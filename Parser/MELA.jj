@@ -1,0 +1,235 @@
+/*
+Grammar for MELA models
+*/
+
+options {
+    STATIC = false ;
+}
+
+PARSER_BEGIN(MELAParser)
+
+package Model;
+import Actions;
+import Model;
+import Utility;
+
+/*package MELAparser;
+
+public class MELAParser {
+       
+    public MELAParser() {
+        this(new java.io.StringReader(""));
+    }
+
+    public void parseFromString( String modelDef ) throws ParseException, TokenMgrError, NumberFormatException {
+        this.ReInit(new java.io.StringReader(modelDef));
+        this.Start();
+    }
+
+    public void parseFromFile( String filename ) throws ParseException, TokenMgrError, NumberFormatException {
+        try { this.ReInit(new java.io.FileReader(filename)); }
+        catch(java.io.IOException e) {throw new ParseException("Error while opening file " + filename + ": " + e); }
+        this.Start();
+    }
+
+}
+PARSER_END(MELAParser)
+
+/***************************************************************
+SKIP
+***************************************************************/
+
+<DEFAULT,RESET,ID> SKIP :
+{
+  " "
+  | "\t"
+  | "\n"
+  | "\r"
+
+  | <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+  | <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
+}
+
+/***************************************************************
+TOKENS
+***************************************************************/
+
+ /* LITERALS */
+TOKEN : { < #INTEGER: ("-")? ["0"-"9"] (["0"-"9"])* > }
+TOKEN : { < #FLOAT:
+                            ("-")?  (["0"-"9"])+ "." (["0"-"9"])*
+                            | ("-")?  "." (["0"-"9"])+
+                    > }
+TOKEN : { < #FLOAT_SCIENTIFIC:
+                             ("-")? (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)
+                            |  ("-")? "." (["0"-"9"])+ (<EXPONENT>)
+                            |  ("-")? (["0"-"9"])+ <EXPONENT>
+                    > }
+TOKEN : { < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ > }
+TOKEN: { < #LETTER: ["A"-"Z","a"-"z"] > }
+TOKEN: { < #DIGIT: ["0"-"9"] > }
+	
+/*
+IDENTIFIERS
+*/
+
+<DEFAULT> TOKEN : { <KEYWORD_LOC : "l" > }
+<DEFAULT> TOKEN : { <KEYWORD_NEIGH : "N(l)" > }
+<DEFAULT> TOKEN : { <KEYWORD_ALL : "all" > }
+
+<DEFAULT> TOKEN : { <COL : ";" > }
+<DEFAULT> TOKEN : { <PLUS : "+" > }
+<DEFAULT> TOKEN : { <DOT : "." > }
+<DEFAULT> TOKEN : { <SEMICOLON : ":" > }
+<DEFAULT> TOKEN : { <DEFINE : ":=" > }
+<DEFAULT> TOKEN : { <ASSIGN : "=" > : MATH}
+
+<DEFAULT> TOKEN : { <LR : "(" > }
+<DEFAULT> TOKEN : { <RR : ")" > }
+<DEFAULT> TOKEN : { <LSQ : "[" >}
+<DEFAULT> TOKEN : { <RSQ : "]" >}
+<DEFAULT> TOKEN : { <LBRAC : "{" > : MATH}
+<DEFAULT> TOKEN : { <RBRAC : "}" > }
+
+<DEFAULT> TOKEN : { <QUO : "\"" > }
+<DEFAULT> TOKEN : { <COMMA : "," > : SIMPLE_MATH }
+<DEFAULT> TOKEN : { <PARALLEL : "||" > }
+
+<DEFAULT> TOKEN : {<INT : <INTEGER> > }
+<DEFAULT> TOKEN : {<DOUBLE : <FLOAT>|<FLOAT_SCIENTIFIC> > }
+<DEFAULT> TOKEN: { <IDENTIFIER: <LETTER>(<LETTER>|<DIGIT>|"_"|"$"|"#")*> }
+
+<MATH> TOKEN : { <MATH_EXPR : (<DIGIT> | <LETTER> | <SYMBOL> | <SPACE> | <M_AND> | <M_OR> | <M_LINER> | <M_LINEN> | <SQUO>)+ > : DEFAULT }
+<MATH> TOKEN : { <#SPACE : " " | "\t"> }
+<MATH> TOKEN : { <#M_AND : "&&" > }
+<MATH> TOKEN : { <#M_OR : "|"> }
+<MATH> TOKEN : { <#M_LINER : "\r"> }
+<MATH> TOKEN : { <#M_LINEN : "\n"> }
+
+<SIMPLE_MATH> TOKEN : { <MATH_PARAM : (<DIGIT> | <LETTER> | <PARAM_SYMBOL> | <SPACE>)+ > : DEFAULT}
+
+TOKEN : { <#SYMBOL : [".", "=", "+", "-", "*", "/", "%", "^", "(", ")", "!", "<", ">", ",", "_", "[","]" ]> }
+TOKEN : { <#PARAM_SYMBOL : [".", "+", "-", "*", "/", "%", "^" ]> }
+
+/***********************************************
+GRAMMAR RULES
+***********************************************/
+
+void Start() throws NumberFormatException, RuntimeException, ParseException :
+{
+    Token t;
+    boolean states = false, agents = false, sub = false, comp = false, cont = false;
+}
+{		<SECTION_SPACE>
+    (
+    	 Space()
+    )
+    
+    	<SECTION_PARAM>
+    (
+    	 Param()
+    )*
+    
+		<SECTION_AGENT>
+    (
+		 Agent()     
+    )+
+    
+    <SECTION_INIT>
+    (
+    	Init()
+    )
+    { if (!Space && !Agent && !Init) 
+        throw new ParseException("Some model sections are missing"); 
+    }
+    <EOF>
+}
+
+void Param() throws NumberFormatException, RuntimeException, ParseException :
+{
+    Token t1,t2;
+    State st;
+    
+}
+{		
+	<KEYWORD_PARAM>
+    t1 = <IDENTIFIER>
+    <ASSIGN>
+    t2 = <MATH_EXPR>
+    <EOL> 
+    {
+        double value = ExpEvaluator.evalParamExp(t2.image);
+        if(value == Utality.ERROR_NUM) {
+            throw new ParseException("line " + t2.beginLine + " colum " + t2.beginColumn +": "+t1.image +" not correctly defined!"); 
+        }
+        if(!GlobalManager.getParamManager().isParamExist(t1.image)) {
+            GlobalManager.getParamManager().addParam(t1.image, value);        
+        } 
+    }
+}
+
+
+
+void State() throws NumberFormatException, RuntimeException, ParseException :
+{
+    Token t;
+    State st;
+    
+}
+{
+    t = <IDENTIFIER>
+    <LR>
+    <KEYWORD_LOC>
+    <RR>
+    {st = new State(t.image, Integer.parseInt(x.image), Integer.parseInt(y.image));}
+    <DEFINE>
+    Action(st) 
+    (
+        <PLUS> 
+        Action(st) 
+    )* 
+    <EOL> 
+    {
+        GlobalManager.getStateManager().putState(st);
+    }
+}
+
+void Action(State st) throws NumberFormatException, RuntimeException, ParseException :
+{
+    int type = Action.ACTION_TYPE_NoInf;
+}
+{   
+    [   
+        LOOKAHEAD(2)
+        NoInfAction(st)
+        |
+        LOOKAHEAD(2)
+        InfAction(st)
+        |
+        LOOKAHEAD(2)
+        PassAction(st)
+        |
+        LOOKAHEAD(2)
+        EnvAction(st)
+    ]
+}
+
+void NoInfAction(State st) throws NumberFormatException, RuntimeException, ParseException :
+{}
+
+void InfAction(State st) throws NumberFormatException, RuntimeException, ParseException :
+{}
+
+void PassAction(State st) throws NumberFormatException, RuntimeException, ParseException :
+{}
+
+void EnvAction(State st) throws NumberFormatException, RuntimeException, ParseException :
+{}
+
+
+void Agent() throws NumberFormatException, RuntimeException, ParseException :
+{}
+
+void AtomAgent() throws NumberFormatException, RuntimeException, ParseException :
+{}
+    	
