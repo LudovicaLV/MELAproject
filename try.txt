@@ -1,0 +1,3 @@
+RateContact = 0.3;
+RateBirth = 0.5;
+RateBirth = 0.6;

@@ -1,0 +1,71 @@
+options {
+  STATIC = false;
+}
+
+
+PARSER_BEGIN(MELAprog)
+
+
+public class MELAprog {
+
+  public static void main(String[] args) throws ParseException {
+    MELAprog parser = new MELAprog(System.in);
+    parser.Input();
+  }
+
+}
+PARSER_END(MELAprog)
+
+/***************************************************************
+SKIP
+***************************************************************/
+<DEFAULT,RESET,ID> SKIP :
+{
+  " "
+  | "\t"
+  | "\n"
+  | "\r"
+
+  | <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+  | <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
+}
+
+/***************************************************************
+TOKENS
+***************************************************************/
+
+<DEFAULT> TOKEN : { <EOL : ";" > }
+<DEFAULT> TOKEN : { <ASSIGN : "=" >}
+
+TOKEN : { < FLOAT:
+                            ("-")?  (["0"-"9"])+ "." (["0"-"9"])*
+                            | ("-")?  "." (["0"-"9"])+> }
+
+TOKEN: { < #LETTER: ["A"-"Z","a"-"z"] > }
+TOKEN: { < #DIGIT: ["0"-"9"] > }
+<DEFAULT> TOKEN: { <IDENTIFIER: <LETTER>(<LETTER>|<DIGIT>)*> }
+
+void Input() :
+{}
+{		
+    (
+    	 Param()
+    )*
+}
+
+void Param() :
+{
+    Token t1,t2;   
+}
+{		
+    t1 = <IDENTIFIER>
+    <ASSIGN>
+    t2 = <FLOAT>
+    <EOL> 
+   { 
+	 System.out.println("The name of the parameter is " + t1 + " and the value is " + t2 ); 
+   }
+}
+
+
+

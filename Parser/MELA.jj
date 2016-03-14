@@ -8,10 +8,10 @@ options {
 
 PARSER_BEGIN(MELAParser)
 
-package Model;
-import Actions;
-import Model;
-import Utility;
+package MELAproject.Model;
+import MELAproject.Actions;
+import MELAproject.Model;
+import MELAproject.Utility;
 
 /*package MELAparser;
 

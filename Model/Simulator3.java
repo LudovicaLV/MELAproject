@@ -426,8 +426,7 @@ public class Simulator3 {
 						}
 						populations[PassAgentName][PassAgentPosition]--;					
 						populations[newStatePos][PassAgentPosition]++;					
-						System.out.println("State action - Pass");}}}}}
-			
+						System.out.println("State action - Pass");}}}}}			
 			
 		}}}}}}
 			
@@ -443,8 +442,6 @@ public class Simulator3 {
 	        	System.out.println("-----");
 		}}}
 		
-		
-	
 	
 	
        //methods	
@@ -469,8 +466,6 @@ public class Simulator3 {
 			list.add(loc);
 		}
 		
-		
-	  
 		
 }	
 				

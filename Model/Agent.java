@@ -1,31 +1,31 @@
 package Model;
 
+import java.util.ArrayList;
+import Actions.Action;
+
+
 public class Agent {
 
-	int numLoc;
-	String name; 	
-   
-	public Agent(int numLoc, String name){
-		this.numLoc = numLoc;
-		this.name = name;		
+	String name;
+    Location AgentLoc;
+	ArrayList<Action> actionList = new ArrayList<Action>();
+
+	
+	public Agent(String name, ArrayList<Integer> LocName) {
+		this.name = name;
+		this.AgentLoc = new Location(LocName);
 	}
 	
-	
-	public int[] getArray(int numLoc){
-	int[] name = new int[numLoc];
-	return name;
-	}
-	
-	
-	public int[] initialArray(int numLoc){
-		int[] name = new int[numLoc];
+	public String getName(){
 		return name;
-		}
+	}
 	
+	public void addAction(Action a){
+		actionList.add(a);
+	}
 	
+	public ArrayList<Action> getActionList() {
+		return this.actionList;
+	}
 	
 }
-
-
-
-
