@@ -1,7 +1,7 @@
 #MELA model example
 
-#Space: graph                                   #Space: grid
-V = {1,2,3,4};                                  Dimensions = 1 (x) / 2 (x,y) / 3 (x,y,z) ;
+#Space: Graph                                   #Space: OneD (x) / TwoD (x,y) / ThreeD (x,y,z)
+V = {1,2,3,4};                                 
 E = {{2,3},{1,4},{1,4},{2,3}};
 
 
@@ -26,7 +26,6 @@ I(l) = (deathI,dI)<<I(l) + ->{l}(contact,c).I(l) + (moveI, mI).I(new_I);
 
 #Environment
 E = ->{all}(contactE,cE).E;
-
 
 #Initial conditions:
 S(1)[10]||S(2)[10]||S(3)[10]||S(4)[10]||I(1)[1]

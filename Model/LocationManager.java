@@ -11,9 +11,8 @@ public class LocationManager {
     public static HashMap<ArrayList<Integer>, ArrayList<ArrayList<Integer>>> NeighThreeD = new HashMap<>();		    	    		    
     
 
-    public static HashMap<Integer, HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>>> globalMap  = new HashMap<Integer, HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>>>();       
+    public static HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> globalMap  = new HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>>();       
 	public static int BracketsCounter;
-	public static int index = BracketsCounter - 2;
 			    
 	public static ArrayList<ArrayList<Integer>> getAllLoc(){
     	return AllLoc;
@@ -118,18 +117,15 @@ public class LocationManager {
 	   
 	   
 	   //method to use for the parser 
-	   public static HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> addNode(ArrayList<Integer> NodeName){
-		   LocationManager.AllLoc.add(NodeName);	   
-		   HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> valuesMap = new HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>>();	   
+	   public static HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> prepareMap(ArrayList<Integer> NodeName){	   	   
 		   ArrayList<ArrayList<Integer>> NeighNodes = new ArrayList<ArrayList<Integer>>();
-		   globalMap.put(index, valuesMap);
-		   globalMap.get(index).put(NodeName, NeighNodes);
-		   return valuesMap;	   	 
+		   globalMap.put(NodeName, NeighNodes);
+		   return globalMap; 
 		  } 
 	   
-	   public static void addNeighNode(ArrayList<Integer> NodeNeigh){
-		   globalMap.get(index).get(LocationManager.AllLoc.get(index)).add(NodeNeigh);
-		   	 
+	   public static HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> addNeighNode(ArrayList<Integer> NodeNeigh, int BracketsCounter){
+		   globalMap.get(LocationManager.AllLoc.get(BracketsCounter-2)).add(NodeNeigh);
+		   return globalMap;		   	 
 		  } 
 	    	  
 	   

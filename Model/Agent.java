@@ -5,7 +5,6 @@ import Actions.Action;
 
 
 public class Agent {
-
 	String name;
     Location AgentLoc;
 	ArrayList<Action> actionList = new ArrayList<Action>();
