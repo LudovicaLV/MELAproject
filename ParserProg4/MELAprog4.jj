@@ -85,10 +85,7 @@ IDENTIFIERS
 <DEFAULT> TOKEN : { <EOL : ";" > }
 <DEFAULT> TOKEN : { <PLUS : "+" > }
 <DEFAULT> TOKEN : { <DOT : "." > }
-
 <DEFAULT> TOKEN : { <SEMICOLON : ":" > }
-<DEFAULT> TOKEN : { <DOLLAR : "$" > }
-
 <DEFAULT> TOKEN : { <DEFINE : ":=" > }
 
 <DEFAULT> TOKEN : { <ASSIGN : "=" > : MATH}
@@ -100,7 +97,6 @@ IDENTIFIERS
 <DEFAULT> TOKEN : { <SQUO : "\'" > }
 <DEFAULT> TOKEN : { <QUEST : "?" > }
 <DEFAULT> TOKEN : { <EXCL : "!" > }
-<DEFAULT> TOKEN : { <AT : "@" > }
 <DEFAULT> TOKEN : { <LBRAC : "{" > : MATH}
 <DEFAULT> TOKEN : { <RBRAC : "}" > }
 
@@ -258,10 +254,9 @@ void Action(Agent agent) throws NumberFormatException, RuntimeException, ParseEx
 
 void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, update; 
+    Token name, update, symbol; 
     String actionName = null;
-    String rateName =null;
-    Token symbol;
+    String rateName = null;
 }
 {  
     <LR>
@@ -328,8 +323,9 @@ void PassAction(Agent agent) throws NumberFormatException, RuntimeException, Par
     Token symbol;
 }
 {
-    <DASH>
     <LANG>
+    <DASH>
+    <LR>
     [
     	name = <IDENTIFIER>
     	{actionName = name.image;}
@@ -465,16 +461,20 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
        {LocationManager.addNeighNode(Location.createListName(e1.image), BracketsCounter);})*
      <RBRAC>
      {BracketsCounter++;}
-     ( <LBRAC>
-     <INT>
+     (<COMMA>
+      <LBRAC>
+    {BracketsCounter++;}
+     e = <INT>
+     {LocationManager.addNeighNode(Location.createListName(e.image), BracketsCounter);}
       (
         <COMMA>
-        <INT>)*
-     <RBRAC>
-     {BracketsCounter++;})*
+       e1 = <INT>
+       {LocationManager.addNeighNode(Location.createListName(e1.image), BracketsCounter);})*
      <RBRAC>
      {BracketsCounter++;}
-
+       )*
+     <RBRAC>
+     {BracketsCounter++;}
 }
 
 void setOneD()throws NumberFormatException, RuntimeException, ParseException :

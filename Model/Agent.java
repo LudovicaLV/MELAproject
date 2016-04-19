@@ -7,7 +7,6 @@ import Actions.Action;
 public class Agent {
 	String name;
 	ArrayList<Action> actionList = new ArrayList<Action>();
-
 	
 	public Agent(String name) {
 		this.name = name;
