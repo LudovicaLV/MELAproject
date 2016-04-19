@@ -2,21 +2,19 @@ options {
   STATIC = false;
 }
 
-PARSER_BEGIN(MELAprog2)
+PARSER_BEGIN(MELAprog4)
 
-package ParserProg2;
+package ParserProg4;
 
-### import classes needed
-
-public class MELAprog2 {
+public class MELAprog4 {
 
   public static void main(String[] args) throws ParseException {
-    MELAprog2 parser = new MELAprog2(System.in);
+    MELAprog4 parser = new MELAprog4(System.in);
     parser.Input();
   }
 
 }
-PARSER_END(MELAprog2)
+PARSER_END(MELAprog4)
 
 /***************************************************************
 SKIP
@@ -144,24 +142,19 @@ GRAMMAR RULES
 void Input() throws NumberFormatException, RuntimeException, ParseException :
 {
     Token space;
-
 }
 
 {   <SECTION_SPACE>
 	<SEMICOLON>
    	space = <KEYWORD_SPACE>
-   	{if (space = "Graph")
-   	 setGraph();   	}
-   	else
-   	{if (space = "OneD")   	 setOneD();   	 
+   	{if (space = "Graph") {   	 setGraph();   	}
+   	else if (space = "OneD") {  	     	 setOneD();   	 
    	}
-   	else
-   	{if (space = "TwoD")
+   	else if (space = "TwoD") {  	  
    	 setTwoD();   	 
    	}
-   	else
-   	{if (space = "ThreeD")
-   	 setThreeD();    }    else    {throw new ParseException("Spatial structure incorrectly defined");}
+   	else if (space = "ThreeD") {   	  
+   	 setThreeD();    }    else    {throw new ParseException("Spatial structure incorrectly defined");}    }
 
   	<SECTION_PARAM>
     (
@@ -178,7 +171,7 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
     (
 		 Env()     
     )*
-
+    {AgentManager.GlobalMatrixCreation();}
         <SECTION_INIT>
         {init = true;}
     (
@@ -200,141 +193,150 @@ void Param() throws NumberFormatException, RuntimeException, ParseException :
     <ASSIGN>
     t2 = <MATH_EXPR>
     <EOL> 
-    {System.out.println("The name of the parameter is " + t1 + " and the value is " + t2 );}
+    {ParamManager.addParam(t1.image, t2.image);}
 }
 
 void Agent() throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token t;  
+    Token t;
+    Agent agent;
 }
 {
     t = <IDENTIFIER>
     <LR>
     <KEYWORD_LOC>
     <RR>
-    {System.out.println("The agent" + t + " is in the model");}
+    {Agent.addAgentName(t.image);
+     agent = new Agent(t.image);}
     <DEFINE>
-    Action(t) 
+    Action(agent) 
     (
         <PLUS> 
-        Action(t) 
+        Action(agent) 
     )* 
     <EOL>
 }
-
 
 
 void Env() throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token t;  
+    Token t;
+    Agent agent;
 }
 {
     t = <IDENTIFIER>
-    {System.out.println("The agent" + t + " is in the model");}
+    {Agent.addAgentName(t.image);
+     agent = new Agent(t.image);}
     <DEFINE>
-    EnvAction(t) 
+    EnvAction(agent) 
     (
         <PLUS> 
-        EnvAction(t) 
+        EnvAction(agent) 
     )* 
     <EOL>
 }
 
-void Action(Agent t) throws NumberFormatException, RuntimeException, ParseException :
+void Action(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
     int type = Action.ACTION_TYPE_NoInfAction;
 }
 {   
     [   
         LOOKAHEAD(2)
-        NoInfAction(t)
+        NoInfAction(agent)
         |
         LOOKAHEAD(2)
-        InfAction(st)
+        InfAction(agent)
         |
         LOOKAHEAD(2)
-        PassAction(st)
+        PassAction(agent)
         |
         LOOKAHEAD(2)
-        EnvAction(st)
+        EnvAction(agent)
     ]
 }
 
-void NoInfAction(Agent t) throws NumberFormatException, RuntimeException, ParseException :
+void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, rate=null, update; 
-    String strName = null;
-    boolean paramRate = false;
+    Token name, update; 
+    String actionName = null;
+    String rateName =null;
+    Token symbol;
 }
 {  
     <LR>
     [
-    	name = <IDENTIFIER>
-    	{strName = name.image;}
+    name = <IDENTIFIER>
+    {actionName = name.image;}
     ]
     <COMMA>
     [
-    	rate = <MATH_PARAM>
+    rateName = <IDENTIFIER>
     ]
     <RR>
- 
-    <MELASYMBOL>
+    symbol = <MELASYMBOL>
     update = <IDENTIFIER>
     <LR>
     updateloc = <UPDATE_LOC>
     <RR>
-    {System.out.println("The action " + name + " has as update " + update + "(" + updateloc + ")");}
-}
+     
+     { Double rate = ParamManager.getParamValue(rateName);       NoInfAction ac = new NoInfAction(actionName, rate, symbol, update + "(" + updateloc + ")");
+       agent.addAction(ac); }
+}     
 
-void InfAction(Agent t) throws NumberFormatException, RuntimeException, ParseException :
+
+void InfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, rate=null, update, infset=null; 
-    String strName = null;
-    boolean paramRate = false;
+    Token name, update, infset=null; 
+    String actionName = null;
+    String rateName;
+    Token symbol;
 }
 {   
     <DASH>
     <RANG>
     <LBRAC>
-    <INFSET>
+    infset = <INFSET>
     <RBRAC>    
-    <LR>
-    
+    <LR>    
     [
     	name = <IDENTIFIER>
-    	{strName = name.image;}
-    ]
-    
+    	{actionName = name.image;}
+    ]    
     <COMMA>
-
     [
-    	rate = <MATH_PARAM>
+    	rate = <IDENTIFIER>
     ]
     <RR> 
-    <MELASYMBOL>
+    symbol = <MELASYMBOL>
     update = <IDENTIFIER>
     <LR>
     updateloc = <UPDATE_LOC>
     <RR>
-    {System.out.println("The action " + name + " has as update " + update + "(" + updateloc + ")");}
+   { Double rate = ParamManager.getParamValue(rateName);
+     InfAction ac = new InfAction(actionName, rate, infset, symbol, update + "(" + updateloc + ")");
+     agent.addAction(ac); } 
+
 }
 
-void PassAction(Agent t) throws NumberFormatException, RuntimeException, ParseException :
+
+void PassAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, prob=null, update, range=null; 
-    String strName = null;
-    boolean paramRate = false;
+    Token name, update; 
+    String actionName = null;
+    String probName = null;
+    Token symbol;
 }
 {
     <DASH>
     <LANG>
     [
     	name = <IDENTIFIER>
-    	{strName = name.image;}
+    	{actionName = name.image;}
     ]
     <COMMA>
     [
-    	prob = <MATH_PARAM>
+    	probName = <IDENTIFIER>
     ]
     <RR>
     <MELASYMBOL>
@@ -342,79 +344,95 @@ void PassAction(Agent t) throws NumberFormatException, RuntimeException, ParseEx
     <LR>
     updateloc = <UPDATE_LOC>
     <RR>
-    {System.out.println("The action " + name + " has as update " + update + "(" + updateloc + ")");}
+    {Double prob = ParamManager.getParamValue(probName);
+     PassAction ac = new PassAction(actionName, prob, symbol, update + "(" + updateloc + ")");
+     agent.addAction(ac); } 
 }
 
-
-void EnvAction(Env t) throws NumberFormatException, RuntimeException, ParseException :
+void EnvAction(Env agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, rate=null, update ; 
-    String strName = null;
-    boolean paramRate = false;
+    Token name, update, infset=null ; 
+    String actionName = null;
+    String rateName = null;
 }
 {     
     <DASH>
     <RANG>
     <LBRAC>
-    <INFSET>
+    infset = <INFSET>
     <RBRAC>    
     <LR>    
     [
     	name = <IDENTIFIER>
-    	{strName = name.image;}
+    	{actionName = name.image;}
     ]   
     <COMMA>
     [
-    	rate = <MATH_PARAM>
+    	rateName = <IDENTIFIER>
     ]
     <RR> 
     <DOT>
     update = <IDENTIFIER>
-    {System.out.println("The action " + name + " has as update " + update + "(" + updateloc + ")");}
+    {Double rate = ParamManager.getParamValue(rateName);
+    EnvAction ac = new EnvAction(actionName, rate, infset, update);
+    agent.addAction(ac); }
 }
-
 
 
 void Init() throws NumberFormatException, RuntimeException, ParseException :
 {
     
 }
-{
-  
-    AtomAgent() 
+{  
+    InitAgent() 
     (
         <PARALLEL> 
-        AtomAgent() 
+        InitAgent() 
     )*
          
         }    
 
 
-void AtomAgent() throws NumberFormatException, RuntimeException, ParseException :
+void InitAgent() throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token t,x,y,z,n,t2=null;
-    State st;
-    int num = 1;
+    Token t,x,y,z,n =null;
 }
 {
     t = <IDENTIFIER>
+    (
     <LR>
     x = <INT>
     (
        <COMMA>
     y = <INT>
-
-     (
+    (
        <COMMA>
     z = <INT>
     )?
     )?    
     <RR>
+    )?
     <LSQ>
     n = <INT>
     <RSQ>
-  
+   
+  { if (x.image = null)  { GlobalMatrix[MatrixAgent.get(t.image)][0]= n;  }else{    if (space = "Graph") {
+   	 GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image)]= n;
+   	}
+   	else if (space = "OneD") {  	  
+   	GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image)]= n;   	 
+   	}
+   	else if (space = "TwoD") {  	  
+   	 GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image,y.image)]= n;  	 
+   	}
+   	else if (space = "ThreeD") {   	  
+   	 GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image,y.image,z.image)]= n;
+    }
+  }
 }
+}
+
+
 
 void setGraph()throws NumberFormatException, RuntimeException, ParseException :
 {
@@ -438,25 +456,24 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     <EDGES>
     <ASSIGN>
     <LBRAC>
-    {BracketsCounter++}     <LBRAC>
-    {BracketsCounter++}
+    {BracketsCounter++;}     <LBRAC>
+    {BracketsCounter++;}
      e = <INT>
-     {LocationManager.addNeighNode(Location.createListName(e.image), BracketsCounter)}
+     {LocationManager.addNeighNode(Location.createListName(e.image), BracketsCounter);}
       (        <COMMA>
        e1 = <INT>
-       {LocationManager.addNeighNode(Location.createListName(e1.image), BracketsCounter)})*
+       {LocationManager.addNeighNode(Location.createListName(e1.image), BracketsCounter);})*
      <RBRAC>
-     {BracketsCounter++}
+     {BracketsCounter++;}
      ( <LBRAC>
      <INT>
       (
         <COMMA>
         <INT>)*
      <RBRAC>
-     {BracketsCounter++})*
+     {BracketsCounter++;})*
      <RBRAC>
-     {BracketsCounter++}
-       
+     {BracketsCounter++;}
 
 }
 
@@ -466,7 +483,7 @@ void setOneD()throws NumberFormatException, RuntimeException, ParseException :
 }
 {   <LR>
     x = <INT>
-   {Location.createAllLocOneD(x.image)}
+   {Location.createAllLocOneD(x.image);}
    <RR>
 }
 
@@ -479,7 +496,7 @@ void setTwoD()throws NumberFormatException, RuntimeException, ParseException :
     < COMMA >
     y = < INT >
    <RR>
-   {Location.createAllLocTwoD(x.image, y.image)}
+   {Location.createAllLocTwoD(x.image, y.image);}
 }
 
 void setThreeD()throws NumberFormatException, RuntimeException, ParseException :
@@ -493,5 +510,5 @@ void setThreeD()throws NumberFormatException, RuntimeException, ParseException :
     < COMMA >
     z = < INT >
    <RR>
-   {Location.createAllLocThreeD(x.image, y.image, z.image)}
+   {Location.createAllLocThreeD(x.image, y.image, z.image);}
 }

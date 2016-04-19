@@ -28,7 +28,7 @@ I(l) = (deathI,dI)<<I(l) + ->{l}(contact,c).I(l) + (moveI, mI).I(new_I);
 E = ->{all}(contactE,cE).E;
 
 #Initial conditions:
-S(1)[10]||S(2)[10]||S(3)[10]||S(4)[10]||I(1)[1]
+S(1,1)[10]||S(2)[10]||S(3)[10]||S(4)[10]||I(1)[1]
 
 
 Influence action options:

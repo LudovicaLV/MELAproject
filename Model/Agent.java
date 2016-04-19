@@ -6,13 +6,13 @@ import Actions.Action;
 
 public class Agent {
 	String name;
-    Location AgentLoc;
 	ArrayList<Action> actionList = new ArrayList<Action>();
 
 	
-	public Agent(String name, ArrayList<Integer> LocName) {
+	public Agent(String name) {
 		this.name = name;
-		this.AgentLoc = new Location(LocName);
+		AgentManager.addAgentName(name);
+		AgentManager.addAgent(this);
 	}
 	
 	public String getName(){
