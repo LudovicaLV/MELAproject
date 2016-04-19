@@ -7,13 +7,24 @@ PARSER_BEGIN(MELAprog4)
 package ParserProg4;
 
 public class MELAprog4 {
+       
+    public MELAprog4() {
+        this(new java.io.StringReader(""));
+    }
 
-  public static void main(String[] args) throws ParseException {
-    MELAprog4 parser = new MELAprog4(System.in);
-    parser.Input();
-  }
+    public void parseFromString( String modelDef ) throws ParseException, TokenMgrError, NumberFormatException {
+        this.ReInit(new java.io.StringReader(modelDef));
+        this.Start();
+    }
+
+    public void parseFromFile( String filename ) throws ParseException, TokenMgrError, NumberFormatException {
+        try { this.ReInit(new java.io.FileReader(filename)); }
+        catch(java.io.IOException e) {throw new ParseException("Error while opening file " + filename + ": " + e); }
+        this.Start();
+    }
 
 }
+
 PARSER_END(MELAprog4)
 
 /***************************************************************
@@ -137,39 +148,44 @@ GRAMMAR RULES
 
 void Input() throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token space;
+    Token space;    
+    boolean space = false, agents = false, init = false;
 }
 
 {   <SECTION_SPACE>
+    {space = true;}
 	<SEMICOLON>
    	space = <KEYWORD_SPACE>
-   	{if (space = "Graph") {   	 setGraph();   	}
-   	else if (space = "OneD") {  	     	 setOneD();   	 
+    {LocationManager.SpatialSt = space.image;
+    if (space.image = "Graph") {   	 setGraph();   	}
+   	else if (space.image.matches("(?i).*OneD*")) {  	     	 setOneD();   	 
    	}
-   	else if (space = "TwoD") {  	  
+   	else if (space.image.matches("(?i).*TwoD*")) {  	  
    	 setTwoD();   	 
    	}
-   	else if (space = "ThreeD") {   	  
-   	 setThreeD();    }    else    {throw new ParseException("Spatial structure incorrectly defined");}    }
+   	else if (space.image.matches("(?i).*ThreeD*")) {   	  
+   	 setThreeD();    }    else    {throw new ParseException("Spatial structure incorrectly defined");}      }
 
   	<SECTION_PARAM>
     (
-    	 Param()
+      Param()
     )*
-		<SECTION_AGENTS>
-		{agents = true;}
+
+	<SECTION_AGENTS>
+	{agents = true;}
     (
-		 Agent()     
+	  Agent()     
     )+
 
-	   <SECTION_ENV>
-		{env = true;}
+	<SECTION_ENV>
     (
-		 Env()     
+	  Env()     
     )*
+    
     {AgentManager.GlobalMatrixCreation();}
-        <SECTION_INIT>
-        {init = true;}
+
+    <SECTION_INIT>
+    {init = true;}
     (
     	 Init()
     )
@@ -238,31 +254,28 @@ void Action(Agent agent) throws NumberFormatException, RuntimeException, ParseEx
 }
 {   
     [   
-        LOOKAHEAD(2)
+        LOOKAHEAD(1)
         NoInfAction(agent)
         |
-        LOOKAHEAD(2)
+        LOOKAHEAD(1)
         InfAction(agent)
         |
-        LOOKAHEAD(2)
+        LOOKAHEAD(1)
         PassAction(agent)
         |
-        LOOKAHEAD(2)
+        LOOKAHEAD(1)
         EnvAction(agent)
     ]
 }
 
 void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, update, symbol; 
-    String actionName = null;
-    String rateName = null;
+    Token name, rateName, symbo, update, updateloc; 
 }
 {  
     <LR>
     [
     name = <IDENTIFIER>
-    {actionName = name.image;}
     ]
     <COMMA>
     [
@@ -275,17 +288,14 @@ void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, Pa
     updateloc = <UPDATE_LOC>
     <RR>
      
-     { Double rate = ParamManager.getParamValue(rateName);       NoInfAction ac = new NoInfAction(actionName, rate, symbol, update + "(" + updateloc + ")");
-       agent.addAction(ac); }
+    { Double rate = ParamManager.getParamValue(rateName.image);      NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")");
+      agent.addAction(ac); }
 }     
 
 
 void InfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, update, infset=null; 
-    String actionName = null;
-    String rateName;
-    Token symbol;
+    Token infset, name, rate, symbol, update, updateloc; 
 }
 {   
     <DASH>
@@ -296,7 +306,6 @@ void InfAction(Agent agent) throws NumberFormatException, RuntimeException, Pars
     <LR>    
     [
     	name = <IDENTIFIER>
-    	{actionName = name.image;}
     ]    
     <COMMA>
     [
@@ -308,8 +317,8 @@ void InfAction(Agent agent) throws NumberFormatException, RuntimeException, Pars
     <LR>
     updateloc = <UPDATE_LOC>
     <RR>
-   { Double rate = ParamManager.getParamValue(rateName);
-     InfAction ac = new InfAction(actionName, rate, infset, symbol, update + "(" + updateloc + ")");
+   { Double rate = ParamManager.getParamValue(rate.image);
+     InfAction ac = new InfAction(name.image, rate, infset.image, symbol.image, update.image + "(" + updateloc.image + ")");
      agent.addAction(ac); } 
 
 }
@@ -317,10 +326,7 @@ void InfAction(Agent agent) throws NumberFormatException, RuntimeException, Pars
 
 void PassAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, update; 
-    String actionName = null;
-    String probName = null;
-    Token symbol;
+    Token name, probName, update, updateloc; 
 }
 {
     <LANG>
@@ -328,28 +334,25 @@ void PassAction(Agent agent) throws NumberFormatException, RuntimeException, Par
     <LR>
     [
     	name = <IDENTIFIER>
-    	{actionName = name.image;}
     ]
     <COMMA>
     [
     	probName = <IDENTIFIER>
     ]
     <RR>
-    <MELASYMBOL>
+    symbol = <MELASYMBOL>
     update = <IDENTIFIER>
     <LR>
     updateloc = <UPDATE_LOC>
     <RR>
-    {Double prob = ParamManager.getParamValue(probName);
-     PassAction ac = new PassAction(actionName, prob, symbol, update + "(" + updateloc + ")");
+    {Double prob = ParamManager.getParamValue(probName.image);
+     PassAction ac = new PassAction(name.image, prob, symbol.image, update.image + "(" + updateloc.image + ")");
      agent.addAction(ac); } 
 }
 
 void EnvAction(Env agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name, update, infset=null ; 
-    String actionName = null;
-    String rateName = null;
+    Token infset, name, rateName, update;
 }
 {     
     <DASH>
@@ -360,7 +363,6 @@ void EnvAction(Env agent) throws NumberFormatException, RuntimeException, ParseE
     <LR>    
     [
     	name = <IDENTIFIER>
-    	{actionName = name.image;}
     ]   
     <COMMA>
     [
@@ -369,8 +371,8 @@ void EnvAction(Env agent) throws NumberFormatException, RuntimeException, ParseE
     <RR> 
     <DOT>
     update = <IDENTIFIER>
-    {Double rate = ParamManager.getParamValue(rateName);
-    EnvAction ac = new EnvAction(actionName, rate, infset, update);
+    {Double rate = ParamManager.getParamValue(rateName.image);
+    EnvAction ac = new EnvAction(name.image, rate, infset.image, update.image);
     agent.addAction(ac); }
 }
 
@@ -412,16 +414,16 @@ void InitAgent() throws NumberFormatException, RuntimeException, ParseException 
     n = <INT>
     <RSQ>
    
-  { if (x.image = null)  { GlobalMatrix[MatrixAgent.get(t.image)][0]= n;  }else{    if (space = "Graph") {
+  { if (x.image = null)  { GlobalMatrix[MatrixAgent.get(t.image)][0]= n;  }else{    if (LocationManager.SpatialSt = "Graph") {
    	 GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image)]= n;
    	}
-   	else if (space = "OneD") {  	  
+   	else if (space.image.matches("(?i).*OneD*")) {  	  
    	GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image)]= n;   	 
    	}
-   	else if (space = "TwoD") {  	  
+   	else if (space.image.matches("(?i).*TwoD*")) {  	  
    	 GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image,y.image)]= n;  	 
    	}
-   	else if (space = "ThreeD") {   	  
+   	else if (space.image.matches("(?i).*ThreeD*")) {   	  
    	 GlobalMatrix[MatrixAgent.get(t.image)][MatrixLoc.get(x.image,y.image,z.image)]= n;
     }
   }

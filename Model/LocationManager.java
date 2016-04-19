@@ -11,11 +11,14 @@ public class LocationManager {
     public static HashMap<ArrayList<Integer>, ArrayList<ArrayList<Integer>>> NeighThreeD = new HashMap<>();		    	    		       
 
     public static HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> globalMap  = new HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>>();       
-	public static int BracketsCounter;
+	public static int BracketsCounter;	
+
+	public static String SpatialSt = new String();
 			    
 	public static ArrayList<ArrayList<Integer>> getAllLoc(){
     	return AllLoc;
     }  
+
     
     //Hashmap name - Matrix position
 
@@ -29,11 +32,11 @@ public class LocationManager {
 	//Hashmap name - neigh (given differently if graph or grid)	
 	
 	public static ArrayList<ArrayList<Integer>> getNeigh(ArrayList<Integer> LocName){
-	    if(Init.SpatialSt == "Graph") {
+	    if(SpatialSt == "Graph") {
 	   		return LocationManager.NeighGraph.get(LocName);	    		
-	   	}else{if (Init.SpatialSt == "OneD"){
+	   	}else{if (SpatialSt == "OneD"){
 	   		return LocationManager.NeighOneD.get(LocName);		    	    		  
-	   	}else{if (Init.SpatialSt == "TwoD"){
+	   	}else{if (SpatialSt == "TwoD"){
     		return NeighTwoD.get(LocName);	
 	    }else{
 	   		return NeighThreeD.get(LocName);			    	    		  
@@ -41,10 +44,10 @@ public class LocationManager {
 	    		
 
 	   public static void createNeighbourhood(ArrayList<Integer> LocName){
-		   if (Init.SpatialSt == "Graph"){
+		   if (SpatialSt == "Graph"){
 			   //create previously (while parsing)
 		   }else{
-			   if (Init.SpatialSt == "OneD"){
+			   if (SpatialSt == "OneD"){
 				   ArrayList<ArrayList<Integer>> NeighOneD = new ArrayList<ArrayList<Integer>> ();		
 				ArrayList<Integer> Neigh1 = new ArrayList<Integer>(); 	   			
 				//careful with boundaries conditions - to add
@@ -52,7 +55,7 @@ public class LocationManager {
 				Neigh1.add(LocName.get(0) - 1); 			
 				LocationManager.NeighOneD.put(LocName, NeighOneD); 			
 			}
-			if (Init.SpatialSt == "TwoD"){
+			if (SpatialSt == "TwoD"){
 				ArrayList<ArrayList<Integer>> NeighTwoD = new ArrayList<ArrayList<Integer>>();	
 				ArrayList<Integer> Neigh2_1 = new ArrayList<Integer>();	
 				ArrayList<Integer> Neigh2_2 = new ArrayList<Integer>();	
@@ -72,7 +75,7 @@ public class LocationManager {
 				NeighTwoD.add(Neigh2_4); 
 				LocationManager.NeighTwoD.put(LocName, NeighTwoD); 			
 			}
-			if (Init.SpatialSt == "ThreeD"){
+			if (SpatialSt == "ThreeD"){
 				
 				ArrayList<ArrayList<Integer>> NeighThreeD = new ArrayList<ArrayList<Integer>>();	
 				ArrayList<Integer> Neigh3_1 = new ArrayList<Integer>();	
