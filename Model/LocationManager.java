@@ -130,9 +130,32 @@ public class LocationManager {
 		   return globalMap;		   	 
 		  } 
 	    	  
+	   public static ArrayList<Integer> createListOneD (int x){
+		   ArrayList<Integer> ListOneD = new ArrayList<Integer>();
+		   ListOneD.add(x);
+		   return ListOneD;
+	   }
 	   
+	   public static ArrayList<Integer> createListTwoD (int x, int y){
+		   ArrayList<Integer> ListTwoD = new ArrayList<Integer>();
+		   ListTwoD.add(x);
+		   ListTwoD.add(y);
+		   return ListTwoD;
+	   }
 	   
+	   public static ArrayList<Integer> createListThreeD (int x, int y, int z){
+		   ArrayList<Integer> ListThreeD = new ArrayList<Integer>();
+		   ListThreeD.add(x);
+		   ListThreeD.add(y);
+		   ListThreeD.add(z);
+		   return ListThreeD;
+	   }
 	   
+	   public static ArrayList<Integer> createListZero (){
+	   ArrayList<Integer> Zero = new ArrayList<Integer>();
+	   Zero.add(0);
+	   return Zero;
+	   }	   
 	   
 	   
 }
