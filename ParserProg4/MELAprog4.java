@@ -91,6 +91,7 @@ agents = true;
     jj_consume_token(SECTION_ENV);
     label_3:
     while (true) {
+      Agent();
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case IDENTIFIER:{
         ;
@@ -100,7 +101,6 @@ agents = true;
         jj_la1[2] = jj_gen;
         break label_3;
       }
-      Env();
     }
 AgentManager.GlobalMatrixCreation();
     jj_consume_token(SECTION_INIT);
@@ -123,17 +123,10 @@ double paramValue = ExpEvaluator.evalParamExp(t2.image);
   final public void Agent() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token t;
     Agent agent;
     t = jj_consume_token(IDENTIFIER);
-    jj_consume_token(LR);
-    jj_consume_token(KEYWORD_LOC);
-    jj_consume_token(RR);
-AgentManager.addAgentName(t.image);
-     agent = new Agent(t.image);
-    jj_consume_token(DEFINE);
-    Action(agent);
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case PLUS:{
+      case LR:{
         ;
         break;
         }
@@ -141,19 +134,14 @@ AgentManager.addAgentName(t.image);
         jj_la1[3] = jj_gen;
         break label_4;
       }
-      jj_consume_token(PLUS);
-      Action(agent);
+      jj_consume_token(LR);
+      jj_consume_token(KEYWORD_LOC);
+      jj_consume_token(RR);
     }
-    jj_consume_token(EOL);
-  }
-
-  final public void Env() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token t;
-    Agent agent;
-    t = jj_consume_token(IDENTIFIER);
 AgentManager.addAgentName(t.image);
      agent = new Agent(t.image);
     jj_consume_token(DEFINE);
-    EnvAction(agent);
+    Action(agent);
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -166,46 +154,58 @@ AgentManager.addAgentName(t.image);
         break label_5;
       }
       jj_consume_token(PLUS);
-      EnvAction(agent);
+      Action(agent);
     }
     jj_consume_token(EOL);
   }
 
-  final public void Action(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {
+/*  So far problem solved without using this part
+
+void Env() throws NumberFormatException, RuntimeException, ParseException :
+{
+    Token t;
+    Env agent;
+}
+{
+    t = <IDENTIFIER>
+    {AgentManager.addAgentName(t.image);
+     agent = new Agent(t.image);}
+    <DEFINE>
+    EnvAction(agent) 
+    (
+        <PLUS> 
+        EnvAction(agent) 
+    )* 
+    <EOL>
+}
+*/
+  final public 
+void Action(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case LR:
     case LANG:
     case DASH:{
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case LR:{
+      if (jj_2_1(13)) {
         NoInfAction(agent);
-        break;
-        }
-      case DASH:{
+      } else if (jj_2_2(13)) {
         InfAction(agent);
-        break;
-        }
-      case LANG:{
+      } else if (jj_2_3(13)) {
         PassAction(agent);
-        break;
-        }{
+      } else if (jj_2_4(13)) {
         EnvAction(agent);
-        break;
-        }
-      default:
-        jj_la1[5] = jj_gen;
+      } else {
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
       }
     default:
-      jj_la1[6] = jj_gen;
+      jj_la1[5] = jj_gen;
       ;
     }
   }
 
-  final public void NoInfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, rateName = null, symbol, update, updateloc;
+  final public void NoInfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, rateName = null, symbol, update, updateloc=null;
     jj_consume_token(LR);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IDENTIFIER:{
@@ -213,7 +213,7 @@ AgentManager.addAgentName(t.image);
       break;
       }
     default:
-      jj_la1[7] = jj_gen;
+      jj_la1[6] = jj_gen;
       ;
     }
     jj_consume_token(COMMA);
@@ -223,7 +223,7 @@ AgentManager.addAgentName(t.image);
       break;
       }
     default:
-      jj_la1[8] = jj_gen;
+      jj_la1[7] = jj_gen;
       ;
     }
     jj_consume_token(RR);
@@ -237,7 +237,7 @@ Double rate = ParamManager.getParamValue(rateName.image);
       agent.addAction(ac);
   }
 
-  final public void InfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infset, name = null, rate = null, symbol, update, updateloc;
+  final public void InfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infset, name = null, rate = null, symbol, update, updateloc=null;
     jj_consume_token(DASH);
     jj_consume_token(RANG);
     jj_consume_token(LBRAC);
@@ -250,7 +250,7 @@ Double rate = ParamManager.getParamValue(rateName.image);
       break;
       }
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[8] = jj_gen;
       ;
     }
     jj_consume_token(COMMA);
@@ -260,7 +260,7 @@ Double rate = ParamManager.getParamValue(rateName.image);
       break;
       }
     default:
-      jj_la1[10] = jj_gen;
+      jj_la1[9] = jj_gen;
       ;
     }
     jj_consume_token(RR);
@@ -274,7 +274,7 @@ Double rateValue = ParamManager.getParamValue(rate.image);
      agent.addAction(ac);
   }
 
-  final public void PassAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, probName = null, update, updateloc, symbol;
+  final public void PassAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, probName = null, update, updateloc=null, symbol;
     jj_consume_token(LANG);
     jj_consume_token(DASH);
     jj_consume_token(LR);
@@ -284,7 +284,7 @@ Double rateValue = ParamManager.getParamValue(rate.image);
       break;
       }
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[10] = jj_gen;
       ;
     }
     jj_consume_token(COMMA);
@@ -294,7 +294,7 @@ Double rateValue = ParamManager.getParamValue(rate.image);
       break;
       }
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[11] = jj_gen;
       ;
     }
     jj_consume_token(RR);
@@ -308,7 +308,7 @@ Double prob = ParamManager.getParamValue(probName.image);
      agent.addAction(ac);
   }
 
-  final public void EnvAction(Env agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infset, name, rateName, update;
+  final public void EnvAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infset, name=null, rateName=null, update;
     jj_consume_token(DASH);
     jj_consume_token(RANG);
     jj_consume_token(LBRAC);
@@ -321,7 +321,7 @@ Double prob = ParamManager.getParamValue(probName.image);
       break;
       }
     default:
-      jj_la1[13] = jj_gen;
+      jj_la1[12] = jj_gen;
       ;
     }
     jj_consume_token(COMMA);
@@ -331,7 +331,7 @@ Double prob = ParamManager.getParamValue(probName.image);
       break;
       }
     default:
-      jj_la1[14] = jj_gen;
+      jj_la1[13] = jj_gen;
       ;
     }
     jj_consume_token(RR);
@@ -352,7 +352,7 @@ Double rate = ParamManager.getParamValue(rateName.image);
         break;
         }
       default:
-        jj_la1[15] = jj_gen;
+        jj_la1[14] = jj_gen;
         break label_6;
       }
       jj_consume_token(PARALLEL);
@@ -377,20 +377,20 @@ Double rate = ParamManager.getParamValue(rateName.image);
           break;
           }
         default:
-          jj_la1[16] = jj_gen;
+          jj_la1[15] = jj_gen;
           ;
         }
         break;
         }
       default:
-        jj_la1[17] = jj_gen;
+        jj_la1[16] = jj_gen;
         ;
       }
       jj_consume_token(RR);
       break;
       }
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[17] = jj_gen;
       ;
     }
     jj_consume_token(LSQ);
@@ -443,7 +443,7 @@ int vertexName = Integer.parseInt(v.image);
         break;
         }
       default:
-        jj_la1[19] = jj_gen;
+        jj_la1[18] = jj_gen;
         break label_7;
       }
       jj_consume_token(COMMA);
@@ -470,7 +470,7 @@ int edgeName = Integer.parseInt(e.image);
         break;
         }
       default:
-        jj_la1[20] = jj_gen;
+        jj_la1[19] = jj_gen;
         break label_8;
       }
       jj_consume_token(COMMA);
@@ -488,7 +488,7 @@ BracketsCounter++;
         break;
         }
       default:
-        jj_la1[21] = jj_gen;
+        jj_la1[20] = jj_gen;
         break label_9;
       }
       jj_consume_token(COMMA);
@@ -505,7 +505,7 @@ int edgeName2 = Integer.parseInt(e.image);
           break;
           }
         default:
-          jj_la1[22] = jj_gen;
+          jj_la1[21] = jj_gen;
           break label_10;
         }
         jj_consume_token(COMMA);
@@ -553,6 +553,143 @@ int xValue = Integer.parseInt(x.image);
     Location.createAllLocThreeD(xValue, yValue, zValue);
   }
 
+  private boolean jj_2_1(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_1(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(0, xla); }
+  }
+
+  private boolean jj_2_2(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_2(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(1, xla); }
+  }
+
+  private boolean jj_2_3(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_3(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  private boolean jj_2_4(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_4(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
+  private boolean jj_3R_12()
+ {
+    if (jj_scan_token(DASH)) return true;
+    if (jj_scan_token(RANG)) return true;
+    if (jj_scan_token(LBRAC)) return true;
+    if (jj_scan_token(INFSET)) return true;
+    if (jj_scan_token(RBRAC)) return true;
+    if (jj_scan_token(LR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(COMMA)) return true;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(RR)) return true;
+    if (jj_scan_token(MELASYMBOL)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(LR)) return true;
+    if (jj_scan_token(UPDATE_LOC)) return true;
+    if (jj_scan_token(RR)) return true;
+    return false;
+  }
+
+  private boolean jj_3_4()
+ {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_13()
+ {
+    if (jj_scan_token(LANG)) return true;
+    if (jj_scan_token(DASH)) return true;
+    if (jj_scan_token(LR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(COMMA)) return true;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(RR)) return true;
+    if (jj_scan_token(MELASYMBOL)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(LR)) return true;
+    if (jj_scan_token(UPDATE_LOC)) return true;
+    if (jj_scan_token(RR)) return true;
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_11()
+ {
+    if (jj_scan_token(LR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(COMMA)) return true;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(RR)) return true;
+    if (jj_scan_token(MELASYMBOL)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(LR)) return true;
+    if (jj_scan_token(UPDATE_LOC)) return true;
+    if (jj_scan_token(RR)) return true;
+    return false;
+  }
+
+  private boolean jj_3_2()
+ {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_14()
+ {
+    if (jj_scan_token(DASH)) return true;
+    if (jj_scan_token(RANG)) return true;
+    if (jj_scan_token(LBRAC)) return true;
+    if (jj_scan_token(INFSET)) return true;
+    if (jj_scan_token(RBRAC)) return true;
+    if (jj_scan_token(LR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(COMMA)) return true;
+    xsp = jj_scanpos;
+    if (jj_scan_token(56)) jj_scanpos = xsp;
+    if (jj_scan_token(RR)) return true;
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1()
+ {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
   /** Generated Token Manager. */
   public MELAprog4TokenManager token_source;
   SimpleCharStream jj_input_stream;
@@ -561,8 +698,10 @@ int xValue = Integer.parseInt(x.image);
   /** Next token. */
   public Token jj_nt;
   private int jj_ntk;
+  private Token jj_scanpos, jj_lastpos;
+  private int jj_la;
   private int jj_gen;
-  final private int[] jj_la1 = new int[23];
+  final private int[] jj_la1 = new int[22];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -572,14 +711,17 @@ int xValue = Integer.parseInt(x.image);
       jj_la1_init_2();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x0,0x80000000,0x80000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x1000000,0x1000000,0x1000000,0x0,0x0,0x108040,0x108040,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x20000,0x4000,0x4000,0x40,0x4000,0x4000,0x4000,0x4000,};
+      jj_la1_1 = new int[] {0x1000000,0x1000000,0x1000000,0x40,0x0,0x108040,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x20000,0x4000,0x4000,0x40,0x4000,0x4000,0x4000,0x4000,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
+  final private JJCalls[] jj_2_rtns = new JJCalls[4];
+  private boolean jj_rescan = false;
+  private int jj_gc = 0;
 
   /** Constructor with InputStream. */
   public MELAprog4(java.io.InputStream stream) {
@@ -592,7 +734,8 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -606,7 +749,8 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Constructor. */
@@ -616,7 +760,8 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -626,7 +771,8 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Constructor with generated Token Manager. */
@@ -635,7 +781,8 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -644,7 +791,8 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -654,11 +802,45 @@ int xValue = Integer.parseInt(x.image);
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
+      if (++jj_gc > 100) {
+        jj_gc = 0;
+        for (int i = 0; i < jj_2_rtns.length; i++) {
+          JJCalls c = jj_2_rtns[i];
+          while (c != null) {
+            if (c.gen < jj_gen) c.first = null;
+            c = c.next;
+          }
+        }
+      }
       return token;
     }
     token = oldToken;
     jj_kind = kind;
     throw generateParseException();
+  }
+
+  @SuppressWarnings("serial")
+  static private final class LookaheadSuccess extends java.lang.Error { }
+  final private LookaheadSuccess jj_ls = new LookaheadSuccess();
+  private boolean jj_scan_token(int kind) {
+    if (jj_scanpos == jj_lastpos) {
+      jj_la--;
+      if (jj_scanpos.next == null) {
+        jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.getNextToken();
+      } else {
+        jj_lastpos = jj_scanpos = jj_scanpos.next;
+      }
+    } else {
+      jj_scanpos = jj_scanpos.next;
+    }
+    if (jj_rescan) {
+      int i = 0; Token tok = token;
+      while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
+      if (tok != null) jj_add_error_token(kind, i);
+    }
+    if (jj_scanpos.kind != kind) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+    return false;
   }
 
 
@@ -691,6 +873,33 @@ int xValue = Integer.parseInt(x.image);
   private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
   private int[] jj_expentry;
   private int jj_kind = -1;
+  private int[] jj_lasttokens = new int[100];
+  private int jj_endpos;
+
+  private void jj_add_error_token(int kind, int pos) {
+    if (pos >= 100) return;
+    if (pos == jj_endpos + 1) {
+      jj_lasttokens[jj_endpos++] = kind;
+    } else if (jj_endpos != 0) {
+      jj_expentry = new int[jj_endpos];
+      for (int i = 0; i < jj_endpos; i++) {
+        jj_expentry[i] = jj_lasttokens[i];
+      }
+      jj_entries_loop: for (java.util.Iterator<?> it = jj_expentries.iterator(); it.hasNext();) {
+        int[] oldentry = (int[])(it.next());
+        if (oldentry.length == jj_expentry.length) {
+          for (int i = 0; i < jj_expentry.length; i++) {
+            if (oldentry[i] != jj_expentry[i]) {
+              continue jj_entries_loop;
+            }
+          }
+          jj_expentries.add(jj_expentry);
+          break jj_entries_loop;
+        }
+      }
+      if (pos != 0) jj_lasttokens[(jj_endpos = pos) - 1] = kind;
+    }
+  }
 
   /** Generate ParseException. */
   public ParseException generateParseException() {
@@ -700,7 +909,7 @@ int xValue = Integer.parseInt(x.image);
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 22; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -722,6 +931,9 @@ int xValue = Integer.parseInt(x.image);
         jj_expentries.add(jj_expentry);
       }
     }
+    jj_endpos = 0;
+    jj_rescan_token();
+    jj_add_error_token(0, 0);
     int[][] exptokseq = new int[jj_expentries.size()][];
     for (int i = 0; i < jj_expentries.size(); i++) {
       exptokseq[i] = jj_expentries.get(i);
@@ -735,6 +947,44 @@ int xValue = Integer.parseInt(x.image);
 
   /** Disable tracing. */
   final public void disable_tracing() {
+  }
+
+  private void jj_rescan_token() {
+    jj_rescan = true;
+    for (int i = 0; i < 4; i++) {
+    try {
+      JJCalls p = jj_2_rtns[i];
+      do {
+        if (p.gen > jj_gen) {
+          jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
+          switch (i) {
+            case 0: jj_3_1(); break;
+            case 1: jj_3_2(); break;
+            case 2: jj_3_3(); break;
+            case 3: jj_3_4(); break;
+          }
+        }
+        p = p.next;
+      } while (p != null);
+      } catch(LookaheadSuccess ls) { }
+    }
+    jj_rescan = false;
+  }
+
+  private void jj_save(int index, int xla) {
+    JJCalls p = jj_2_rtns[index];
+    while (p.gen > jj_gen) {
+      if (p.next == null) { p = p.next = new JJCalls(); break; }
+      p = p.next;
+    }
+    p.gen = jj_gen + xla - jj_la; p.first = token; p.arg = xla;
+  }
+
+  static final class JJCalls {
+    int gen;
+    Token first;
+    int arg;
+    JJCalls next;
   }
 
 }

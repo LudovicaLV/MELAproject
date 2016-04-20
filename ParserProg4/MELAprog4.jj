@@ -193,10 +193,14 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
     )+
 
 	<SECTION_ENV>
-    (
+   /* (
 	  Env()     
     )*
-    
+    */
+    (
+	  Agent()     
+    )+
+
     {AgentManager.GlobalMatrixCreation();}
 
     <SECTION_INIT>
@@ -231,9 +235,10 @@ void Agent() throws NumberFormatException, RuntimeException, ParseException :
 }
 {
     t = <IDENTIFIER>
-    <LR>
+    (      <LR>
     <KEYWORD_LOC>
     <RR>
+     )*
     {AgentManager.addAgentName(t.image);
      agent = new Agent(t.image);}
     <DEFINE>
@@ -246,10 +251,12 @@ void Agent() throws NumberFormatException, RuntimeException, ParseException :
 }
 
 
+/*  So far problem solved without using this part
+
 void Env() throws NumberFormatException, RuntimeException, ParseException :
 {
     Token t;
-    Agent agent;
+    Env agent;
 }
 {
     t = <IDENTIFIER>
@@ -263,6 +270,7 @@ void Env() throws NumberFormatException, RuntimeException, ParseException :
     )* 
     <EOL>
 }
+*/
 
 void Action(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
@@ -270,23 +278,23 @@ void Action(Agent agent) throws NumberFormatException, RuntimeException, ParseEx
 }
 {   
     [   
-        LOOKAHEAD(1)
+        LOOKAHEAD(13)
         NoInfAction(agent)
         |
-        LOOKAHEAD(1)
+        LOOKAHEAD(13)
         InfAction(agent)
         |
-        LOOKAHEAD(1)
+        LOOKAHEAD(13)
         PassAction(agent)
         |
-        LOOKAHEAD(1)
+        LOOKAHEAD(13)
         EnvAction(agent)
     ]
 }
 
 void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name = null, rateName = null, symbol, update, updateloc; 
+    Token name = null, rateName = null, symbol, update, updateloc=null; 
 }
 {  
     <LR>
@@ -299,10 +307,10 @@ void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, Pa
     ]
     <RR>
     symbol = <MELASYMBOL>
-    update = <IDENTIFIER>
-    <LR>
+    update = <IDENTIFIER>      <LR>
     updateloc = <UPDATE_LOC>
     <RR>
+     
      
     { Double rate = ParamManager.getParamValue(rateName.image);      NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")");
       agent.addAction(ac); }
@@ -311,7 +319,7 @@ void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, Pa
 
 void InfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token infset, name = null, rate = null, symbol, update, updateloc; 
+    Token infset, name = null, rate = null, symbol, update, updateloc=null; 
 }
 {   
     <DASH>
@@ -329,8 +337,7 @@ void InfAction(Agent agent) throws NumberFormatException, RuntimeException, Pars
     ]
     <RR> 
     symbol = <MELASYMBOL>
-    update = <IDENTIFIER>
-    <LR>
+    update = <IDENTIFIER>    <LR>
     updateloc = <UPDATE_LOC>
     <RR>
    { Double rateValue = ParamManager.getParamValue(rate.image);
@@ -342,7 +349,7 @@ void InfAction(Agent agent) throws NumberFormatException, RuntimeException, Pars
 
 void PassAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name = null, probName = null, update, updateloc, symbol; 
+    Token name = null, probName = null, update, updateloc=null, symbol; 
 }
 {
     <LANG>
@@ -366,9 +373,9 @@ void PassAction(Agent agent) throws NumberFormatException, RuntimeException, Par
      agent.addAction(ac); } 
 }
 
-void EnvAction(Env agent) throws NumberFormatException, RuntimeException, ParseException :
+void EnvAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token infset, name, rateName, update;
+    Token infset, name=null, rateName=null, update;
 }
 {     
     <DASH>
