@@ -74,7 +74,8 @@ public class Utility {
 			expr = expr.replaceAll("abs", "Math.abs");
 			//System.out.println(expr);	
 			Object res = interpreter.eval(expr);
-			ret = (Double)interpreter.get("ret");
+			ret = (Double)interpreter.get("res");
+			
 			//System.out.println("ret: " + ret);
 			//System.out.println("res: " + res.toString());
 			return ret;

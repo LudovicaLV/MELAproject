@@ -4,6 +4,8 @@ import java.util.HashMap;
 import Utility.Utility;
 
 public class ParamManager {
+	
+	
 	public static HashMap<String, Double> paramMap = new HashMap<String, Double>();
 	
 	public static void addParam(String name, double value) {
@@ -11,7 +13,7 @@ public class ParamManager {
 			System.err.println("The param " + name + " already exists!");
 		}else {
 			paramMap.put(name, value);
-			Utility.setParamInInterpreter(name, value);
+			//Utility.setParamInInterpreter(name, value);
 		}
 	}
 	
