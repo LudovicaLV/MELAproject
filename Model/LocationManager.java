@@ -125,9 +125,10 @@ public class LocationManager {
 		   return globalMap; 
 		  } 
 	   
-	   public static HashMap<ArrayList<Integer>,ArrayList<ArrayList<Integer>>> addNeighNode(ArrayList<Integer> NodeNeigh, int BracketsCounter){
-		   globalMap.get(LocationManager.AllLoc.get(BracketsCounter-2)).add(NodeNeigh);
-		   return globalMap;		   	 
+	   public static void addNeighNode(ArrayList<Integer> NodeNeigh, int BracketsCounter){
+		   int positionMap = BracketsCounter-2;
+		   ArrayList<ArrayList<Integer>> List = globalMap.get(LocationManager.AllLoc.get(positionMap));		
+		   List.add(NodeNeigh);
 		  } 
 	    	  
 	   public static ArrayList<Integer> createListOneD (int x){

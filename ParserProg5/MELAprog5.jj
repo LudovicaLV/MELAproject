@@ -281,8 +281,7 @@ Token SpaceStructure() throws NumberFormatException, RuntimeException, ParseExce
     [   
         LOOKAHEAD(2)
         spaceKey = < KEYWORD_GRAPH >
-        { setGraph();
-        System.out.println("graph");}
+        { setGraph();}
         |
         LOOKAHEAD(2)
         spaceKey = <  KEYWORD_ONED >
@@ -384,14 +383,8 @@ void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, Pa
     update = <IDENTIFIER>
       <LR>
     updateloc = UpdateLoc()
-    <RR>
-     
-     
+    <RR>    
     { Double rate = ParamManager.getParamValue(rateName.image);
-    System.out.println(rateName.image);
-    System.out.println(rate);
-    System.out.println(update.image);
-    System.out.println(updateloc.image);
       NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")");
       agent.addAction(ac); }
 }     
@@ -549,8 +542,8 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     v = <INT>
     {int vertexName = Integer.parseInt(v.image);   
     LocationManager.AllLoc.add(Location.createListName(vertexName));
-    LocationManager.prepareMap(Location.createListName(vertexName));}  
-      (
+    LocationManager.prepareMap(Location.createListName(vertexName)); } 
+    (
         <COMMA>
         v1 = <INT>
     {int vertexName1 = Integer.parseInt(v.image);
@@ -559,25 +552,28 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
       )*
     < RBRAC >
     < EOL >
-    <EDGES>
+    < EDGES >
     <ASSIGN>
     <LBRAC>
-    {BracketsCounter++;}
+    {BracketsCounter++;
+    System.out.println(BracketsCounter);}
      <LBRAC>
-    {BracketsCounter++;}
+    {BracketsCounter++;
+    System.out.println(BracketsCounter);}
      e = <INT>
      {int edgeName = Integer.parseInt(e.image);
      LocationManager.addNeighNode(Location.createListName(edgeName), BracketsCounter);}
-      (
-        <COMMA>
-       e1 = <INT>
+    (<COMMA>
+     e1 = <INT>
      {int edgeName1 = Integer.parseInt(e1.image);
      LocationManager.addNeighNode(Location.createListName(edgeName1), BracketsCounter);})*
      <RBRAC>
-     {BracketsCounter++;}
-     (<COMMA>
-      <LBRAC>
-    {BracketsCounter++;}
+     {BracketsCounter++;
+     System.out.println(BracketsCounter);}
+     (       <COMMA>
+     <LBRAC>
+     {BracketsCounter++;
+     System.out.println(BracketsCounter);}
      e = <INT>
      {int edgeName2 = Integer.parseInt(e.image);
      LocationManager.addNeighNode(Location.createListName(edgeName2), BracketsCounter);}
@@ -587,10 +583,13 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
      {int edgeName3 = Integer.parseInt(e1.image);
      LocationManager.addNeighNode(Location.createListName(edgeName3), BracketsCounter);})*
      <RBRAC>
-     {BracketsCounter++;}
+     {BracketsCounter++;
+     System.out.println(BracketsCounter);}
        )*
      <RBRAC>
-     {BracketsCounter++;}
+     {BracketsCounter++;
+     System.out.println(BracketsCounter);}
+     < EOL >
 }
 
 void setOneD()throws NumberFormatException, RuntimeException, ParseException :

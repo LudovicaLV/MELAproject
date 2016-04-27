@@ -197,7 +197,6 @@ Token SpaceStructure() throws ParseException, NumberFormatException, RuntimeExce
       if (jj_2_1(2)) {
         spaceKey = jj_consume_token(KEYWORD_GRAPH);
 setGraph();
-        System.out.println("graph");
       } else if (jj_2_2(2)) {
         spaceKey = jj_consume_token(KEYWORD_ONED);
 setOneD();
@@ -350,10 +349,6 @@ setThreeD();
     updateloc = UpdateLoc();
     jj_consume_token(RR);
 Double rate = ParamManager.getParamValue(rateName.image);
-    System.out.println(rateName.image);
-    System.out.println(rate);
-    System.out.println(update.image);
-    System.out.println(updateloc.image);
       NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")");
       agent.addAction(ac);
   }
@@ -531,8 +526,10 @@ int vertexName1 = Integer.parseInt(v.image);
     jj_consume_token(ASSIGN);
     jj_consume_token(LBRAC);
 BracketsCounter++;
+    System.out.println(BracketsCounter);
     jj_consume_token(LBRAC);
 BracketsCounter++;
+    System.out.println(BracketsCounter);
     e = jj_consume_token(INT);
 int edgeName = Integer.parseInt(e.image);
      LocationManager.addNeighNode(Location.createListName(edgeName), BracketsCounter);
@@ -554,6 +551,7 @@ int edgeName1 = Integer.parseInt(e1.image);
     }
     jj_consume_token(RBRAC);
 BracketsCounter++;
+     System.out.println(BracketsCounter);
     label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -568,6 +566,7 @@ BracketsCounter++;
       jj_consume_token(COMMA);
       jj_consume_token(LBRAC);
 BracketsCounter++;
+     System.out.println(BracketsCounter);
       e = jj_consume_token(INT);
 int edgeName2 = Integer.parseInt(e.image);
      LocationManager.addNeighNode(Location.createListName(edgeName2), BracketsCounter);
@@ -589,9 +588,12 @@ int edgeName3 = Integer.parseInt(e1.image);
       }
       jj_consume_token(RBRAC);
 BracketsCounter++;
+     System.out.println(BracketsCounter);
     }
     jj_consume_token(RBRAC);
 BracketsCounter++;
+     System.out.println(BracketsCounter);
+    jj_consume_token(EOL);
   }
 
   final public void setOneD() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token x;
@@ -683,10 +685,10 @@ int xValue = Integer.parseInt(x.image);
     finally { jj_save(6, xla); }
   }
 
-  private boolean jj_3R_13()
+  private boolean jj_3R_14()
  {
+    if (jj_scan_token(LANG)) return true;
     if (jj_scan_token(DASH)) return true;
-    if (jj_scan_token(RANG)) return true;
     return false;
   }
 
@@ -700,6 +702,13 @@ int xValue = Integer.parseInt(x.image);
  {
     if (jj_scan_token(LR)) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_13()
+ {
+    if (jj_scan_token(DASH)) return true;
+    if (jj_scan_token(RANG)) return true;
     return false;
   }
 
@@ -730,13 +739,6 @@ int xValue = Integer.parseInt(x.image);
   private boolean jj_3_5()
  {
     if (jj_3R_12()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_14()
- {
-    if (jj_scan_token(LANG)) return true;
-    if (jj_scan_token(DASH)) return true;
     return false;
   }
 
