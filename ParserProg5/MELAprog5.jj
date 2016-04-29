@@ -6,6 +6,7 @@ PARSER_BEGIN(MELAprog5)
 
 package ParserProg5;
 
+import java.util.ArrayList;
 import Actions.Action;
 import Actions.EnvAction;
 import Actions.InfAction;
@@ -163,7 +164,8 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
     {spaceboolean = true;}
 	<SEMICOLON>
    	space = SpaceStructure()
-    {LocationManager.SpatialSt = space.image;}
+    {LocationManager.SpatialSt = space.image;
+    LocationManager.MatrixLocation(LocationManager.AllLoc);}
     <SECTION_PARAM>
     (
       Param()
@@ -175,21 +177,24 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
 	  Agent()     
     )+
 
-	<SECTION_ENV>
-    (
+	(<SECTION_ENV>
+    
 	  EnvAgent()     
     )*
 
-    {AgentManager.GlobalMatrixCreation();}
+    {AgentManager.MatrixAgentCreation();
+     AgentManager.GlobalMatrixCreation(); 
+    }
 
-   /* <SECTION_INIT>
+   <SECTION_INIT>
     {init = true;}
     (
     	 Init()
     )
     { if (!agents && !init) 
         throw new ParseException("Some model sections are missing"); 
-    }*/
+    }
+    
     <EOF>
 }
 
@@ -223,8 +228,7 @@ void Agent() throws NumberFormatException, RuntimeException, ParseException :
     <KEYWORD_LOC>
     <RR>
      )*
-    {AgentManager.addAgentName(t.image);
-     agent = new Agent(t.image);}
+    {agent = new Agent(t.image);}
     <DEFINE>
     Action(agent) 
     (
@@ -242,8 +246,7 @@ void EnvAgent() throws NumberFormatException, RuntimeException, ParseException :
 }
 {
     t = <IDENTIFIER>
-    {AgentManager.addAgentName(t.image);
-     agent = new Agent(t.image);}
+    {agent = new Agent(t.image);}
     <DEFINE>
     EnvAction(agent) 
     (
@@ -252,7 +255,6 @@ void EnvAgent() throws NumberFormatException, RuntimeException, ParseException :
     )* 
     <EOL>
 }
-
 
 /*  So far problem solved without using this part
 
@@ -498,38 +500,45 @@ void InitAgent() throws NumberFormatException, RuntimeException, ParseException 
     <LSQ>
     n = <INT>
     <RSQ>
-   
-  { if (x.image == null)
-  {int InitNum = Integer.parseInt(n.image);    
-    AgentManager.GlobalMatrix[AgentManager.MatrixAgent.get(t.image)][LocationManager.MatrixLoc.get(LocationManager.createListZero())] = InitNum;
-  }else{
-    if (LocationManager.SpatialSt == "Graph") {
-     int InitNum = Integer.parseInt(n.image);
+ {if (x == null)
+ {int InitNum = Integer.parseInt(n.image);
+ int i = AgentManager.MatrixAgent.get(t.image);
+ int j = 0;
+ AgentManager.GlobalMatrix[i][j] = InitNum;}
+   else if (LocationManager.SpatialSt == "Graph")
+   {int i = AgentManager.MatrixAgent.get(t.image);     
+   int xValue = Integer.parseInt(x.image);
+   ArrayList<Integer> LocName = LocationManager.createListOneD(xValue);
+   int j = LocationManager.MatrixLoc.get(LocName);   
+   int InitNum = Integer.parseInt(n.image);
+   AgentManager.GlobalMatrix[i][j]= InitNum;
+   }
+ 	 else if (LocationManager.SpatialSt.matches("(?i).*OneD*"))
+     {int InitNum = Integer.parseInt(n.image);
      int xValue = Integer.parseInt(x.image);
-   	 AgentManager.GlobalMatrix[AgentManager.MatrixAgent.get(t.image)][LocationManager.MatrixLoc.get(LocationManager.createListOneD(xValue))]= InitNum;
-   	}
-   	else if (LocationManager.SpatialSt.matches("(?i).*OneD*")) {
-    int InitNum = Integer.parseInt(n.image);
-    int xValue = Integer.parseInt(x.image);
- 	AgentManager.GlobalMatrix[AgentManager.MatrixAgent.get(t.image)][LocationManager.MatrixLoc.get(LocationManager.createListOneD(xValue))]= InitNum;   	 
-   	}
-   	else if (LocationManager.SpatialSt.matches("(?i).*TwoD*")) {
-    int InitNum = Integer.parseInt(n.image);
-    int xValue = Integer.parseInt(x.image);
-    int yValue = Integer.parseInt(y.image);    	  
-    AgentManager.GlobalMatrix[AgentManager.MatrixAgent.get(t.image)][LocationManager.MatrixLoc.get(LocationManager.createListTwoD(xValue, yValue))]= InitNum;  	 
-   	}
-   	else if (LocationManager.SpatialSt.matches("(?i).*ThreeD*")) {
-    int InitNum = Integer.parseInt(n.image);
-    int xValue = Integer.parseInt(x.image);
-    int yValue = Integer.parseInt(y.image);
-    int zValue = Integer.parseInt(z.image);	    	  
-    AgentManager.GlobalMatrix[AgentManager.MatrixAgent.get(t.image)][LocationManager.MatrixLoc.get(LocationManager.createListThreeD(xValue,yValue,zValue))]= InitNum;
+     int i = AgentManager.MatrixAgent.get(t.image);
+     int j = LocationManager.MatrixLoc.get(LocationManager.createListOneD(xValue));
+ 	 AgentManager.GlobalMatrix[i][j]= InitNum;
+     }
+       else if (LocationManager.SpatialSt.matches("(?i).*TwoD*"))
+ 	   {int InitNum = Integer.parseInt(n.image);
+       int xValue = Integer.parseInt(x.image);
+       int yValue = Integer.parseInt(y.image);
+       int i = AgentManager.MatrixAgent.get(t.image);
+       int j = LocationManager.MatrixLoc.get(LocationManager.createListTwoD(xValue, yValue));
+       AgentManager.GlobalMatrix[i][j]= InitNum;
+       }
+   	     else if (LocationManager.SpatialSt.matches("(?i).*ThreeD*"))
+   	     {int InitNum = Integer.parseInt(n.image);
+         int xValue = Integer.parseInt(x.image);
+         int yValue = Integer.parseInt(y.image);
+         int zValue = Integer.parseInt(z.image);
+         int i = AgentManager.MatrixAgent.get(t.image);
+         int j = LocationManager.MatrixLoc.get(LocationManager.createListThreeD(xValue,yValue,zValue));
+         AgentManager.GlobalMatrix[i][j]= InitNum;
+         }
     }
-  }
 }
-}
-
 
 void setGraph()throws NumberFormatException, RuntimeException, ParseException :
 {
@@ -546,7 +555,7 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     (
         <COMMA>
         v1 = <INT>
-    {int vertexName1 = Integer.parseInt(v.image);
+    {int vertexName1 = Integer.parseInt(v1.image);
     LocationManager.AllLoc.add(Location.createListName(vertexName1));
     LocationManager.prepareMap(Location.createListName(vertexName1));}
       )*
@@ -555,11 +564,9 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     < EDGES >
     <ASSIGN>
     <LBRAC>
-    {BracketsCounter++;
-    System.out.println(BracketsCounter);}
+    {BracketsCounter++;}
      <LBRAC>
-    {BracketsCounter++;
-    System.out.println(BracketsCounter);}
+    {BracketsCounter++;}
      e = <INT>
      {int edgeName = Integer.parseInt(e.image);
      LocationManager.addNeighNode(Location.createListName(edgeName), BracketsCounter);}
@@ -568,12 +575,9 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
      {int edgeName1 = Integer.parseInt(e1.image);
      LocationManager.addNeighNode(Location.createListName(edgeName1), BracketsCounter);})*
      <RBRAC>
-     {BracketsCounter++;
-     System.out.println(BracketsCounter);}
      (       <COMMA>
      <LBRAC>
-     {BracketsCounter++;
-     System.out.println(BracketsCounter);}
+     {BracketsCounter++;}
      e = <INT>
      {int edgeName2 = Integer.parseInt(e.image);
      LocationManager.addNeighNode(Location.createListName(edgeName2), BracketsCounter);}
@@ -583,12 +587,8 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
      {int edgeName3 = Integer.parseInt(e1.image);
      LocationManager.addNeighNode(Location.createListName(edgeName3), BracketsCounter);})*
      <RBRAC>
-     {BracketsCounter++;
-     System.out.println(BracketsCounter);}
        )*
      <RBRAC>
-     {BracketsCounter++;
-     System.out.println(BracketsCounter);}
      < EOL >
 }
 

@@ -23,7 +23,8 @@ public class LocationManager {
     //Hashmap name - Matrix position
 
 	public static HashMap<ArrayList<Integer>, Integer> MatrixLoc = new HashMap<>();    
-	public void MatrixLocation(ArrayList<ArrayList<Integer>> AllLoc) {
+	
+	public static void MatrixLocation(ArrayList<ArrayList<Integer>> AllLoc) {
            for(int i=0; i< AllLoc.size(); i++){
         	   MatrixLoc.put(AllLoc.get(i),i);
         	   }

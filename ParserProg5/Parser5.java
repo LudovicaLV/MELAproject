@@ -7,5 +7,4 @@ public class Parser5 {
 		Parser.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELAproject/try.mela");
         System.out.println("Good!");
 	}
-
 }
