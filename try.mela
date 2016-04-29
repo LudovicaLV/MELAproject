@@ -1,6 +1,4 @@
-#Space: Graph
-V = {1,2};
-E = {2}, {1}};
+#Space: ThreeD(3,3,3)
 
 
 #Parameters
@@ -14,9 +12,9 @@ c = 0.4;
 mI = 0.2;
 cE = 0.3;
 #Agents
-S(l):=->{all}(ActionName,b)<<S(l);
+S(l):=->{all}(ActionName,b)<<S(l) + (birth,b)>>S(l);
 I(l):=(death,d)<<I(l);
 #Environment
 En:=->{all}(ActionName,b).En;
 #Initial conditions
-S(3)[4]||En[1]
+S(1,1,1)[4]||En[1]

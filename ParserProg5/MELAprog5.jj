@@ -193,6 +193,15 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
     )
     { if (!agents && !init) 
         throw new ParseException("Some model sections are missing"); 
+
+    /*All the following lines are used to print the stored information in the console*/
+    System.out.println("The chosen spatial structure is: " + LocationManager.SpatialSt);
+    GlobalManager.PrintHashMap(ParamManager.paramMap);
+    GlobalManager.PrintNames(AgentManager.AgentNames);
+    GlobalManager.PrintActions(AgentManager.Agents);
+    GlobalManager.PrintLocations(LocationManager.AllLoc);
+    GlobalManager.PrintInitCondition();
+
     }
     
     <EOF>

@@ -97,6 +97,14 @@ init = true;
     Init();
 if (!agents && !init)
         {if (true) throw new ParseException("Some model sections are missing");}
+
+    /*All the following lines are used to print the stored information in the console*/
+    System.out.println("The chosen spatial structure is: " + LocationManager.SpatialSt);
+    GlobalManager.PrintHashMap(ParamManager.paramMap);
+    GlobalManager.PrintNames(AgentManager.AgentNames);
+    GlobalManager.PrintActions(AgentManager.Agents);
+    GlobalManager.PrintLocations(LocationManager.AllLoc);
+    GlobalManager.PrintInitCondition();
     jj_consume_token(0);
   }
 
@@ -471,47 +479,42 @@ Double rate = ParamManager.getParamValue(rateName.image);
     n = jj_consume_token(INT);
     jj_consume_token(RSQ);
 if (x == null)
-  {int InitNum = Integer.parseInt(n.image);
-  int i = AgentManager.MatrixAgent.get(t.image);
-  int j = 0;
-    AgentManager.GlobalMatrix[i][j] = InitNum;
-    System.out.println("env");}
-  else if (LocationManager.SpatialSt == "Graph")
-    {int i = AgentManager.MatrixAgent.get(t.image);
+ {int InitNum = Integer.parseInt(n.image);
+ int i = AgentManager.MatrixAgent.get(t.image);
+ int j = 0;
+ AgentManager.GlobalMatrix[i][j] = InitNum;}
+   else if (LocationManager.SpatialSt == "Graph")
+   {int i = AgentManager.MatrixAgent.get(t.image);
+   int xValue = Integer.parseInt(x.image);
+   ArrayList<Integer> LocName = LocationManager.createListOneD(xValue);
+   int j = LocationManager.MatrixLoc.get(LocName);
+   int InitNum = Integer.parseInt(n.image);
+   AgentManager.GlobalMatrix[i][j]= InitNum;
+   }
+         else if (LocationManager.SpatialSt.matches("(?i).*OneD*"))
+     {int InitNum = Integer.parseInt(n.image);
      int xValue = Integer.parseInt(x.image);
-     ArrayList<Integer> LocName = LocationManager.createListOneD(xValue);
-     int j = LocationManager.MatrixLoc.get(LocName);
-     int InitNum = Integer.parseInt(n.image);
-     AgentManager.GlobalMatrix[i][j]= InitNum;
-      System.out.println("donegr");
+     int i = AgentManager.MatrixAgent.get(t.image);
+     int j = LocationManager.MatrixLoc.get(LocationManager.createListOneD(xValue));
+         AgentManager.GlobalMatrix[i][j]= InitNum;
      }
-        else if (LocationManager.SpatialSt.matches("(?i).*OneD*"))
-        {int InitNum = Integer.parseInt(n.image);
-    int xValue = Integer.parseInt(x.image);
-    int i = AgentManager.MatrixAgent.get(t.image);
-    int j = LocationManager.MatrixLoc.get(LocationManager.createListOneD(xValue));
-        AgentManager.GlobalMatrix[i][j]= InitNum;
-         System.out.println("done1");
-    }
-        else if (LocationManager.SpatialSt.matches("(?i).*TwoD*"))
-        {int InitNum = Integer.parseInt(n.image);
-    int xValue = Integer.parseInt(x.image);
-    int yValue = Integer.parseInt(y.image);
-    int i = AgentManager.MatrixAgent.get(t.image);
-    int j = LocationManager.MatrixLoc.get(LocationManager.createListTwoD(xValue, yValue));
-    AgentManager.GlobalMatrix[i][j]= InitNum;
-    System.out.println("done2");
-        }
-        else if (LocationManager.SpatialSt.matches("(?i).*ThreeD*"))
-        {int InitNum = Integer.parseInt(n.image);
-    int xValue = Integer.parseInt(x.image);
-    int yValue = Integer.parseInt(y.image);
-    int zValue = Integer.parseInt(z.image);
-    int i = AgentManager.MatrixAgent.get(t.image);
-    int j = LocationManager.MatrixLoc.get(LocationManager.createListThreeD(xValue,yValue,zValue));
-    AgentManager.GlobalMatrix[i][j]= InitNum;
-    System.out.println("done3");
-    }
+       else if (LocationManager.SpatialSt.matches("(?i).*TwoD*"))
+           {int InitNum = Integer.parseInt(n.image);
+       int xValue = Integer.parseInt(x.image);
+       int yValue = Integer.parseInt(y.image);
+       int i = AgentManager.MatrixAgent.get(t.image);
+       int j = LocationManager.MatrixLoc.get(LocationManager.createListTwoD(xValue, yValue));
+       AgentManager.GlobalMatrix[i][j]= InitNum;
+       }
+             else if (LocationManager.SpatialSt.matches("(?i).*ThreeD*"))
+             {int InitNum = Integer.parseInt(n.image);
+         int xValue = Integer.parseInt(x.image);
+         int yValue = Integer.parseInt(y.image);
+         int zValue = Integer.parseInt(z.image);
+         int i = AgentManager.MatrixAgent.get(t.image);
+         int j = LocationManager.MatrixLoc.get(LocationManager.createListThreeD(xValue,yValue,zValue));
+         AgentManager.GlobalMatrix[i][j]= InitNum;
+         }
   }
 
   final public void setGraph() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token v, v1, e, e1;
@@ -696,6 +699,36 @@ int xValue = Integer.parseInt(x.image);
     finally { jj_save(6, xla); }
   }
 
+  private boolean jj_3_7()
+ {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  private boolean jj_3_6()
+ {
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
+  private boolean jj_3_4()
+ {
+    if (jj_scan_token(KEYWORD_THREED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_5()
+ {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    if (jj_scan_token(KEYWORD_TWOD)) return true;
+    return false;
+  }
+
   private boolean jj_3R_14()
  {
     if (jj_scan_token(LANG)) return true;
@@ -726,36 +759,6 @@ int xValue = Integer.parseInt(x.image);
   private boolean jj_3_1()
  {
     if (jj_scan_token(KEYWORD_GRAPH)) return true;
-    return false;
-  }
-
-  private boolean jj_3_7()
- {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  private boolean jj_3_6()
- {
-    if (jj_3R_13()) return true;
-    return false;
-  }
-
-  private boolean jj_3_5()
- {
-    if (jj_3R_12()) return true;
-    return false;
-  }
-
-  private boolean jj_3_4()
- {
-    if (jj_scan_token(KEYWORD_THREED)) return true;
-    return false;
-  }
-
-  private boolean jj_3_3()
- {
-    if (jj_scan_token(KEYWORD_TWOD)) return true;
     return false;
   }
 
