@@ -1,20 +1,17 @@
-#Space: ThreeD(3,3,3)
-
+#Space: ThreeD(3,2,2)
 
 #Parameters
-b = 0.5;
-d = 0.3;
-p = 0.9;
-pE = 0.7;
-mS = 0.3;
-dI = 0.6;
-c = 0.4;
-mI = 0.2;
-cE = 0.3;
+r1 = 0.5;
+r2 = 0.3;
+r3 = 0.9;
+r4 = 0.7;
+
 #Agents
-S(l):=->{all}(ActionName,b)<<S(l) + (birth,b)>>S(l);
-I(l):=(death,d)<<I(l);
+S(l):=->{all}(action1,r1)<<S(l) + (action2,r2)>>S(l);
+I(l):=(action3,r3)<<I(l);
+
 #Environment
-En:=->{all}(ActionName,b).En;
+En:=->{all}(action4,r4).En;
+
 #Initial conditions
-S(1,1,1)[4]||En[1]
+S(2,1,1)[4]||En[1]

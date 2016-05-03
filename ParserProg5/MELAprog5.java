@@ -105,6 +105,7 @@ if (!agents && !init)
     GlobalManager.PrintActions(AgentManager.Agents);
     GlobalManager.PrintLocations(LocationManager.AllLoc);
     GlobalManager.PrintInitCondition();
+    GlobalManager.PrintNoZeroInitCondition();
     jj_consume_token(0);
   }
 
@@ -479,42 +480,83 @@ Double rate = ParamManager.getParamValue(rateName.image);
     n = jj_consume_token(INT);
     jj_consume_token(RSQ);
 if (x == null)
- {int InitNum = Integer.parseInt(n.image);
+{if (!(AgentManager.AgentNames.contains(t.image))) {{if (true) throw new ParseException("The declared agent is not described in the section #Agents");}}
  int i = AgentManager.MatrixAgent.get(t.image);
  int j = 0;
+ int InitNum = Integer.parseInt(n.image);
  AgentManager.GlobalMatrix[i][j] = InitNum;}
-   else if (LocationManager.SpatialSt == "Graph")
-   {int i = AgentManager.MatrixAgent.get(t.image);
+ else if (LocationManager.SpatialSt == "Graph")
+   {{
+   if (!(AgentManager.AgentNames.contains(t.image))) {{if (true) throw new ParseException("The declared agent is not described in the section #Agents");}}
+   }
+   int i = AgentManager.MatrixAgent.get(t.image);
    int xValue = Integer.parseInt(x.image);
    ArrayList<Integer> LocName = LocationManager.createListOneD(xValue);
-   int j = LocationManager.MatrixLoc.get(LocName);
+   {if (y == null && z ==null && LocationManager.AllLoc.contains(LocName))
+   {int j = LocationManager.MatrixLoc.get(LocName);
    int InitNum = Integer.parseInt(n.image);
    AgentManager.GlobalMatrix[i][j]= InitNum;
-   }
-         else if (LocationManager.SpatialSt.matches("(?i).*OneD*"))
-     {int InitNum = Integer.parseInt(n.image);
+   }else
+   {
+     {if (true) throw new ParseException("The input location does not exist");}}
+    } }
+  else if (LocationManager.SpatialSt.matches("(?i).*OneD*"))
+    {{
+    if (!(AgentManager.AgentNames.contains(t.image))) {{if (true) throw new ParseException("The declared agent is not described in the section #Agents");}}
+    }int i = AgentManager.MatrixAgent.get(t.image);
      int xValue = Integer.parseInt(x.image);
-     int i = AgentManager.MatrixAgent.get(t.image);
-     int j = LocationManager.MatrixLoc.get(LocationManager.createListOneD(xValue));
+     ArrayList<Integer> LocName = LocationManager.createListOneD(xValue);
+     int InitNum = Integer.parseInt(n.image);
+     {if (y == null && z ==null && LocationManager.AllLoc.contains(LocName))
+     {int j = LocationManager.MatrixLoc.get(LocName);
          AgentManager.GlobalMatrix[i][j]= InitNum;
+     }else
+     {
+     {if (true) throw new ParseException("The input location does not exist");}}
+     }
      }
        else if (LocationManager.SpatialSt.matches("(?i).*TwoD*"))
-           {int InitNum = Integer.parseInt(n.image);
+           {{
+       if (!(AgentManager.AgentNames.contains(t.image))) {{if (true) throw new ParseException("The declared agent is not described in the section #Agents");}}
+       }int i = AgentManager.MatrixAgent.get(t.image);
        int xValue = Integer.parseInt(x.image);
+       {if (y==null)
+         {{if (true) throw new ParseException("The input location does not exist");}}
+       }
        int yValue = Integer.parseInt(y.image);
-       int i = AgentManager.MatrixAgent.get(t.image);
-       int j = LocationManager.MatrixLoc.get(LocationManager.createListTwoD(xValue, yValue));
+       int InitNum = Integer.parseInt(n.image);
+       ArrayList<Integer> LocName = LocationManager.createListTwoD(xValue, yValue);
+       {if (z ==null && LocationManager.AllLoc.contains(LocName))
+       { int j = LocationManager.MatrixLoc.get(LocName);
        AgentManager.GlobalMatrix[i][j]= InitNum;
+       }else
+       {
+     {if (true) throw new ParseException("The input location does not exist");}}
+       }
        }
              else if (LocationManager.SpatialSt.matches("(?i).*ThreeD*"))
-             {int InitNum = Integer.parseInt(n.image);
+             {{
+         if (!(AgentManager.AgentNames.contains(t.image))) {{if (true) throw new ParseException("The declared agent is not described in the section #Agents");}}
+         }int i = AgentManager.MatrixAgent.get(t.image);
          int xValue = Integer.parseInt(x.image);
-         int yValue = Integer.parseInt(y.image);
-         int zValue = Integer.parseInt(z.image);
-         int i = AgentManager.MatrixAgent.get(t.image);
-         int j = LocationManager.MatrixLoc.get(LocationManager.createListThreeD(xValue,yValue,zValue));
-         AgentManager.GlobalMatrix[i][j]= InitNum;
+         {if (y==null)
+         {{if (true) throw new ParseException("The input location does not exist");}}
          }
+         int yValue = Integer.parseInt(y.image);
+         {if (z==null)
+         {{if (true) throw new ParseException("The input location does not exist");}}
+         }
+         int zValue = Integer.parseInt(z.image);
+         int InitNum = Integer.parseInt(n.image);
+         ArrayList<Integer> LocName = LocationManager.createListThreeD(xValue,yValue,zValue);
+         {if (LocationManager.AllLoc.contains(LocName))
+         {int j = LocationManager.MatrixLoc.get(LocName);
+         AgentManager.GlobalMatrix[i][j]= InitNum;
+         }else
+         {
+         {if (true) throw new ParseException("The input location does not exist");}}
+         }
+    }
   }
 
   final public void setGraph() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token v, v1, e, e1;
@@ -607,6 +649,8 @@ int edgeName3 = Integer.parseInt(e1.image);
       jj_consume_token(RBRAC);
     }
     jj_consume_token(RBRAC);
+if ((BracketsCounter-1) !=  LocationManager.AllLoc.size())
+     {{if (true) throw new ParseException("Wrong input for edges - no matching number of entries");}}
     jj_consume_token(EOL);
   }
 
