@@ -1,14 +1,14 @@
 package Model;
 
 import java.util.HashMap;
-import Utility.Utility;
+//import Utility.Utility;
 
 public class ParamManager {
 	
 	
-	public static HashMap<String, Double> paramMap = new HashMap<String, Double>();
-	
-	public static void addParam(String name, double value) {
+	public HashMap<String, Double> paramMap = new HashMap<String, Double>();
+
+	public void addParam(String name, double value) {
 		if(ParamExist(name)) {
 			System.err.println("The param " + name + " already exists!");
 		}else {
@@ -17,7 +17,7 @@ public class ParamManager {
 		}
 	}
 	
-	public static boolean ParamExist(String name) {
+	public boolean ParamExist(String name) {
 		if(paramMap.get(name) != null) {
 			return true;
 		}else {
@@ -25,7 +25,7 @@ public class ParamManager {
 		}
 	}
 	
-	public static double getParamValue(String name) {
+	public double getParamValue(String name) {
 		double ret = (Double) paramMap.get(name);
 		return ret;
 	}

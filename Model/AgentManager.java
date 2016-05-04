@@ -5,14 +5,14 @@ import java.util.HashMap;
 
 public class AgentManager {
 	  
-	public static ArrayList<Agent> Agents = new ArrayList<>(); 
-	public static ArrayList<String> AgentNames = new ArrayList<>(); 
-    public static HashMap<String, Integer> MatrixAgent = new HashMap<>();	
-    public static int[][] GlobalMatrix;  
-    public static ArrayList<ArrayList<Integer>> Global = new ArrayList<ArrayList<Integer>>();
+	public ArrayList<Agent> Agents = new ArrayList<>(); 
+	public ArrayList<String> AgentNames = new ArrayList<>(); 
+    public HashMap<String, Integer> MatrixAgent = new HashMap<>();	
+    public int[][] GlobalMatrix;  
+    public ArrayList<ArrayList<Integer>> Global = new ArrayList<ArrayList<Integer>>();
     
-	public static void GlobalMatrixCreation() {
-	       GlobalMatrix = new int[AgentNames.size()][LocationManager.AllLoc.size()];
+	public void GlobalMatrixCreation() {
+	       GlobalMatrix = new int[AgentNames.size()][GlobalManager.getLocationManager().AllLoc.size()];
 	}
        
 //	public static int[][] GlobalMatrixCreationversion2() {
@@ -21,18 +21,18 @@ public class AgentManager {
 //	       return GlobalMatrix;
 //	}
 		
-    public static HashMap<String, Integer> MatrixAgentCreation() {
+    public HashMap<String, Integer> MatrixAgentCreation() {
     	for(int i=0; i< AgentNames.size(); i++){
     		MatrixAgent.put(AgentNames.get(i),i);
     	}
     	return MatrixAgent;
     }
     
-    public static void addAgent(Agent a) {
+    public void addAgent(Agent a) {
     	Agents.add(a);
     }
     
-	 public static void addAgentName(String Name){
+	 public void addAgentName(String Name){
 		AgentNames.add(Name);
 	}
 	 
