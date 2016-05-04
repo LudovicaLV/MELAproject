@@ -1,17 +1,17 @@
-#Space: ThreeD(3,2,2)
+#Space: OneD(3)
 
 #Parameters
 r1 = 0.5;
 r2 = 0.3;
 r3 = 0.9;
-r4 = 0.7;
+r4 = 0.07;
 
 #Agents
-S(l):=->{all}(action1,r1)<<S(l) + (action2,r2)>>S(l);
+S(l):=->{all}(action1,r1)<<S(l) + (action2,r2).I(l);
 I(l):=(action3,r3)<<I(l);
 
 #Environment
 En:=->{all}(action4,r4).En;
 
 #Initial conditions
-S(2,1,1)[4]||En[1]
+S(1)[100]||En[1]

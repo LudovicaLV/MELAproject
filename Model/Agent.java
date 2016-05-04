@@ -10,8 +10,8 @@ public class Agent {
 	
 	public Agent(String name) {
 		this.name = name;
-		AgentManager.addAgentName(name);
-		AgentManager.addAgent(this);
+		GlobalManager.getAgentManager().addAgentName(name);
+		GlobalManager.getAgentManager().addAgent(this);
 	}
 	
 	public String getName(){
