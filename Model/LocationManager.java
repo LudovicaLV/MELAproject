@@ -33,13 +33,13 @@ public class LocationManager {
 	
 	public ArrayList<ArrayList<Integer>> getNeigh(ArrayList<Integer> LocName){
 	    if(SpatialSt == "Graph") {
-	   		return GlobalManager.getLocationManager().NeighGraph.get(LocName);	    		
+	   		return GlobalManager.getLocationManager().globalMap.get(LocName);	    		
 	   	}else{if (SpatialSt == "OneD"){
 	   		return GlobalManager.getLocationManager().NeighOneD.get(LocName);		    	    		  
 	   	}else{if (SpatialSt == "TwoD"){
-    		return NeighTwoD.get(LocName);	
+    		return GlobalManager.getLocationManager().NeighTwoD.get(LocName);	
 	    }else{
-	   		return NeighThreeD.get(LocName);			    	    		  
+	   		return GlobalManager.getLocationManager().NeighThreeD.get(LocName);			    	    		  
 	    }}}}
 	    		
 
