@@ -101,21 +101,19 @@ public class GlobalManager {
 		}
 		}
 	
-	  
-			   
-		public static ArrayList<Integer> createListOneD (int x){
+	public static ArrayList<Integer> createListOneD (int x){
 		 ArrayList<Integer> ListOneD = new ArrayList<Integer>();
 		 ListOneD.add(x);
 		 return ListOneD;
 		}
-		
+
 		public static ArrayList<Integer> createListTwoD (int x, int y){
 		 ArrayList<Integer> ListTwoD = new ArrayList<Integer>();
 		 ListTwoD.add(x);
 		 ListTwoD.add(y);
 		 return ListTwoD;
 		}
-		
+
 		public static ArrayList<Integer> createListThreeD (int x, int y, int z){
 		 ArrayList<Integer> ListThreeD = new ArrayList<Integer>();
 		 ListThreeD.add(x);
@@ -123,28 +121,28 @@ public class GlobalManager {
 		 ListThreeD.add(z);
 		 return ListThreeD;
 		}
-		
+
 		public static ArrayList<Integer> createListZero (){
 		ArrayList<Integer> Zero = new ArrayList<Integer>();
 		Zero.add(0);
 		return Zero;
 		}	 
 		
-		public static ArrayList<Integer> createListName(int Name){
-		 ArrayList<Integer> NameAsList = new ArrayList<Integer>();
-		 NameAsList.add(Name);
-		 return NameAsList;
-		 }
-		 
-		
-		public static ArrayList<ArrayList<Integer>> createAllLocOneD(int x){
+		 public static ArrayList<Integer> createListName(int Name){
+			 ArrayList<Integer> NameAsList = new ArrayList<Integer>();
+			 NameAsList.add(Name);
+			 return NameAsList;
+			 }
+			 
+
+		public static void createAllLocOneD(int x){
 		 for (int i = 0; i < x; i++){
-			   GlobalManager.getLocationManager().AllLoc.add(createListName(i));
+			 ArrayList<Integer> Name = createListName(i);	 
+			 GlobalManager.getLocationManager().AllLoc.add(Name);
 		 }
-		 return GlobalManager.getLocationManager().AllLoc;
 		}
-		
-		public static ArrayList<ArrayList<Integer>> createAllLocTwoD(int x, int y){
+
+		public static void createAllLocTwoD(int x, int y){
 		 for (int i = 0; i < x; i++){
 			   for (int j = 0; j < y; j++){
 				   ArrayList<Integer> newList = new ArrayList<Integer>();
@@ -153,10 +151,9 @@ public class GlobalManager {
 				   GlobalManager.getLocationManager().AllLoc.add(newList);
 			   }
 		 }
-		 return GlobalManager.getLocationManager().AllLoc;
 		}
-		
-		public static ArrayList<ArrayList<Integer>> createAllLocThreeD(int x, int y, int z){
+
+		public static void createAllLocThreeD(int x, int y, int z){
 		 for (int i = 0; i < x; i++){
 			   for (int j = 0; j < y; j++){
 				   for (int k = 0; k < z; k++){
@@ -168,7 +165,8 @@ public class GlobalManager {
 			   }
 		   }
 		 }
-		 return GlobalManager.getLocationManager().AllLoc;
 		}	
+	   
+	 
 		
 		}

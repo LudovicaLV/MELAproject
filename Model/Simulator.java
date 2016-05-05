@@ -213,19 +213,19 @@ public class Simulator {
 				ArrayList<Integer> actualposition = agentPositionArray.get(action_index);
 				ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(actualposition);
 	
-//				double[] ProbLoc = new double[neighbourhood.size()];
-//				for (int j=0; j < neighbourhood.size(); j++){	
-//					for (int k = 0; k < neighbourhood.get(j).size(); k++ ){
-//						ProbLoc[j] = (1.0/neighbourhood.size());}
-//				}
-//				int[] neighbourhoodEntries = new int[neighbourhood.size()];
-//				for (int k=0; k < neighbourhood.size(); k++){				
-//					neighbourhoodEntries[k] = k;
-//			    }
-//				int locNewEntry = Samples.getDiscrete(neighbourhoodEntries, ProbLoc);
-//				ArrayList<Integer> locNewName = neighbourhood.get(locNewEntry);
-//				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(actualposition)]--;					
-//				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(locNewName)]++;
+				double[] ProbLoc = new double[neighbourhood.size()];
+				for (int j=0; j < neighbourhood.size(); j++){	
+					for (int k = 0; k < neighbourhood.get(j).size(); k++ ){
+						ProbLoc[j] = (1.0/neighbourhood.size());}
+				}
+				int[] neighbourhoodEntries = new int[neighbourhood.size()];
+				for (int k=0; k < neighbourhood.size(); k++){				
+					neighbourhoodEntries[k] = k;
+			    }
+				int locNewEntry = Samples.getDiscrete(neighbourhoodEntries, ProbLoc);
+				ArrayList<Integer> locNewName = neighbourhood.get(locNewEntry);
+				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(actualposition)]--;					
+				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(locNewName)]++;
      			System.out.println("Spatial action");}else{
 			
                 //change of state

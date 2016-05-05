@@ -18,6 +18,5 @@ public class Location {
 	   GlobalManager.getLocationManager().AllLoc.add(Loc.getLocName());
    }
    
- 
 }
    

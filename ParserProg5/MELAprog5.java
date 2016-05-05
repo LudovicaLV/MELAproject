@@ -41,13 +41,12 @@ GRAMMAR RULES
   final public 
 void Input() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token space;
     boolean spaceboolean = false, agents = false, init = false;
-    
-    GlobalManager.init();
+GlobalManager.init();
     jj_consume_token(SECTION_SPACE);
-    spaceboolean = true;
+spaceboolean = true;
     jj_consume_token(SEMICOLON);
     space = SpaceStructure();
-    GlobalManager.getLocationManager().SpatialSt = space.image;
+GlobalManager.getLocationManager().SpatialSt = space.image;
     GlobalManager.getLocationManager().MatrixLocation(GlobalManager.getLocationManager().AllLoc);
     jj_consume_token(SECTION_PARAM);
     label_1:
@@ -660,7 +659,7 @@ if ((BracketsCounter-1) !=  GlobalManager.getLocationManager().AllLoc.size())
     jj_consume_token(LR);
     x = jj_consume_token(INT);
 int xValue = Integer.parseInt(x.image);
-GlobalManager.createAllLocOneD(xValue);
+   GlobalManager.createAllLocOneD(xValue);
     jj_consume_token(RR);
   }
 
@@ -672,7 +671,7 @@ GlobalManager.createAllLocOneD(xValue);
     jj_consume_token(RR);
 int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
-    GlobalManager.createAllLocTwoD(xValue, yValue);
+   GlobalManager.createAllLocTwoD(xValue, yValue);
   }
 
   final public void setThreeD() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token x, y, z;
@@ -745,27 +744,21 @@ int xValue = Integer.parseInt(x.image);
     finally { jj_save(6, xla); }
   }
 
-  private boolean jj_3_7()
- {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
   private boolean jj_3_6()
  {
     if (jj_3R_13()) return true;
     return false;
   }
 
-  private boolean jj_3_4()
- {
-    if (jj_scan_token(KEYWORD_THREED)) return true;
-    return false;
-  }
-
   private boolean jj_3_5()
  {
     if (jj_3R_12()) return true;
+    return false;
+  }
+
+  private boolean jj_3_4()
+ {
+    if (jj_scan_token(KEYWORD_THREED)) return true;
     return false;
   }
 
@@ -805,6 +798,12 @@ int xValue = Integer.parseInt(x.image);
   private boolean jj_3_1()
  {
     if (jj_scan_token(KEYWORD_GRAPH)) return true;
+    return false;
+  }
+
+  private boolean jj_3_7()
+ {
+    if (jj_3R_14()) return true;
     return false;
   }
 

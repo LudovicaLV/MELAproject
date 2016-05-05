@@ -1,4 +1,7 @@
-#Space: OneD(4)
+#Space: Graph
+
+V = {1,2};
+E = {{2}, {1}};
 
 #Parameters
 r1 = 0.5;

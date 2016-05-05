@@ -159,8 +159,8 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
     Token space;    
     boolean spaceboolean = false, agents = false, init = false;
 }
-
-{   <SECTION_SPACE>
+{   {GlobalManager.init();}
+    <SECTION_SPACE>
     {spaceboolean = true;}
 	<SEMICOLON>
    	space = SpaceStructure()
@@ -345,7 +345,10 @@ Token MelaSymbol() throws NumberFormatException, RuntimeException, ParseExceptio
         LOOKAHEAD(1)
         sym = <  DOWN >
     ]
-    {      return sym;    }    
+    {
+      return sym;
+    }
+    
 }
 
 Token UpdateLoc() throws NumberFormatException, RuntimeException, ParseException :
@@ -515,25 +518,33 @@ void InitAgent() throws NumberFormatException, RuntimeException, ParseException 
  int i = GlobalManager.getAgentManager().MatrixAgent.get(t.image);
  int j = 0;
  int InitNum = Integer.parseInt(n.image);
- GlobalManager.getAgentManager().GlobalMatrix[i][j] = InitNum;} else if (GlobalManager.getLocationManager().SpatialSt == "Graph")   {{
+ GlobalManager.getAgentManager().GlobalMatrix[i][j] = InitNum;}
+ else if (GlobalManager.getLocationManager().SpatialSt == "Graph")
+   {{
    if (!(GlobalManager.getAgentManager().AgentNames.contains(t.image))) {throw new ParseException("The declared agent is not described in the section #Agents");}
    }
    int i = GlobalManager.getAgentManager().MatrixAgent.get(t.image);     
    int xValue = Integer.parseInt(x.image);
-   ArrayList<Integer> LocName = GlobalManager.getLocationManager().createListOneD(xValue);
+   ArrayList<Integer> LocName = GlobalManager.createListOneD(xValue);
    {if (y == null && z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))
    {int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);   
    int InitNum = Integer.parseInt(n.image);
-   GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;   }else   {     throw new ParseException("The input location does not exist");}
-    } }  else if (GlobalManager.getLocationManager().SpatialSt.matches("(?i).*OneD*"))
+   GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;
+   }else
+   {
+     throw new ParseException("The input location does not exist");}
+    } }
+  else if (GlobalManager.getLocationManager().SpatialSt.matches("(?i).*OneD*"))
     {{
     if (!(GlobalManager.getAgentManager().AgentNames.contains(t.image))) {throw new ParseException("The declared agent is not described in the section #Agents");}
     }int i = GlobalManager.getAgentManager().MatrixAgent.get(t.image);
      int xValue = Integer.parseInt(x.image);
-     ArrayList<Integer> LocName = GlobalManager.getLocationManager().createListOneD(xValue); 
+     ArrayList<Integer> LocName = GlobalManager.createListOneD(xValue); 
      int InitNum = Integer.parseInt(n.image);
-     {if (y == null && z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))     {int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
- 	 GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;     }else
+     {if (y == null && z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))
+     {int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
+ 	 GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;
+     }else
      {
      throw new ParseException("The input location does not exist");}
      } 
@@ -548,13 +559,15 @@ void InitAgent() throws NumberFormatException, RuntimeException, ParseException 
        }      
        int yValue = Integer.parseInt(y.image);
        int InitNum = Integer.parseInt(n.image);
-       ArrayList<Integer> LocName = GlobalManager.getLocationManager().createListTwoD(xValue, yValue);
-       {if (z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))       { int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
+       ArrayList<Integer> LocName = GlobalManager.createListTwoD(xValue, yValue);
+       {if (z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))
+       { int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
        GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;
        }else
        {
      throw new ParseException("The input location does not exist");}
-       }       }   
+       }
+       }   
    	     else if (GlobalManager.getLocationManager().SpatialSt.matches("(?i).*ThreeD*"))
    	     {{
          if (!(GlobalManager.getAgentManager().AgentNames.contains(t.image))) {throw new ParseException("The declared agent is not described in the section #Agents");}
@@ -569,15 +582,17 @@ void InitAgent() throws NumberFormatException, RuntimeException, ParseException 
          }
          int zValue = Integer.parseInt(z.image);
          int InitNum = Integer.parseInt(n.image);
-         ArrayList<Integer> LocName = GlobalManager.getLocationManager().createListThreeD(xValue,yValue,zValue);
-         {if (GlobalManager.getLocationManager().AllLoc.contains(LocName))         {int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
+         ArrayList<Integer> LocName = GlobalManager.createListThreeD(xValue,yValue,zValue);
+         {if (GlobalManager.getLocationManager().AllLoc.contains(LocName))
+         {int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
          GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;
          }else
          {
          throw new ParseException("The input location does not exist");}
          }
     }
-}}
+}
+}
 
 void setGraph()throws NumberFormatException, RuntimeException, ParseException :
 {
@@ -589,14 +604,17 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     < LBRAC >
     v = <INT>
     {int vertexName = Integer.parseInt(v.image);   
-    GlobalManager.getLocationManager().AllLoc.add(Location.createListName(vertexName));
-    GlobalManager.getLocationManager().prepareMap(Location.createListName(vertexName)); } 
+    GlobalManager.getLocationManager().AllLoc.add(GlobalManager.createListName(vertexName));
+    GlobalManager.getLocationManager().prepareMap(GlobalManager.createListName(vertexName)); }
+
+
+    
     (
         <COMMA>
         v1 = <INT>
     {int vertexName1 = Integer.parseInt(v1.image);
-    GlobalManager.getLocationManager().AllLoc.add(Location.createListName(vertexName1));
-    GlobalManager.getLocationManager().prepareMap(Location.createListName(vertexName1));}
+    GlobalManager.getLocationManager().AllLoc.add(GlobalManager.createListName(vertexName1));
+    GlobalManager.getLocationManager().prepareMap(GlobalManager.createListName(vertexName1));}
       )*
     < RBRAC >
     < EOL >
@@ -608,27 +626,30 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     {BracketsCounter++;}
      e = <INT>
      {int edgeName = Integer.parseInt(e.image);
-     GlobalManager.getLocationManager().addNeighNode(Location.createListName(edgeName), BracketsCounter);}
+     GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName), BracketsCounter);}
     (<COMMA>
      e1 = <INT>
      {int edgeName1 = Integer.parseInt(e1.image);
-     GlobalManager.getLocationManager().addNeighNode(Location.createListName(edgeName1), BracketsCounter);})*
+     GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName1), BracketsCounter);})*
      <RBRAC>
-     (       <COMMA>
+     (
+       <COMMA>
      <LBRAC>
      {BracketsCounter++;}
      e = <INT>
      {int edgeName2 = Integer.parseInt(e.image);
-     GlobalManager.getLocationManager().addNeighNode(Location.createListName(edgeName2), BracketsCounter);}
+     GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName2), BracketsCounter);}
       (
         <COMMA>
        e1 = <INT>
      {int edgeName3 = Integer.parseInt(e1.image);
-     GlobalManager.getLocationManager().addNeighNode(Location.createListName(edgeName3), BracketsCounter);})*
+     GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName3), BracketsCounter);})*
      <RBRAC>
        )*
      <RBRAC>
-     {if ((BracketsCounter-1) !=  GlobalManager.getLocationManager().AllLoc.size())     {throw new ParseException("Wrong input for edges - no matching number of entries");}     }
+     {if ((BracketsCounter-1) !=  GlobalManager.getLocationManager().AllLoc.size())
+     {throw new ParseException("Wrong input for edges - no matching number of entries");}
+     }
      < EOL >
 }
 
@@ -639,7 +660,7 @@ void setOneD()throws NumberFormatException, RuntimeException, ParseException :
 {   <LR>
     x = <INT>
    {int xValue = Integer.parseInt(x.image);
-   Location.createAllLocOneD(xValue);}
+   GlobalManager.createAllLocOneD(xValue);}
    <RR>
 }
 
@@ -654,7 +675,7 @@ void setTwoD()throws NumberFormatException, RuntimeException, ParseException :
    <RR>
    {int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
-   Location.createAllLocTwoD(xValue, yValue);}
+   GlobalManager.createAllLocTwoD(xValue, yValue);}
 }
 
 void setThreeD()throws NumberFormatException, RuntimeException, ParseException :
@@ -671,5 +692,5 @@ void setThreeD()throws NumberFormatException, RuntimeException, ParseException :
    {int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
     int zValue = Integer.parseInt(z.image);
-    Location.createAllLocThreeD(xValue, yValue, zValue);}
+    GlobalManager.createAllLocThreeD(xValue, yValue, zValue);}
 }
