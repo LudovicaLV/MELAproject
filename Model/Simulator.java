@@ -181,6 +181,12 @@ public class Simulator {
 			ActionRef[i] = i;
 		}	
 		
+//		for (int i = 0; i < PropFunc.size(); i++){
+//			System.out.println(PropFunc.get(i));
+//			System.out.println(Prob[i]);
+//			System.out.println(ActionRef[i]);
+//		}
+		
 		int action_index = Samples.getDiscrete(ActionRef, Prob);
 		
 		if(Type.get(action_index) == Action.ACTION_TYPE_NoInf){
@@ -202,25 +208,24 @@ public class Simulator {
 		System.out.println("Demographic- action");
 		}
 		if (symbol == "."){
-			System.out.println(chosenAction.getUpdate());
 			if (chosenAction.getUpdate().matches("(.*)new(.*)")){				
 				//so far just random movement
 				ArrayList<Integer> actualposition = agentPositionArray.get(action_index);
-		//		ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(actualposition);
-	//			System.out.println(neighbourhood.get(0).get(0));
-		//		double[] ProbLoc = new double[neighbourhood.size()];
-		//		for (int j=0; j < neighbourhood.size(); j++){	
-		//			for (int k = 0; k < neighbourhood.get(j).size(); k++ ){
-//						ProbLoc[j] = (1.0/neighbourhood.size());
+				ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(actualposition);
+	
+//				double[] ProbLoc = new double[neighbourhood.size()];
+//				for (int j=0; j < neighbourhood.size(); j++){	
+//					for (int k = 0; k < neighbourhood.get(j).size(); k++ ){
+//						ProbLoc[j] = (1.0/neighbourhood.size());}
 //				}
 //				int[] neighbourhoodEntries = new int[neighbourhood.size()];
-//				for (int j=0; j < neighbourhood.size(); j++){				
-//					neighbourhoodEntries[j] = j;
+//				for (int k=0; k < neighbourhood.size(); k++){				
+//					neighbourhoodEntries[k] = k;
 //			    }
 //				int locNewEntry = Samples.getDiscrete(neighbourhoodEntries, ProbLoc);
 //				ArrayList<Integer> locNewName = neighbourhood.get(locNewEntry);
 //				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(actualposition)]--;					
-	//			GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(locNewName)]++;
+//				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(locNewName)]++;
      			System.out.println("Spatial action");}else{
 			
                 //change of state

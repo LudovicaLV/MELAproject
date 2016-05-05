@@ -1,4 +1,4 @@
-#Space: TwoD(3,3)
+#Space: OneD(4)
 
 #Parameters
 r1 = 0.5;
@@ -7,13 +7,14 @@ r3 = 0.8;
 r4 = 0.6;
 p = 0.9;
 m = 0.9;
+mI = 0.7;
 
 #Agents
 S(l):=->{all}(action1,r1)<<S(l) + (action2,r2).I(l) + <-(action4,p).I(l) + (move,m).S(newl);
-I(l):=(action3,r3)<<I(l);
+I(l):=(action3,r3)<<I(l) + (moveI,mI).I(newl);
 
 #Environment
 En:=->{all}(action4,r4).En;
 
 #Initial conditions
-S(1,1)[100]||En[1]
+S(1)[10]||En[1]
