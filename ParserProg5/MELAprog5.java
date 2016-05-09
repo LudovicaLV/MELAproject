@@ -47,7 +47,7 @@ spaceboolean = true;
     jj_consume_token(SEMICOLON);
     space = SpaceStructure();
 GlobalManager.getLocationManager().SpatialSt = space.image;
-    GlobalManager.getLocationManager().MatrixLocation(GlobalManager.getLocationManager().AllLoc);
+    GlobalManager.getLocationManager().MatrixLocationCreation();
     jj_consume_token(SECTION_PARAM);
     label_1:
     while (true) {
@@ -522,17 +522,16 @@ if (x == null)
        }int i = GlobalManager.getAgentManager().MatrixAgent.get(t.image);
        int xValue = Integer.parseInt(x.image);
        {if (y==null)
-         {{if (true) throw new ParseException("The input location does not exist");}}
+         {if (true) throw new ParseException("The input location does not exist");}
        }
        int yValue = Integer.parseInt(y.image);
        int InitNum = Integer.parseInt(n.image);
-       ArrayList<Integer> LocName = GlobalManager.createListTwoD(xValue, yValue);
+       ArrayList<Integer> LocName = GlobalManager.createListTwoD(xValue, yValue);       
        {if (z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))
        { int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
        GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;
        }else
-       {
-     {if (true) throw new ParseException("The input location does not exist");}}
+       {if (true) throw new ParseException("The input location does not exist");}
        }
        }
              else if (GlobalManager.getLocationManager().SpatialSt.matches("(?i).*ThreeD*"))
@@ -659,6 +658,7 @@ if ((BracketsCounter-1) !=  GlobalManager.getLocationManager().AllLoc.size())
     jj_consume_token(LR);
     x = jj_consume_token(INT);
 int xValue = Integer.parseInt(x.image);
+   GlobalManager.getLocationManager().OneD = xValue;
    GlobalManager.createAllLocOneD(xValue);
     jj_consume_token(RR);
   }
@@ -671,7 +671,9 @@ int xValue = Integer.parseInt(x.image);
     jj_consume_token(RR);
 int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
-   GlobalManager.createAllLocTwoD(xValue, yValue);
+    GlobalManager.getLocationManager().TwoDx = xValue;
+    GlobalManager.getLocationManager().TwoDy = yValue;
+    GlobalManager.createAllLocTwoD(xValue, yValue);
   }
 
   final public void setThreeD() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token x, y, z;
@@ -685,6 +687,9 @@ int xValue = Integer.parseInt(x.image);
 int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
     int zValue = Integer.parseInt(z.image);
+    GlobalManager.getLocationManager().ThreeDx = xValue;
+    GlobalManager.getLocationManager().ThreeDy = yValue;
+    GlobalManager.getLocationManager().ThreeDz = zValue;
     GlobalManager.createAllLocThreeD(xValue, yValue, zValue);
   }
 
@@ -744,21 +749,27 @@ int xValue = Integer.parseInt(x.image);
     finally { jj_save(6, xla); }
   }
 
+  private boolean jj_3_7()
+ {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
   private boolean jj_3_6()
  {
     if (jj_3R_13()) return true;
     return false;
   }
 
-  private boolean jj_3_5()
- {
-    if (jj_3R_12()) return true;
-    return false;
-  }
-
   private boolean jj_3_4()
  {
     if (jj_scan_token(KEYWORD_THREED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_5()
+ {
+    if (jj_3R_12()) return true;
     return false;
   }
 
@@ -798,12 +809,6 @@ int xValue = Integer.parseInt(x.image);
   private boolean jj_3_1()
  {
     if (jj_scan_token(KEYWORD_GRAPH)) return true;
-    return false;
-  }
-
-  private boolean jj_3_7()
- {
-    if (jj_3R_14()) return true;
     return false;
   }
 

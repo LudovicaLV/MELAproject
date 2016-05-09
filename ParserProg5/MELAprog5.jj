@@ -165,7 +165,7 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
 	<SEMICOLON>
    	space = SpaceStructure()
     {GlobalManager.getLocationManager().SpatialSt = space.image;
-    GlobalManager.getLocationManager().MatrixLocation(GlobalManager.getLocationManager().AllLoc);}
+    GlobalManager.getLocationManager().MatrixLocationCreation();}
     <SECTION_PARAM>
     (
       Param()
@@ -660,6 +660,7 @@ void setOneD()throws NumberFormatException, RuntimeException, ParseException :
 {   <LR>
     x = <INT>
    {int xValue = Integer.parseInt(x.image);
+   GlobalManager.getLocationManager().OneD = xValue;
    GlobalManager.createAllLocOneD(xValue);}
    <RR>
 }
@@ -675,7 +676,9 @@ void setTwoD()throws NumberFormatException, RuntimeException, ParseException :
    <RR>
    {int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
-   GlobalManager.createAllLocTwoD(xValue, yValue);}
+    GlobalManager.getLocationManager().TwoDx = xValue;
+    GlobalManager.getLocationManager().TwoDy = yValue;
+    GlobalManager.createAllLocTwoD(xValue, yValue);}
 }
 
 void setThreeD()throws NumberFormatException, RuntimeException, ParseException :
@@ -691,6 +694,9 @@ void setThreeD()throws NumberFormatException, RuntimeException, ParseException :
    <RR>
    {int xValue = Integer.parseInt(x.image);
     int yValue = Integer.parseInt(y.image);
-    int zValue = Integer.parseInt(z.image);
+    int zValue = Integer.parseInt(z.image);  
+    GlobalManager.getLocationManager().ThreeDx = xValue;
+    GlobalManager.getLocationManager().ThreeDy = yValue;
+    GlobalManager.getLocationManager().ThreeDz = zValue;
     GlobalManager.createAllLocThreeD(xValue, yValue, zValue);}
 }

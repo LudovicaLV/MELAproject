@@ -63,6 +63,7 @@ public class GlobalManager {
 	}
 	
 	public static void PrintInitCondition(){
+		System.out.println("The initial number of each type of agent in each location:");
 		for (int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
 			for (int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
 				System.out.print("The initial number of agent " + GlobalManager.getAgentManager().AgentNames.get(i) + " in location " + GlobalManager.getLocationManager().AllLoc.get(j).get(0));
@@ -76,6 +77,7 @@ public class GlobalManager {
 	
 	
 	public static void PrintNoZeroInitCondition(){
+		System.out.println("Just the no-zero initial number:");
 		for (int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
 			for (int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
 				if (GlobalManager.getAgentManager().GlobalMatrix[i][j] != 0){
@@ -101,12 +103,19 @@ public class GlobalManager {
 		}
 		}
 	
+	public static ArrayList<Integer> createListName (int name){
+		 ArrayList<Integer> ListName = new ArrayList<Integer>();
+		 ListName.add(name);
+		 return ListName;
+		}
+	
+	
 	public static ArrayList<Integer> createListOneD (int x){
 		 ArrayList<Integer> ListOneD = new ArrayList<Integer>();
 		 ListOneD.add(x);
 		 return ListOneD;
 		}
-
+	
 		public static ArrayList<Integer> createListTwoD (int x, int y){
 		 ArrayList<Integer> ListTwoD = new ArrayList<Integer>();
 		 ListTwoD.add(x);
@@ -128,43 +137,35 @@ public class GlobalManager {
 		return Zero;
 		}	 
 		
-		 public static ArrayList<Integer> createListName(int Name){
-			 ArrayList<Integer> NameAsList = new ArrayList<Integer>();
-			 NameAsList.add(Name);
-			 return NameAsList;
-			 }
-			 
 
-		public static void createAllLocOneD(int x){
+		public static ArrayList<ArrayList<Integer>> createAllLocOneD(int x){
 		 for (int i = 0; i < x; i++){
-			 ArrayList<Integer> Name = createListName(i);	 
-			 GlobalManager.getLocationManager().AllLoc.add(Name);
+			 ArrayList<Integer> newList = createListOneD(i);	 
+			 GlobalManager.getLocationManager().AllLoc.add(newList);
 		 }
+		 return GlobalManager.getLocationManager().AllLoc;
 		}
 
-		public static void createAllLocTwoD(int x, int y){
+		public static ArrayList<ArrayList<Integer>> createAllLocTwoD(int x, int y){
 		 for (int i = 0; i < x; i++){
 			   for (int j = 0; j < y; j++){
-				   ArrayList<Integer> newList = new ArrayList<Integer>();
-				   newList.add(i);
-				   newList.add(j);		   
+				   ArrayList<Integer> newList = createListTwoD(i, j);
 				   GlobalManager.getLocationManager().AllLoc.add(newList);
 			   }
-		 }
+		    }
+		 return GlobalManager.getLocationManager().AllLoc;
 		}
 
-		public static void createAllLocThreeD(int x, int y, int z){
+		public static ArrayList<ArrayList<Integer>> createAllLocThreeD(int x, int y, int z){
 		 for (int i = 0; i < x; i++){
 			   for (int j = 0; j < y; j++){
 				   for (int k = 0; k < z; k++){
-				   ArrayList<Integer> newList = new ArrayList<Integer>();
-				   newList.add(i);
-				   newList.add(j);		
-				   newList.add(k);
+				   ArrayList<Integer> newList = createListThreeD(i,j,k);
 				   GlobalManager.getLocationManager().AllLoc.add(newList);
 			   }
-		   }
+		    }
 		 }
+		 return GlobalManager.getLocationManager().AllLoc;
 		}	
 	   
 	 

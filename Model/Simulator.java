@@ -212,7 +212,6 @@ public class Simulator {
 				//so far just random movement
 				ArrayList<Integer> actualposition = agentPositionArray.get(action_index);
 				ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(actualposition);
-	
 				double[] ProbLoc = new double[neighbourhood.size()];
 				for (int j=0; j < neighbourhood.size(); j++){	
 					for (int k = 0; k < neighbourhood.get(j).size(); k++ ){
@@ -224,9 +223,11 @@ public class Simulator {
 			    }
 				int locNewEntry = Samples.getDiscrete(neighbourhoodEntries, ProbLoc);
 				ArrayList<Integer> locNewName = neighbourhood.get(locNewEntry);
-				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(actualposition)]--;					
-				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(locNewName)]++;
-     			System.out.println("Spatial action");}else{
+				GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(actualposition)]--;	
+				int s = agentArrayList.get(action_index);
+				int t = GlobalManager.getLocationManager().MatrixLoc.get(locNewName);
+     			GlobalManager.getAgentManager().GlobalMatrix[s][t]++;
+				System.out.println("Spatial action");}else{
 			
                 //change of state
 				String newState = action.getUpdate();	
