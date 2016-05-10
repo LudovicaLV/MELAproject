@@ -20,7 +20,30 @@ public class Simulator {
               
         //setting time for the simulation
 		double time = 0;
-		double timeTotal = 10;
+		double timeTotal = 100;
+		
+//		System.out.print("time  ");
+//		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+//        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){		
+//        		String formatedString = GlobalManager.getLocationManager().AllLoc.get(j).toString()
+//        			    .replace("[", "")  //remove the right bracket
+//        			    .replace("]", "")  //remove the left bracket
+//        			    .trim(); 
+//        		System.out.print(GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")  ");
+//        		}}
+		
+//		System.out.println("For legend in the plot");
+//		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+//        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){		
+//        		String formatedString = GlobalManager.getLocationManager().AllLoc.get(j).toString()
+//        			    .replace("[", "")  //remove the right bracket
+//        			    .replace("]", "")  //remove the left bracket
+//        			    .trim(); 
+//        		System.out.print("'" + GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")', ");
+//        		}}
+//		System.out.println();
+		
+		
 				
 		while(time < timeTotal){
 		ArrayList<Double> PropFunc = new ArrayList<>();
@@ -32,8 +55,7 @@ public class Simulator {
 		ArrayList<Integer> Type = new ArrayList<>();		
 		
 		ArrayList<Integer> NoPassive = new ArrayList<Integer>();
-		NoPassive.add(-1);
-		
+		NoPassive.add(-1);	
 		
 		for(int i=0; i < GlobalManager.getAgentManager().Agents.size(); i++){
 	        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
@@ -412,6 +434,15 @@ public class Simulator {
 	        	System.out.println("Time: " + time);
 	        	System.out.println("-----");
 		}}
+//		System.out.print(time + " ");
+//		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+//    	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
+//    		System.out.print(GlobalManager.getAgentManager().GlobalMatrix[i][j] + " ");
+//    		}}}
+//   }}
+		
+		
+
 		
 	
        //methods	
