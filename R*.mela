@@ -1,0 +1,33 @@
+#Space: OneD(3)
+
+#Parameters
+rc = 0.5;
+rc1 = 5.0;
+p = 1.0;
+p1 = 1.0;
+rr = 0.8;
+rr1 = 0.8;
+b = 1.0;
+dS = 0.3;
+dI = 0.6;
+dI1 = 0.6;
+dR = 0.4;
+mS = 0.7;
+mI1 = 5.0;
+mI = 0.5;
+mR = 0.6;
+
+#Agents
+S(l):=<-(contact1,p1).I(l) + <-(contact,p).I(l) + (birth,b)>>S(l) + (deathS,dS)<<S(l) + (moveS,mS).S(newl);
+
+I1(l):= ->{l}(contact1,rc1).I1(l) + (deathI1,dI1)<<I1(l) + (recover1, rr1).R(l) + (moveI1,mI1).I1(newl);
+
+
+I(l):=->{l}(contact,rc).I(l) + (recover, rr).R(l) + (deathI,dI).I(l) + (moveI,mI).I(newl);
+
+
+R(l):=(deathR,dR)<<R(l) + (moveR,mR).R(newl);
+
+
+#Initial conditions
+S(0)[100]||I1(0)[1]

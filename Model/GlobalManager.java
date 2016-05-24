@@ -168,6 +168,14 @@ public class GlobalManager {
 		 return GlobalManager.getLocationManager().AllLoc;
 		}	
 	   
+		
+		public static int SumPopulation (String name){
+			int sum = 0;
+			for (int j = 0; j < GlobalManager.getAgentManager().GlobalMatrix[0].length; j++){
+		         sum = sum + GlobalManager.getAgentManager().GlobalMatrix[GlobalManager.getAgentManager().MatrixAgent.get(name)][j];
+		        }
+			return sum;
+		    }
 	 
 		
 		}

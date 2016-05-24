@@ -3,20 +3,13 @@
 package ParserProg5;
 
 import java.util.ArrayList;
-import Actions.Action;
 import Actions.EnvAction;
 import Actions.InfAction;
 import Actions.NoInfAction;
 import Actions.PassAction;
 
 import Model.Agent;
-import Model.AgentManager;
-import Model.ExpEvaluator;
 import Model.GlobalManager;
-import Model.Location;
-import Model.LocationManager;
-import Model.ParamManager;
-
 
 public class MELAprog5 implements MELAprog5Constants {
 

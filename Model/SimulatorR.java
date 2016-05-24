@@ -9,7 +9,7 @@ import Actions.NoInfAction;
 import Actions.PassAction;
 import Utility.StdRandom;
 
-public class Simulator {
+public class SimulatorR {
 
 	public static void main(String[] args) {
 			
@@ -20,7 +20,9 @@ public class Simulator {
               
         //setting time for the simulation
 		double time = 0;
-		double timeTotal = 100;
+		//double timeTotal = 100;
+		
+		
 		
 //		System.out.print("time  ");
 //		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
@@ -32,20 +34,22 @@ public class Simulator {
 //        		System.out.print(GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")  ");
 //        		}}
 		
-//		System.out.println("For legend in the plot");
-//		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
-//        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){		
-//        		String formatedString = GlobalManager.getLocationManager().AllLoc.get(j).toString()
-//        			    .replace("[", "")  //remove the right bracket
-//        			    .replace("]", "")  //remove the left bracket
-//        			    .trim(); 
-//        		System.out.print("'" + GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")', ");
-//        		}}
-//		System.out.println();
+		System.out.println("For legend in the plot");
+		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){		
+        		String formatedString = GlobalManager.getLocationManager().AllLoc.get(j).toString()
+        			    .replace("[", "")  //remove the right bracket
+        			    .replace("]", "")  //remove the left bracket
+        			    .trim(); 
+        		System.out.print("'" + GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")', ");
+        		}}
+		System.out.println();
 		
-		
+		String actionToTrack = "contact1";
+
+		ArrayList<ArrayList<Integer>> LocationR = new ArrayList<ArrayList<Integer>>();
 				
-		while(time < timeTotal){
+		while(GlobalManager.SumPopulation("I1") > 0){
 		ArrayList<Double> PropFunc = new ArrayList<>();
 		ArrayList<Integer> agentArrayList = new ArrayList<>();			
 		ArrayList<ArrayList<Integer>> agentPositionArray = new ArrayList<>();	
@@ -60,7 +64,6 @@ public class Simulator {
 		for(int i=0; i < GlobalManager.getAgentManager().Agents.size(); i++){
 	        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
 	        		if (GlobalManager.getAgentManager().GlobalMatrix[i][j]==0){}else{
-	        			//this has to be changed, for each agent we want to get the list, or as before, with AgentAction
 	        			for(Action action: GlobalManager.getAgentManager().Agents.get(i).getActionList()){
 	        				//no-inf action - mass action
 	        				if (action.getType() == Action.ACTION_TYPE_NoInf){
@@ -68,10 +71,10 @@ public class Simulator {
 	 					       PropFunc.add(noinfaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j]);	 					       
 	 					       agentArrayList.add(i);
 	 					       agentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
-	 					       nameActions.add(action.getName());
+	 					       nameActions.add(noinfaction.getName());
 	 					       passiveAgentPositionArray.add(NoPassive);//there is no passive agent
 	 					       passiveProbArray.add(0.0);
-	 					       Type.add(action.getType());
+	 					       Type.add(noinfaction.getType());
 	 				        }		        				
 	        				//inf action - check all the couple act-pass (depending on influence set)
 	 						if (action.getType() == Action.ACTION_TYPE_Inf){
@@ -80,11 +83,11 @@ public class Simulator {
 	 						    	 for(int k = 0; k < allActions.size(); k++){
 	 						    		 if(k != i){
 	 						    	     for(Action actionToCheck: allActions.get(k)){
-	 						    		    if(action.getName() == actionToCheck.getName() && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
-	 						    		    	//now: passive agent same loc and >0
+	 						    		   if(action.getName().equals(actionToCheck.getName()) && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
+	 						    	    	 //now: passive agent same loc and >0
 	 						    		    	if(GlobalManager.getAgentManager().GlobalMatrix[k][j] > 0){
-	 						    		    	PropFunc.add(infaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j]);
-	 						    		    	agentArrayList.add(i);
+	 						    		    	PropFunc.add(infaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j] * GlobalManager.getAgentManager().GlobalMatrix[k][j]);
+		                                        agentArrayList.add(i);
 	 					 					    agentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
 	 					 					    nameActions.add(action.getName());
 	 					 					    passiveAgentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
@@ -96,11 +99,11 @@ public class Simulator {
 	 						    	 for(int k = 0; k < allActions.size(); k++){
 	 						    		 if(k != i){
 	 						    	     for(Action actionToCheck: allActions.get(k)){
-	 						    		    if(action.getName() == actionToCheck.getName() && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
+	 						    		    if(action.getName().equals(actionToCheck.getName()) && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
 	 						    		    	//now: passive agent same loc and >0
 	 						    		    	for(ArrayList<Integer> t : GlobalManager.getLocationManager().getNeigh(GlobalManager.getLocationManager().AllLoc.get(j))){
 	 						    		    	if(GlobalManager.getAgentManager().GlobalMatrix[k][GlobalManager.getLocationManager().MatrixLoc.get(t)] > 0){
-	 						    		    	PropFunc.add(infaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j]);
+	 						    		    	PropFunc.add(infaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j] * GlobalManager.getAgentManager().GlobalMatrix[k][GlobalManager.getLocationManager().MatrixLoc.get(t)]);
 	 						    		    	agentArrayList.add(i);
 	 					 					    agentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
 	 					 					    nameActions.add(action.getName());
@@ -113,11 +116,11 @@ public class Simulator {
 	 						    	 for(int k = 0; k < allActions.size(); k++){
 	 						    		 if(k != i){
 	 						    	     for(Action actionToCheck: allActions.get(k)){
-	 						    		    if(action.getName() == actionToCheck.getName() && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
+	 						    		    if(action.getName().equals(actionToCheck.getName()) && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
 	 						    		    	//now: passive agent >0
 	 						    		    	for(ArrayList<Integer> s : GlobalManager.getLocationManager().AllLoc){
 	 						    		    	if(GlobalManager.getAgentManager().GlobalMatrix[k][GlobalManager.getLocationManager().MatrixLoc.get(s)] > 0){
-	 						    		    	PropFunc.add(infaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j]);
+	 						    		    	PropFunc.add(infaction.getRate() * GlobalManager.getAgentManager().GlobalMatrix[i][j] * GlobalManager.getAgentManager().GlobalMatrix[k][GlobalManager.getLocationManager().MatrixLoc.get(s)]);
 	 						    		    	agentArrayList.add(i);
 	 					 					    agentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
 	 					 					    nameActions.add(action.getName());
@@ -127,13 +130,15 @@ public class Simulator {
 	 					 					    Type.add(action.getType());}}}}}}}}
 	 						    
 	 					   if (action.getType() == Action.ACTION_TYPE_Pass){
+	 						    PassAction passaction = (PassAction) action;
 	 						    PropFunc.add(0.0);
 					    		agentArrayList.add(i);
 				 			    agentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
-				 			    nameActions.add(action.getName());
+				 			    nameActions.add(passaction.getName());
 							    passiveAgentPositionArray.add(GlobalManager.getLocationManager().AllLoc.get(j));
+							    //the probability is added while dealing with the influence action
 							    passiveProbArray.add(0.0);
-							    Type.add(action.getType());}
+							    Type.add(passaction.getType());}
 	 						      
 	        	
 	 				       if (action.getType() == Action.ACTION_TYPE_Env){
@@ -142,7 +147,7 @@ public class Simulator {
 		 						      for(int k = 0; k < allActions.size(); k++){
 		 						          if(k != i){
 		 						          for(Action actionToCheck: allActions.get(k)){
-		 						     	     if(action.getName() == actionToCheck.getName() && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
+		 						     	     if(action.getName().equals(actionToCheck.getName()) && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
 		 						    	    	//now: passive agent >0
 		 						     	    	for(ArrayList<Integer> s : GlobalManager.getLocationManager().AllLoc){
 		 						    		    	if(GlobalManager.getAgentManager().GlobalMatrix[k][GlobalManager.getLocationManager().MatrixLoc.get(s)] > 0){
@@ -159,7 +164,7 @@ public class Simulator {
 		 							  for (int r = 0; r < GlobalManager.getAgentManager().GlobalMatrix.length; r++){
 		 								  	if(GlobalManager.getAgentManager().GlobalMatrix[r][GlobalManager.getLocationManager().MatrixLoc.get(locName)] > 0){
 		 								  	for(Action actionToCheck: allActions.get(r)){
-		 								  		if(action.getName() == actionToCheck.getName() && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
+		 								  		if(action.getName().equals(actionToCheck.getName()) && actionToCheck.getType() == Action.ACTION_TYPE_Pass){
 		 								  			//now: passive agent same loc and >0
 		 								  			PropFunc.add(envaction.getRate());
 		 								  			agentArrayList.add(r);
@@ -171,7 +176,7 @@ public class Simulator {
 		 						    		       				
 	 		        				
 //		for(int i=0; i < PropFunc.size(); i++){ 
-//			System.out.println(PropFunc.get(i));
+//		System.out.println(PropFunc.get(i));
 //			System.out.println(agentArrayList.get(i));
 //			System.out.println(agentPositionArray.get(i));
 //			System.out.println(nameActions.get(i));
@@ -180,14 +185,12 @@ public class Simulator {
 //			System.out.println("end");
 //		}
 		
-		
 		double sumPropFunc = sum(PropFunc);
 		
 		if (sumPropFunc == 0){
 			System.out.println("End - null population");
 			break;
-		}else{
-		
+		}else{		
 		
 		double[] Prob = new double[PropFunc.size()];
 
@@ -211,11 +214,19 @@ public class Simulator {
 		
 		int action_index = Samples.getDiscrete(ActionRef, Prob);
 		
+		//PIECE OF CODE THAT TRACK PASSIVE AGENT POSITION -> WHERE contact1 HAPPENS
+		if(nameActions.get(action_index).equals(actionToTrack)){
+			System.out.println("Location where contact1 happened: " + passiveAgentPositionArray.get(action_index));
+			if (!LocationR.contains(passiveAgentPositionArray.get(action_index))){
+			LocationR.add(passiveAgentPositionArray.get(action_index));
+            }
+		}
+		
 		if(Type.get(action_index) == Action.ACTION_TYPE_NoInf){
 			String nameToCheck = nameActions.get(action_index);
-			for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+			for(int i=0; i < GlobalManager.getAgentManager().Agents.size(); i++){
 		        for(Action action: GlobalManager.getAgentManager().Agents.get(i).getActionList()){
-		        	if(action.getName() == nameToCheck){
+		        	if(action.getName().equals(nameToCheck)){
 		        		NoInfAction chosenAction = (NoInfAction) action;		        	
 		        		String symbol = chosenAction.getSymbol();
 
@@ -263,33 +274,31 @@ public class Simulator {
 				GlobalManager.getAgentManager().GlobalMatrix[newStatePos][GlobalManager.getLocationManager().MatrixLoc.get(agentPositionArray.get(action_index))]++;					
 				System.out.println("State action");}}}}}}
 		
-		
-		
+				
 		if(Type.get(action_index) == Action.ACTION_TYPE_Inf){
 			double probEffect = passiveProbArray.get(action_index);
 				if(StdRandom.bernoulli(probEffect)){
 					String nameToCheck = nameActions.get(action_index);
-						for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+						for(int i=0; i < GlobalManager.getAgentManager().Agents.size(); i++){
 					        for(Action action: GlobalManager.getAgentManager().Agents.get(i).getActionList()){
-					        	if(action.getName() == nameToCheck && action.getType() == Action.ACTION_TYPE_Inf){
+					        	if(action.getName().equals(nameToCheck) && action.getType() == Action.ACTION_TYPE_Inf){
 					        		InfAction chosenAction = (InfAction) action;		        	
 					        		String symbolInf = chosenAction.getSymbol();
+					        		
 				    //update for the influence agent
 					//demo+
-					if (symbolInf == "uparrow"){
+					if (symbolInf == ">>"){
 						GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(agentPositionArray.get(action_index))]++;	
 					System.out.println("Demographic+ action - Inf");
 					}
 					//demo-
-					if (symbolInf == "downarrow"){
+					if (symbolInf == "<<"){
 						GlobalManager.getAgentManager().GlobalMatrix[agentArrayList.get(action_index)][GlobalManager.getLocationManager().MatrixLoc.get(agentPositionArray.get(action_index))]--;					
 					System.out.println("Demographic- action - Inf");
 					}
-					
-					
-					
-					if (symbolInf == "dot"){
-						if (chosenAction.getUpdate().matches("(?i).*new*")){				
+								
+					if (symbolInf == "."){
+						if (chosenAction.getUpdate().matches("(.*)new(.*)")){				
 							//so far just random movement
 							ArrayList<Integer> actualposition = agentPositionArray.get(action_index);
 							ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(actualposition);
@@ -308,10 +317,9 @@ public class Simulator {
 			     			System.out.println("Spatial action - Inf");}else{
 			                //change of state
 							String newState = action.getUpdate();
-							
 							int newStatePos = 0;				
-							for(int k=0; k < GlobalManager.getAgentManager().AgentNames.size(); k++){
-								if(newState == GlobalManager.getAgentManager().AgentNames.get(k)){
+							for(int k=0; k < GlobalManager.getAgentManager().Agents.size(); k++){
+								if(newState.equals(GlobalManager.getAgentManager().AgentNames.get(k)  + "(l)")){
 									newStatePos = k;	
 								}
 							}
@@ -322,23 +330,23 @@ public class Simulator {
 					//update of passive agents
 					for (int k=0; k < GlobalManager.getAgentManager().AgentNames.size(); k++){					
 					for(Action actionToCheckPass: GlobalManager.getAgentManager().Agents.get(k).getActionList()){
-					        	if(actionToCheckPass.getName() == nameToCheck && actionToCheckPass.getType() == Action.ACTION_TYPE_Pass){
+					        	if(actionToCheckPass.getName().equals(nameToCheck) && actionToCheckPass.getType() == Action.ACTION_TYPE_Pass){
 					        		PassAction chosenActionPass = (PassAction) actionToCheckPass;		        	
 					        		String symbolPass = chosenActionPass.getSymbol();
 					        		int PassAgentName = k;
 					        		ArrayList<Integer> PassAgentPosition = passiveAgentPositionArray.get(action_index);
 					    //demo+
-					    if (symbolPass == "uparrow"){
+					    if (symbolPass == ">>"){
 					    	GlobalManager.getAgentManager().GlobalMatrix[PassAgentName][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]++;	
 						System.out.println("Demographic+ action - Pass");
 						}
 						//demo-
-						if (symbolPass == "downarrow"){
+						if (symbolPass == "<<"){
 							GlobalManager.getAgentManager().GlobalMatrix[PassAgentName][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]--;					
-						System.out.println("Demographic- action - Pass");
+						//System.out.println("Demographic- action - Pass");
 						}
-						if (symbolPass == "dot"){
-								if (chosenAction.getUpdate().matches("(?i).*new*")){				
+						if (symbolPass == "."){
+								if (chosenActionPass.getUpdate().matches("(?i).*new*")){				
 									//so far just random movement
 									ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(PassAgentPosition);
 									double[] ProbLoc = new double[neighbourhood.size()];
@@ -357,16 +365,17 @@ public class Simulator {
 									
 									
 				                //change of state
-								String newState = action.getUpdate();
+								String newState = chosenActionPass.getUpdate();
 								int newStatePos = 0;				
 								for(int q=0; q < GlobalManager.getAgentManager().AgentNames.size(); q++){
-									if(newState == GlobalManager.getAgentManager().AgentNames.get(q)){
+									if(newState.equals(GlobalManager.getAgentManager().AgentNames.get(q) + "(l)")){
 										newStatePos = q;	
 									}
 								}
 								GlobalManager.getAgentManager().GlobalMatrix[PassAgentName][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]--;					
 								GlobalManager.getAgentManager().GlobalMatrix[newStatePos][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]++;					
-								System.out.println("State action - Pass");}}}}}
+								//System.out.println(" State action - Pass ");
+								}}}}}
 					
 					        			
 		
@@ -380,16 +389,16 @@ public class Simulator {
 			        		int PassAgentName = k;
 			        		ArrayList<Integer> PassAgentPosition = passiveAgentPositionArray.get(action_index);
 			    //demo+
-			    if (symbolPass == "uparrow"){
+			    if (symbolPass == "<<"){
 			    	GlobalManager.getAgentManager().GlobalMatrix[PassAgentName][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]++;	
 				System.out.println("Demographic+ action - Pass");
 				}
 				//demo-
-				if (symbolPass == "downarrow"){
+				if (symbolPass == ">>"){
 					GlobalManager.getAgentManager().GlobalMatrix[PassAgentName][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]--;					
 				System.out.println("Demographic- action - Pass");
 				}
-	     		if (symbolPass == "dot"){
+	     		if (symbolPass == "."){
 					if (chosenAction.getUpdate().matches("(?i).*new*")){				
 							//so far just random movement
 								ArrayList<ArrayList<Integer>> neighbourhood = GlobalManager.getLocationManager().getNeigh(PassAgentPosition);
@@ -410,36 +419,46 @@ public class Simulator {
 						String newState = action.getUpdate();
 						int newStatePos = 0;				
 						for(int q=0; q < GlobalManager.getAgentManager().AgentNames.size(); q++){
-							if(newState == GlobalManager.getAgentManager().AgentNames.get(q)){
+							if(newState == GlobalManager.getAgentManager().AgentNames.get(q) + "(l)"){
 								newStatePos = q;	
 							}
 						}
 						GlobalManager.getAgentManager().GlobalMatrix[PassAgentName][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]--;					
 						GlobalManager.getAgentManager().GlobalMatrix[newStatePos][GlobalManager.getLocationManager().MatrixLoc.get(PassAgentPosition)]++;					
-						System.out.println("State action - Pass");}}}}}
+						System.out.println("State action - Pass");
+						}}}}}
 			
 			
 		}}}}}}
 		
 		time = time + time_passed;
 	
-		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
-	        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
-	        		String formatedString = GlobalManager.getLocationManager().AllLoc.get(j).toString()
-	        			    .replace("[", "")  //remove the right bracket
-	        			    .replace("]", "")  //remove the left bracket
-	        			    .trim(); 
-	        		System.out.println(GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")=" + GlobalManager.getAgentManager().GlobalMatrix[i][j]);
-	        		}}}
-	        	System.out.println("Time: " + time);
-	        	System.out.println("-----");
-		}}
-//		System.out.print(time + " ");
 //		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
-//    	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
-//    		System.out.print(GlobalManager.getAgentManager().GlobalMatrix[i][j] + " ");
-//    		}}}
-//   }}
+//	        	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
+//	        		String formatedString = GlobalManager.getLocationManager().AllLoc.get(j).toString()
+//	        			    .replace("[", "")  //remove the right bracket
+//	        			    .replace("]", "")  //remove the left bracket
+//	        			    .trim(); 
+//	        		System.out.println(GlobalManager.getAgentManager().AgentNames.get(i) + "(" + formatedString + ")=" + GlobalManager.getAgentManager().GlobalMatrix[i][j]);
+//	        		}}}
+//	        	System.out.println("Time: " + time);
+//	        	System.out.println("-----");
+//		}}
+		
+		
+		System.out.print(time + " ");
+		for(int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+    	for(int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
+    		System.out.print(GlobalManager.getAgentManager().GlobalMatrix[i][j] + " ");
+    		}}
+		}}
+		
+    System.out.println();
+    System.out.println("The location where " + actionToTrack + " happened are: ");
+    for (int k=0; k < LocationR.size(); k++){
+	System.out.println(LocationR.get(k));
+    }
+    System.out.println("Therefore, R* is equal to " + LocationR.size());}
 		
 		
 

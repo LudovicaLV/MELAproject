@@ -1,464 +1,380 @@
-The chosen spatial structure is: TwoD
-The value of parameter r2 is 0.3
-The value of parameter p is 0.9
-The value of parameter r3 is 0.8
-The value of parameter r4 is 0.6
-The value of parameter m is 0.9
-The value of parameter r1 is 0.5
+The chosen spatial structure is: OneD
+The value of parameter rr is 0.8
+The value of parameter rc1 is 5.0
+The value of parameter p1 is 1.0
+The value of parameter b is 1.0
+The value of parameter dI is 0.6
+The value of parameter mR is 0.6
+The value of parameter mS is 0.7
+The value of parameter dI1 is 0.6
+The value of parameter dR is 0.4
+The value of parameter dS is 0.3
+The value of parameter p is 1.0
+The value of parameter rr1 is 0.8
+The value of parameter rc is 0.5
+The value of parameter mI1 is 5.0
+The value of parameter mI is 0.5
 We have the following agents:
 S
+I1
 I
-En
+R
 and they can perform these actions:
 S:
-- action1 
-- action2 
-- action4 
-- move 
+- contact1 
+- contact 
+- birth 
+- deathS 
+- moveS 
+I1:
+- contact1 
+- deathI1 
+- recover1 
+- moveI1 
 I:
-- action3 
-En:
-- action4 
+- contact 
+- recover 
+- deathI 
+- moveI 
+R:
+- deathR 
+- moveR 
 We have the following locations:
-0,0
-0,1
-1,0
-1,1
+0
+1
+2
 The initial number of each type of agent in each location:
-The initial number of agent S in location 0,0 is 0
-The initial number of agent S in location 0,1 is 0
-The initial number of agent S in location 1,0 is 0
-The initial number of agent S in location 1,1 is 10
-The initial number of agent I in location 0,0 is 0
-The initial number of agent I in location 0,1 is 0
-The initial number of agent I in location 1,0 is 0
-The initial number of agent I in location 1,1 is 0
-The initial number of agent En in location 0,0 is 1
-The initial number of agent En in location 0,1 is 0
-The initial number of agent En in location 1,0 is 0
-The initial number of agent En in location 1,1 is 0
+The initial number of agent S in location 0 is 100
+The initial number of agent S in location 1 is 0
+The initial number of agent S in location 2 is 0
+The initial number of agent I1 in location 0 is 1
+The initial number of agent I1 in location 1 is 0
+The initial number of agent I1 in location 2 is 0
+The initial number of agent I in location 0 is 0
+The initial number of agent I in location 1 is 0
+The initial number of agent I in location 2 is 0
+The initial number of agent R in location 0 is 0
+The initial number of agent R in location 1 is 0
+The initial number of agent R in location 2 is 0
 Just the no-zero initial number:
-The initial number of agent S in location (1,1) is 10
-The initial number of agent En in location (0,0) is 1
+The initial number of agent S in location (0) is 100
+The initial number of agent I1 in location (0) is 1
 Model parsed correctly. The result of the simulation is:
+For legend in the plot
+'S(0)', 'S(1)', 'S(2)', 'I1(0)', 'I1(1)', 'I1(2)', 'I(0)', 'I(1)', 'I(2)', 'R(0)', 'R(1)', 'R(2)', 
 Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=9
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.007313636147225876
------
-State action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=8
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.050254586661032795
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=7
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.1580321386934578
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=3
-S(1, 1)=6
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.17246118474942124
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=3
-S(1, 1)=5
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.24830338203215102
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=4
-S(1, 1)=4
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.2752575489551794
------
-Spatial action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=3
-S(1, 1)=4
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.32962530766138554
------
-Demographic- action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=4
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 0.5068949100359428
------
-State action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=4
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.0262284865365805
------
-State action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=3
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=2
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.0424509215067193
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=3
-S(1, 1)=2
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=2
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.052964244984101
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=3
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=2
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.0764466492443376
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=2
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=2
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.153936580977744
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=1
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=2
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.376251824622523
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=1
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=2
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.5025863473939878
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=1
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.753890495536013
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=2
-S(1, 1)=0
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 1.8612566994131687
------
-Spatial action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=0
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=1
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 2.1740780256065495
------
-Demographic- action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=0
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 2.2223991810601635
------
-State action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=0
-I(0, 0)=2
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 2.7260346292656976
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=0
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 2.9248437786883605
------
-Spatial action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=0
-S(1, 1)=0
-I(0, 0)=1
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 2.930460739602614
------
-Demographic- action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=0
-S(1, 1)=0
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 3.0095761231091798
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=0
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 3.2569050358697846
------
-Spatial action
-S(0, 0)=1
-S(0, 1)=0
-S(1, 0)=0
-S(1, 1)=0
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 3.5000919241993396
------
-Spatial action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=1
-S(1, 1)=0
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 4.663823182494886
------
-State action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=0
-S(1, 1)=0
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=1
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 5.940226163979085
------
-Demographic- action
-S(0, 0)=0
-S(0, 1)=0
-S(1, 0)=0
-S(1, 1)=0
-I(0, 0)=0
-I(0, 1)=0
-I(1, 0)=0
-I(1, 1)=0
-En(0, 0)=1
-En(0, 1)=0
-En(1, 0)=0
-En(1, 1)=0
-Time: 10.066384145227884
------
-End - null population
+0.006301499383137521 99 1 0 1 0 0 0 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.006345572181813013 98 1 0 1 0 0 1 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.007601370188519591 97 1 0 1 0 0 2 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.007653521129408835 96 1 0 1 0 0 3 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.008195620258812273 95 1 0 1 0 0 4 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.00890281238293398 94 1 0 1 0 0 5 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.009097426088956976 93 1 0 1 0 0 6 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.009488562177748973 92 1 0 1 0 0 7 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.010898499362391498 91 1 0 1 0 0 8 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.012064854987463925 90 1 0 1 0 0 9 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.012110204219020702 89 1 0 1 0 0 10 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.012866934549531093 88 1 0 1 0 0 11 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.013153551746355565 87 1 0 1 0 0 12 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.013280852324920527 86 1 0 1 0 0 13 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.013346456665513654 85 1 0 1 0 0 14 0 0 0 0 0 State action - Inf
+0.014965923130803022 84 1 0 1 0 0 15 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.016617694748825355 83 1 0 1 0 0 16 0 0 0 0 0 State action - Inf
+0.016939201050763037 82 1 0 1 0 0 17 0 0 0 0 0 State action - Inf
+0.017288002127866377 81 1 0 1 0 0 18 0 0 0 0 0 State action - Inf
+0.01757902309038176 80 1 0 1 0 0 19 0 0 0 0 0 State action - Inf
+0.01820836248832252 79 1 0 1 0 0 20 0 0 0 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.018667563712160103 78 1 0 1 0 0 21 0 0 0 0 0 State action - Inf
+0.019318213719409706 77 1 0 1 0 0 22 0 0 0 0 0 State action - Inf
+0.019601377364126486 76 1 0 1 0 0 23 0 0 0 0 0 State action
+0.021701176848072212 76 1 0 1 0 0 22 0 0 1 0 0 State action - Inf
+0.021848061657148175 75 1 0 1 0 0 23 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.023385316938871935 74 1 0 1 0 0 24 0 0 1 0 0 State action - Inf
+0.02460622746256887 73 1 0 1 0 0 25 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.024767773442032688 72 1 0 1 0 0 26 0 0 1 0 0 Spatial action
+0.02485336292408779 71 2 0 1 0 0 26 0 0 1 0 0 Demographic+ action
+0.0263067811322301 72 2 0 1 0 0 26 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.026495080480501542 71 2 0 1 0 0 27 0 0 1 0 0 State action - Inf
+0.028031317979562854 70 2 0 1 0 0 28 0 0 1 0 0 Demographic+ action
+0.029274111263372784 71 2 0 1 0 0 28 0 0 1 0 0 State action - Inf
+0.029444798301660614 70 2 0 1 0 0 29 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.029962672827467552 69 2 0 1 0 0 30 0 0 1 0 0 State action - Inf
+0.02998237896627652 68 2 0 1 0 0 31 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.03031710947535005 67 2 0 1 0 0 32 0 0 1 0 0 State action - Inf
+0.030329244324542745 66 2 0 1 0 0 33 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.031421074090889525 65 2 0 1 0 0 34 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.03211652311011004 64 2 0 1 0 0 35 0 0 1 0 0 State action - Inf
+0.03233019602522461 63 2 0 1 0 0 36 0 0 1 0 0 State action - Inf
+0.03236663142061837 62 2 0 1 0 0 37 0 0 1 0 0 Location where contact1 happened: [0]
+State action - Inf
+0.03312912503107762 61 2 0 1 0 0 38 0 0 1 0 0 State action - Inf
+0.03442199218481176 60 2 0 1 0 0 39 0 0 1 0 0 State action - Inf
+0.034806060804343425 59 2 0 1 0 0 40 0 0 1 0 0 State action - Inf
+0.03500556847115979 58 2 0 1 0 0 41 0 0 1 0 0 State action - Inf
+0.03565496393958345 57 2 0 1 0 0 42 0 0 1 0 0 Spatial action
+0.036214612737729336 57 2 0 0 0 1 42 0 0 1 0 0 State action - Inf
+0.036408557687629524 56 2 0 0 0 1 43 0 0 1 0 0 State action - Inf
+0.03698456762992214 55 2 0 0 0 1 44 0 0 1 0 0 State action - Inf
+0.03990543315845803 54 2 0 0 0 1 45 0 0 1 0 0 State action - Inf
+0.040031678624480566 53 2 0 0 0 1 46 0 0 1 0 0 Spatial action
+0.04040169188490214 52 3 0 0 0 1 46 0 0 1 0 0 State action - Inf
+0.04065297362871523 51 3 0 0 0 1 47 0 0 1 0 0 State action - Inf
+0.04121926624107331 50 3 0 0 0 1 48 0 0 1 0 0 State action - Inf
+0.04143354588739317 49 3 0 0 0 1 49 0 0 1 0 0 State action - Inf
+0.04152051333161188 48 3 0 0 0 1 50 0 0 1 0 0 State action - Inf
+0.041853732273464915 47 3 0 0 0 1 51 0 0 1 0 0 State action - Inf
+0.04243752121381063 46 3 0 0 0 1 52 0 0 1 0 0 State action - Inf
+0.04267858393173595 45 3 0 0 0 1 53 0 0 1 0 0 State action - Inf
+0.043089430982959614 44 3 0 0 0 1 54 0 0 1 0 0 State action - Inf
+0.04354207879868323 43 3 0 0 0 1 55 0 0 1 0 0 Demographic+ action
+0.04455404137580676 44 3 0 0 0 1 55 0 0 1 0 0 Demographic+ action
+0.04793708917085098 45 3 0 0 0 1 55 0 0 1 0 0 State action - Inf
+0.048024204402409454 44 3 0 0 0 1 56 0 0 1 0 0 State action - Inf
+0.04802474658726125 43 3 0 0 0 1 57 0 0 1 0 0 State action
+0.048449999309953445 43 3 0 0 0 1 56 0 0 2 0 0 State action - Inf
+0.05056854637782779 42 3 0 0 0 1 57 0 0 2 0 0 State action - Inf
+0.054620266814778246 41 3 0 0 0 1 58 0 0 2 0 0 State action - Inf
+0.05495231882153942 40 3 0 0 0 1 59 0 0 2 0 0 State action - Inf
+0.05500169220364245 39 3 0 0 0 1 60 0 0 2 0 0 State action - Inf
+0.05582412683720831 38 3 0 0 0 1 61 0 0 2 0 0 State action - Inf
+0.058644010741395095 37 3 0 0 0 1 62 0 0 2 0 0 State action - Inf
+0.059961599266274514 36 3 0 0 0 1 63 0 0 2 0 0 State action - Inf
+0.06227564929284791 35 3 0 0 0 1 64 0 0 2 0 0 State action - Inf
+0.06244587254259666 34 3 0 0 0 1 65 0 0 2 0 0 State action - Inf
+0.06261747155153956 33 3 0 0 0 1 66 0 0 2 0 0 State action - Inf
+0.06425750699425999 32 3 0 0 0 1 67 0 0 2 0 0 Demographic- action
+0.06446415455679211 31 3 0 0 0 1 67 0 0 2 0 0 State action - Inf
+0.06464967763600267 30 3 0 0 0 1 68 0 0 2 0 0 State action - Inf
+0.06516783298367775 29 3 0 0 0 1 69 0 0 2 0 0 State action - Inf
+0.06560172826389084 28 3 0 0 0 1 70 0 0 2 0 0 State action - Inf
+0.0662294559408313 27 3 0 0 0 1 71 0 0 2 0 0 Spatial action
+0.06707872765870673 27 3 0 0 0 1 70 0 1 2 0 0 State action - Inf
+0.06726698295786823 26 3 0 0 0 1 71 0 1 2 0 0 State action - Inf
+0.06745781158531153 25 3 0 0 0 1 72 0 1 2 0 0 Spatial action
+0.06866169953025626 25 3 0 0 1 0 72 0 1 2 0 0 State action - Inf
+0.06982397916651088 24 3 0 0 1 0 73 0 1 2 0 0 State action - Inf
+0.07145564026098009 23 3 0 0 1 0 74 0 1 2 0 0 State action - Inf
+0.07222671715005896 22 3 0 0 1 0 75 0 1 2 0 0 State action - Inf
+0.07347774428769735 21 3 0 0 1 0 76 0 1 2 0 0 State action - Inf
+0.0736909960431543 20 3 0 0 1 0 77 0 1 2 0 0 State action - Inf
+0.07398951467084565 19 3 0 0 1 0 78 0 1 2 0 0 State action - Inf
+0.07410499388378937 18 3 0 0 1 0 79 0 1 2 0 0 State action - Inf
+0.07413295280967709 17 3 0 0 1 0 80 0 1 2 0 0 State action - Inf
+0.07599799890935137 16 3 0 0 1 0 81 0 1 2 0 0 State action - Inf
+0.07700495377716537 15 3 0 0 1 0 82 0 1 2 0 0 State action - Inf
+0.07778290510577822 14 3 0 0 1 0 83 0 1 2 0 0 Spatial action
+0.08049901655693699 14 3 0 0 1 0 82 1 1 2 0 0 Demographic- action
+0.08158998397545557 14 3 0 0 1 0 82 1 1 1 0 0 State action - Inf
+0.08325709525008482 13 3 0 0 1 0 83 1 1 1 0 0 State action
+0.08346143635101577 13 3 0 0 1 0 82 1 1 2 0 0 State action - Inf
+0.08471512502020592 12 3 0 0 1 0 83 1 1 2 0 0 State action - Inf
+0.08872952088761613 11 3 0 0 1 0 84 1 1 2 0 0 State action - Inf
+0.08947730830316528 10 3 0 0 1 0 85 1 1 2 0 0 State action - Inf
+0.09262802990456422 9 3 0 0 1 0 86 1 1 2 0 0 State action - Inf
+0.09375371689528257 8 3 0 0 1 0 87 1 1 2 0 0 State action
+0.1027463645972923 8 3 0 0 1 0 87 1 1 2 0 0 State action
+0.10300335922226118 8 3 0 0 1 0 86 1 1 3 0 0 Location where contact1 happened: [1]
+State action - Inf
+0.10402010289022286 8 2 0 0 1 0 86 2 1 3 0 0 State action - Inf
+0.10582707110618456 7 2 0 0 1 0 87 2 1 3 0 0 State action - Inf
+0.10586306147567938 6 2 0 0 1 0 88 2 1 3 0 0 Spatial action
+0.10599904494810308 6 2 0 0 1 0 87 2 2 3 0 0 State action
+0.10938428042370385 6 2 0 0 1 0 87 2 2 3 0 0 State action - Inf
+0.11193170804408363 5 2 0 0 1 0 88 2 2 3 0 0 State action - Inf
+0.11632905958933659 4 2 0 0 1 0 89 2 2 3 0 0 State action
+0.12476807584685115 4 2 0 0 1 0 89 2 1 3 0 1 State action
+0.12607706518500908 4 2 0 0 1 0 88 2 1 4 0 1 State action
+0.1313189552997993 4 2 0 0 1 0 88 2 1 4 0 1 State action
+0.1354514674114786 4 2 0 0 1 0 87 2 1 5 0 1 State action - Inf
+0.13816379207547022 3 2 0 0 1 0 88 2 1 5 0 1 State action - Inf
+0.14388745206059697 2 2 0 0 1 0 89 2 1 5 0 1 State action - Inf
+0.14525127216316028 1 2 0 0 1 0 90 2 1 5 0 1 Location where contact1 happened: [1]
+State action - Inf
+0.15115137548416951 1 1 0 0 1 0 90 3 1 5 0 1 State action
+0.15163312202883528 1 1 0 0 1 0 90 3 1 5 0 1 State action
+0.15598834570269018 1 1 0 0 1 0 90 3 1 5 0 1 Spatial action
+0.15701763666480856 1 1 0 0 1 0 89 3 2 5 0 1 State action
+0.15943313627752093 1 1 0 0 1 0 88 3 2 6 0 1 State action
+0.16149092862954484 1 1 0 0 1 0 87 3 2 7 0 1 State action
+0.16637777760868652 1 1 0 0 1 0 87 3 2 7 0 1 State action
+0.16761948285849168 1 1 0 0 1 0 86 3 2 8 0 1 State action
+0.17450652505078337 1 1 0 0 1 0 85 3 2 9 0 1 Spatial action
+0.18615539133041606 1 1 0 0 1 0 84 3 3 9 0 1 Spatial action
+0.19208399742910773 1 1 0 0 0 1 84 3 3 9 0 1 Spatial action
+0.19311976963802271 1 1 0 0 0 1 84 3 3 8 1 1 State action
+0.19769541487329334 1 1 0 0 0 1 84 3 3 8 1 1 State action - Inf
+0.19794881936231093 0 1 0 0 0 1 85 3 3 8 1 1 State action
+0.1987625020037928 0 1 0 0 0 1 85 3 3 8 1 1 State action
+0.19930999636779068 0 1 0 0 0 1 84 3 3 9 1 1 State action
+0.20858429603824225 0 1 0 0 0 1 84 3 3 9 1 1 State action
+0.21047112870646967 0 1 0 0 0 1 83 3 3 10 1 1 Spatial action
+0.2147920352285924 0 1 0 0 0 1 82 3 4 10 1 1 Demographic- action
+0.23572406040037402 0 1 0 0 0 1 82 3 4 9 1 1 State action
+0.24987568071044916 0 1 0 0 0 1 81 3 4 10 1 1 State action
+0.2540584633736328 0 1 0 0 0 1 81 3 4 10 1 1 State action
+0.25696198532474446 0 1 0 0 0 1 81 3 4 10 1 1 Spatial action
+0.26110915674707186 0 1 0 0 0 1 80 4 4 10 1 1 State action
+0.2644912282355539 0 1 0 0 0 1 80 4 4 10 1 1 State action
+0.2655832027430913 0 1 0 0 0 1 79 4 4 11 1 1 State action
+0.26865234980464825 0 1 0 0 0 1 79 4 4 11 1 1 Spatial action
+0.27700954360711383 0 1 0 0 0 1 78 4 5 11 1 1 State action
+0.2772547968400129 0 1 0 0 0 1 77 4 5 12 1 1 State action
+0.27850687245222083 0 1 0 0 0 1 76 4 5 13 1 1 Spatial action
+0.2793643443930364 0 1 0 0 0 1 75 5 5 13 1 1 State action
+0.28869936610953884 0 1 0 0 0 1 74 5 5 14 1 1 State action
+0.2895770847271442 0 1 0 0 0 1 74 5 5 14 1 1 Spatial action
+0.29620597766763934 0 1 0 0 0 1 73 5 6 14 1 1 State action
+0.3014007168429061 0 1 0 0 0 1 73 5 6 14 1 1 State action
+0.30244833103010416 0 1 0 0 0 1 73 5 6 14 1 1 State action
+0.3115262661026498 0 1 0 0 0 1 73 5 6 14 1 1 State action
+0.3122287084122683 0 1 0 0 0 1 72 5 6 15 1 1 Demographic- action
+0.31325408305786395 0 1 0 0 0 1 72 5 6 15 1 0 State action
+0.3138284313916508 0 1 0 0 0 1 71 5 6 16 1 0 State action
+0.32891249837528624 0 1 0 0 0 1 71 5 6 16 1 0 State action - Inf
+0.33435767720357495 0 0 0 0 0 1 71 6 6 16 1 0 Spatial action
+0.33636135028135605 0 0 0 0 0 1 70 6 7 16 1 0 State action
+0.33662552190106787 0 0 0 0 0 1 70 6 7 16 1 0 State action
+0.3418795620826142 0 0 0 0 0 1 70 6 7 16 1 0 Spatial action
+0.3426484822984946 0 0 0 0 0 1 69 6 8 16 1 0 State action
+0.3459535130248844 0 0 0 0 0 1 69 6 8 16 1 0 Spatial action
+0.35336735537665465 0 0 0 0 0 1 70 5 8 16 1 0 State action
+0.3559373832269631 0 0 0 0 0 1 70 5 8 16 1 0 State action
+0.3620994848912455 0 0 0 0 0 1 69 5 8 17 1 0 State action
+0.36502666767591596 0 0 0 0 0 1 68 5 8 18 1 0 State action
+0.3687744625232868 0 0 0 0 0 1 68 5 8 18 1 0 State action
+0.3706727651512865 0 0 0 0 0 1 68 5 8 18 1 0 State action
+0.37552822161527954 0 0 0 0 0 1 68 5 8 18 1 0 Spatial action
+0.37871477274312265 0 0 0 0 0 1 68 5 8 17 2 0 State action
+0.3886319864753111 0 0 0 0 0 1 67 5 8 18 2 0 State action
+0.3924435044650753 0 0 0 0 0 1 67 5 8 18 2 0 State action
+0.39381742263658037 0 0 0 0 0 1 66 5 8 19 2 0 State action
+0.3942118586420377 0 0 0 0 0 1 65 5 8 20 2 0 Demographic- action
+0.3948595025459363 0 0 0 0 0 1 65 5 8 19 2 0 Spatial action
+0.398195967160747 0 0 0 0 0 1 65 5 8 18 3 0 Spatial action
+0.4202924933242218 0 0 0 0 0 1 65 5 8 18 2 1 State action
+0.4284437799884149 0 0 0 0 0 1 65 5 8 18 2 1 State action
+0.43136598823234984 0 0 0 0 0 1 64 5 8 19 2 1 State action
+0.43730515621193866 0 0 0 0 0 1 64 5 8 19 2 1 State action
+0.4390852568723502 0 0 0 0 0 1 64 5 8 19 2 1 Spatial action
+0.44051475223997244 0 0 0 1 0 0 64 5 8 19 2 1 State action
+0.44083829697584975 0 0 0 1 0 0 63 5 8 20 2 1 State action
+0.44232975971031185 0 0 0 1 0 0 63 5 7 20 2 2 Spatial action
+0.4686559677556916 0 0 0 1 0 0 62 5 8 20 2 2 State action
+0.4697399750627659 0 0 0 1 0 0 62 5 8 20 2 2 Demographic- action
+0.4704130364125109 0 0 0 1 0 0 62 5 8 20 2 1 Spatial action
+0.48203806324060494 0 0 0 1 0 0 61 6 8 20 2 1 State action
+0.4888351023572534 0 0 0 1 0 0 61 5 8 20 3 1 Demographic- action
+0.5063816695918472 0 0 0 1 0 0 61 5 8 19 3 1 State action
+0.5073728020444024 0 0 0 1 0 0 61 5 8 19 3 1 Spatial action
+0.5078510463244553 0 0 0 1 0 0 61 5 8 18 4 1 Spatial action
+0.5121772119868281 0 0 0 1 0 0 61 6 7 18 4 1 State action
+0.5295900854482438 0 0 0 1 0 0 61 6 7 18 4 1 Spatial action
+0.5332124589073457 0 0 0 1 0 0 61 6 7 18 3 2 State action
+0.5460563922680466 0 0 0 1 0 0 60 6 7 19 3 2 Spatial action
+0.5467755585521735 0 0 0 1 0 0 59 6 8 19 3 2 State action
+0.5496119128868555 0 0 0 1 0 0 58 6 8 20 3 2 Spatial action
+0.5582219143103526 0 0 0 1 0 0 57 6 9 20 3 2 Spatial action
+0.5586669710463105 0 0 0 1 0 0 57 6 9 19 3 3 State action
+0.5693947048574232 0 0 0 1 0 0 56 6 9 20 3 3 State action
+0.5718063644669219 0 0 0 1 0 0 56 6 9 20 3 3 Spatial action
+0.5808725925382879 0 0 0 1 0 0 56 6 9 20 4 2 Spatial action
+0.5814634995875482 0 0 0 0 0 1 56 6 9 20 4 2 State action
+0.5818480796857899 0 0 0 0 0 1 55 6 9 21 4 2 State action
+0.5839199951001838 0 0 0 0 0 1 54 6 9 22 4 2 Spatial action
+0.5857386584179932 0 0 0 0 0 1 53 7 9 22 4 2 Spatial action
+0.5968820355279515 0 0 0 0 0 1 52 7 10 22 4 2 State action
+0.6104207519593767 0 0 0 0 0 1 51 7 10 23 4 2 State action
+0.6169220214380811 0 0 0 0 0 1 51 7 9 23 4 3 Spatial action
+0.6212190798563022 0 0 0 0 0 1 50 8 9 23 4 3 State action
+0.6370376363535606 0 0 0 0 0 1 50 8 9 23 4 3 Spatial action
+0.6378134383923756 0 0 0 0 0 1 51 7 9 23 4 3 State action
+0.6471291170367215 0 0 0 0 0 1 51 7 8 23 4 4 State action
+0.6492648684824674 0 0 0 0 0 1 50 7 8 24 4 4 Demographic- action
+0.650647426310127 0 0 0 0 0 1 50 7 8 23 4 4 State action
+0.6537162970456972 0 0 0 0 0 1 50 7 8 23 4 4 State action
+0.655145348580744 0 0 0 0 0 1 49 7 8 24 4 4 State action
+0.6596230586550902 0 0 0 0 0 1 49 7 8 24 4 4 State action
+0.6650220411103772 0 0 0 0 0 1 48 7 8 25 4 4 Spatial action
+0.6669117362319378 0 0 0 0 0 1 48 7 8 24 5 4 State action
+0.6729875240839992 0 0 0 0 0 1 47 7 8 25 5 4 Spatial action
+0.6746157760831251 0 0 0 0 0 1 47 6 9 25 5 4 Spatial action
+0.6907567656405217 0 0 0 0 0 1 47 5 10 25 5 4 Spatial action
+0.6920766209705679 0 0 0 0 1 0 47 5 10 25 5 4 State action
+0.6921348662153328 0 0 0 0 1 0 47 5 10 25 5 4 State action
+0.6971633006254574 0 0 0 0 1 0 47 5 10 25 5 4 Spatial action
+0.697423275606983 0 0 0 0 1 0 46 6 10 25 5 4 State action
+0.7038241726013453 0 0 0 0 1 0 46 6 10 25 5 4 State action
+0.7046221190224815 0 0 0 0 1 0 46 6 10 25 5 4 State action
+0.7075234887296427 0 0 0 0 1 0 46 6 10 25 5 4 State action
+0.7101952205717599 0 0 0 0 1 0 46 6 9 25 5 5 Spatial action
+0.7109881003089096 0 0 0 0 1 0 46 6 9 24 5 6 Spatial action
+0.7115972930066565 0 0 0 0 1 0 46 7 8 24 5 6 State action
+0.7116934634773915 0 0 0 0 1 0 46 7 8 24 5 6 Spatial action
+0.720321404310167 0 0 0 1 0 0 46 7 8 24 5 6 Demographic- action
+0.7238669204441113 0 0 0 1 0 0 46 7 8 23 5 6 State action
+0.731106184184043 0 0 0 1 0 0 46 7 8 23 5 6 State action
+0.7471937621763236 0 0 0 1 0 0 45 7 8 24 5 6 State action
+0.7554687758972979 0 0 0 1 0 0 45 7 8 24 5 6 Spatial action
+0.7579654659736591 0 0 0 1 0 0 44 7 9 24 5 6 Demographic- action
+0.7718511780463322 0 0 0 1 0 0 44 7 9 24 5 5 State action
+0.7779571964468716 0 0 0 1 0 0 44 7 9 24 5 5 Spatial action
+0.7813272747951973 0 0 0 1 0 0 44 7 9 25 5 4 State action
+0.7866902139256196 0 0 0 1 0 0 44 7 9 25 5 4 State action
+0.7892532863886391 0 0 0 1 0 0 43 7 9 26 5 4 State action
+0.7989882311307511 0 0 0 1 0 0 42 7 9 27 5 4 Demographic- action
+0.8036855573524748 0 0 0 1 0 0 42 7 9 26 5 4 State action
+0.8104389008897525 0 0 0 1 0 0 42 6 9 26 6 4 State action
+0.8215868968740107 0 0 0 1 0 0 42 6 9 26 6 4 State action
+0.8281889526809361 0 0 0 1 0 0 42 6 9 26 6 4 Spatial action
+0.8413377296924197 0 0 0 0 1 0 42 6 9 26 6 4 State action
+0.8450324511619243 0 0 0 0 1 0 41 6 9 27 6 4 State action
+0.8608986003424766 0 0 0 0 1 0 41 6 9 27 6 4 State action
+0.8665422685676958 0 0 0 0 1 0 41 6 9 27 6 4 Spatial action
+0.8976798685305263 0 0 0 0 1 0 41 6 9 26 7 4 Spatial action
+0.9059736033645074 0 0 0 0 1 0 42 6 8 26 7 4 State action
+0.9082078164604135 0 0 0 0 1 0 41 6 8 27 7 4 State action
+0.9252719679850886 0 0 0 0 1 0 40 6 8 28 7 4 State action
+0.9419116501625006 0 0 0 0 1 0 40 6 8 28 7 4 Spatial action
+0.9548330040046294 0 0 0 0 1 0 40 6 8 27 7 5 State action
+0.9638771979852536 0 0 0 0 1 0 40 5 8 27 8 5 Demographic- action
+0.9702736580847792 0 0 0 0 1 0 40 5 8 27 7 5 Spatial action
+0.9884661376207136 0 0 0 0 1 0 39 5 9 27 7 5 State action
+0.9980738993799388 0 0 0 0 1 0 39 5 8 27 7 6 State action
+1.0037529198759776 0 0 0 0 1 0 38 5 8 28 7 6 Spatial action
+1.0139106733886198 0 0 0 0 1 0 38 5 8 27 8 6 State action
+1.0191235345794423 0 0 0 0 1 0 38 5 8 27 8 6 State action
+1.0191327026271215 0 0 0 0 1 0 37 5 8 28 8 6 Spatial action
+1.034570305378163 0 0 0 0 0 1 37 5 8 28 8 6 State action
+1.040803663244253 0 0 0 0 0 1 37 5 8 28 8 6 Demographic- action
+1.042359864462405 0 0 0 0 0 1 37 5 8 28 7 6 State action
+1.04442303493979 0 0 0 0 0 1 37 5 8 28 7 6 State action
+1.0467144058727147 0 0 0 0 0 1 37 5 8 28 7 6 State action
+1.0486161092478796 0 0 0 0 0 1 37 5 8 28 7 6 Demographic- action
+1.0653883017358576 0 0 0 0 0 0 37 5 8 28 7 6 
+The location where contact1 happened are: 
+[0]
+[1]
+Therefore, R* is equal to 2
