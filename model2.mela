@@ -1,18 +1,14 @@
-#Space: OneD(10)
+#Space: OneD(5)
 
 #Parameters
-mS = 0.5;
-mI = 0.3;
-mR = 0.4;
-c = 2.0;
-r = 0.8;
-p = 0.9;
-b = 1.0;
+dI1 = 0.6;
+m = 0.7;
 
 #Agents
-S(l):=<-(contact,p).I(l) + (moveS,mS).S(newl) + (birth,b)>>S(l);
-I(l):=->{l}(contact,c).I(l) + (recover,r).R(l) + (moveI,mI).I(newl);
-R(l):=(moveR,mR).R(newl);
+S(l):=(move,m).S(newl(1));
+
+I1(l):= (deathI1,dI1)<<I1(l);
+
 
 #Initial conditions
-S(0)[20]||S(9)[20]||I(0)[10]
+S(1)[100]||I1(1)[1]

@@ -6,14 +6,16 @@ public class NoInfAction implements Action {
 		private double rate;
         private String symbol;
 		private String update;
+		private int range;
 		
 		//int DETERMINISTIC 
 		
-		public NoInfAction(String name, double rate, String symbol, String update){
+		public NoInfAction(String name, double rate, String symbol, String update, int range){
 			this.name = name;
 			this.rate = rate;
 			this.symbol = symbol;
 			this.update = update;
+			this.range = range;
 		}
 		
 @Override
@@ -36,6 +38,10 @@ public String getSymbol() {
 @Override
 public String getUpdate() {
 	return update;
+}
+
+public int getRangeNoInf() {
+	return range;
 }
 
 @Override

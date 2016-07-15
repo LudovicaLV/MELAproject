@@ -1,0 +1,29 @@
+#Space: TwoD(2,2)
+
+#Parameters
+c1 = 1.0;
+p1 = 1.0;
+c2 = 0.5;
+p2 = 1.0;
+c3 = 0.25;
+p3 = 1.0;
+
+#Agents
+S(l):= <-(contact1,p1).I(l) + <-(contact2,p2).I(l) + <-(contact3,p3).I(l);
+
+I(l):= ->{N(1)}(contact1,c1).I(l) + ->{N(2)}(contact2,c2).I(l) + ->{N(3)}(contact3,c3).I(l) 
+
++ <-(control,p).R(l);
+
+or
++ <-(control,p)>>I(l);
+
+R(l):= ?
+
+#Environment
+
+E = ->{all}(control,c).E
+
+
+#Initial conditions
+I(1,1)[1]||S(0,0)[100]||S(0,1)[100]||S(1,0)[100]||S(1,1)[100]

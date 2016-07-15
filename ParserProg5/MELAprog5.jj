@@ -100,7 +100,7 @@ IDENTIFIERS
 <DEFAULT> TOKEN : { <KEYWORD_THREED : "ThreeD" > }
 
 <DEFAULT> TOKEN : { <KEYWORD_LOC : "l" > }
-<DEFAULT> TOKEN : { <KEYWORD_NEIGH : "N(l)" > }
+<DEFAULT> TOKEN : { <KEYWORD_NEIGH : "N" > }
 <DEFAULT> TOKEN : { <KEYWORD_ALL : "all" > }
 
 <DEFAULT> TOKEN : { <EOL : ";" > }
@@ -169,23 +169,18 @@ void Input() throws NumberFormatException, RuntimeException, ParseException :
     <SECTION_PARAM>
     (
       Param()
-    )*
-    
+    )*  
 	<SECTION_AGENTS>
 	{agents = true;}
     (
 	  Agent()     
     )+
-
-	(<SECTION_ENV>
-    
+	(<SECTION_ENV>  
 	  EnvAgent()     
     )*
-
     {GlobalManager.getAgentManager().MatrixAgentCreation();
      GlobalManager.getAgentManager().GlobalMatrixCreation(); 
     }
-
    <SECTION_INIT>
     {init = true;}
     (
@@ -361,8 +356,8 @@ Token UpdateLoc() throws NumberFormatException, RuntimeException, ParseException
         LOOKAHEAD(1)
         update = <  IDENTIFIER >
     ]
-    {
-      return update;
+    { 
+    return update;
     }
     
 }
@@ -386,7 +381,7 @@ void Action(Agent agent) throws NumberFormatException, RuntimeException, ParseEx
 
 void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name = null, rateName = null, symbol=null, update, updateloc=null; 
+    Token name = null, rateName = null, symbol=null, update, updateloc=null, range = null; 
 }
 {  
     <LR>
@@ -396,24 +391,37 @@ void NoInfAction(Agent agent) throws NumberFormatException, RuntimeException, Pa
     <RR>
     symbol = MelaSymbol()
     update = <IDENTIFIER>
-      <LR>
+    <LR>
     updateloc = UpdateLoc()
+   (<LR>
+    range = < INT >
+    <RR>)*
+    {if (range != null){
+    int rangeValue = Integer.parseInt(range.image);
+    Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
+    NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")", rangeValue);
+    agent.addAction(ac);
+      }else{
+    int rangeValue = 1; 
+    Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
+    NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")", rangeValue);
+    agent.addAction(ac);}}  
     <RR>    
-    { Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
-      NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")");
-      agent.addAction(ac); }
-}     
-
-
-void InfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
+}  
+    
+    
+void InfAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException:
 {
-    Token infset=null, name = null, rate = null, symbolInf =null, update, updatelocInf=null; 
+    Token infset=null, name = null, rate = null, symbolInf =null, update, updatelocInf=null, range = null, rangeNeigh = null; 
 }
 {   
     <DASH>
     <RANG>
     < LBRAC >
     infset =  InfSet()
+    (<LR>
+    rangeNeigh = < INT >
+    <RR>)*  
     < RBRAC >
     <LR>    
     name = <IDENTIFIER>   
@@ -424,17 +432,29 @@ void InfAction(Agent agent) throws NumberFormatException, RuntimeException, Pars
     update = <IDENTIFIER>
     <LR>
     updatelocInf = UpdateLoc()
+    (<LR>
+    range = < INT >
+    <RR>)*
+    {if (range != null){
+    int rangeValue = Integer.parseInt(range.image);
+    if (rangeNeigh!= null){
+    int rangeNeighValue = Integer.parseInt(rangeNeigh.image);
+    Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
+    InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
+    agent.addAction(ac);}}else{  
+    int rangeValue = 1;  
+    int rangeNeighValue = 1;
+    Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
+    InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
+    agent.addAction(ac);
+    }}   
     <RR>
-   { Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
-     InfAction ac = new InfAction(name.image, rateValue, infset.image, symbolInf.image, update.image + "(" + updatelocInf.image + ")");
-     agent.addAction(ac); } 
-
 }
 
 
 void PassAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
 {
-    Token name = null, probName = null, update, updatelocPass=null, symbolPass=null; 
+    Token name = null, probName = null, update, updatelocPass=null, symbolPass=null, range=null; 
 }
 {
     <LANG>
@@ -448,10 +468,19 @@ void PassAction(Agent agent) throws NumberFormatException, RuntimeException, Par
     update = <IDENTIFIER>
     <LR>
     updatelocPass = UpdateLoc()
+     (<LR>
+    range = < INT >
+    <RR>)*
+    {if (range != null){
+    int rangeValue = Integer.parseInt(range.image);
+    Double prob = GlobalManager.getParamManager().getParamValue(probName.image);
+    PassAction ac = new PassAction(name.image, prob, symbolPass.image, update.image + "(" + updatelocPass.image + ")", rangeValue);
+    agent.addAction(ac);}else{
+    int rangeValue = 1;
+    Double prob = GlobalManager.getParamManager().getParamValue(probName.image);
+    PassAction ac = new PassAction(name.image, prob, symbolPass.image, update.image + "(" + updatelocPass.image + ")", rangeValue);
+    agent.addAction(ac);}}
     <RR>
-    {Double prob = GlobalManager.getParamManager().getParamValue(probName.image);
-     PassAction ac = new PassAction(name.image, prob, symbolPass.image, update.image + "(" + updatelocPass.image + ")");
-     agent.addAction(ac); } 
 }
 
 void EnvAction(Agent agent) throws NumberFormatException, RuntimeException, ParseException :
@@ -605,10 +634,7 @@ void setGraph()throws NumberFormatException, RuntimeException, ParseException :
     v = <INT>
     {int vertexName = Integer.parseInt(v.image);   
     GlobalManager.getLocationManager().AllLoc.add(GlobalManager.createListName(vertexName));
-    GlobalManager.getLocationManager().prepareMap(GlobalManager.createListName(vertexName)); }
-
-
-    
+    GlobalManager.getLocationManager().prepareMap(GlobalManager.createListName(vertexName)); }   
     (
         <COMMA>
         v1 = <INT>

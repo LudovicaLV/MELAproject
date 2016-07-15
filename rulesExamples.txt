@@ -1,0 +1,25 @@
+#Time: time = 100
+
+#Boundary: periodic/ bouncing/ fixed
+
+#Population: I1
+
+#Pop_Loc : I1 (1,1)
+
+#ActionCount: birth = 10
+
+
+#Runs = 10
+
+
+#Action:a contact1 
+
+        p contact1 
+  
+        / birth
+
+
+#Focus: State
+        Spatial
+        Demographic
+        No change

@@ -4,15 +4,19 @@ public class InfAction implements Action {
 			private String name;
 			private double rate;
 			private String infset;
+			private int rangeNeigh;
 			private String symbol;
 			private String update;
+			private int range;
 			
-			public InfAction(String name, double rate, String infset, String symbol, String update){
+			public InfAction(String name, double rate, String infset, int rangeNeigh, String symbol, String update, int range){
 				this.name = name;
 				this.rate = rate;
 				this.infset = infset;
+				this.rangeNeigh = rangeNeigh;
 				this.symbol = symbol;
-				this.update = update;			
+				this.update = update;	
+				this.range = range;
 			}
 					
 @Override
@@ -30,6 +34,14 @@ public Double getRate() {
 
 public String getInfSet() {
 	return infset;
+}
+
+public int getRangeNeigh() {
+	return rangeNeigh;
+}
+
+public int getRangeInf() {
+	return range;
 }
 
 public String getSymbol() {

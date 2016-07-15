@@ -346,7 +346,7 @@ setThreeD();
     }
   }
 
-  final public void NoInfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, rateName = null, symbol=null, update, updateloc=null;
+  final public void NoInfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, rateName = null, symbol=null, update, updateloc=null, range = null;
     jj_consume_token(LR);
     name = jj_consume_token(IDENTIFIER);
     jj_consume_token(COMMA);
@@ -356,17 +356,54 @@ setThreeD();
     update = jj_consume_token(IDENTIFIER);
     jj_consume_token(LR);
     updateloc = UpdateLoc();
+    label_7:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case LR:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[14] = jj_gen;
+        break label_7;
+      }
+      jj_consume_token(LR);
+      range = jj_consume_token(INT);
+      jj_consume_token(RR);
+    }
+if (range != null){
+    int rangeValue = Integer.parseInt(range.image);
+    Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
+    NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")", rangeValue);
+    agent.addAction(ac);
+      }else{
+    int rangeValue = 1;
+    Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
+    NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")", rangeValue);
+    agent.addAction(ac);}
     jj_consume_token(RR);
-Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
-      NoInfAction ac = new NoInfAction(name.image, rate, symbol.image, update.image + "(" + updateloc.image + ")");
-      agent.addAction(ac);
   }
 
-  final public void InfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infset=null, name = null, rate = null, symbolInf =null, update, updatelocInf=null;
+  final public void InfAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infset=null, name = null, rate = null, symbolInf =null, update, updatelocInf=null, range = null, rangeNeigh = null;
     jj_consume_token(DASH);
     jj_consume_token(RANG);
     jj_consume_token(LBRAC);
     infset = InfSet();
+    label_8:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case LR:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[15] = jj_gen;
+        break label_8;
+      }
+      jj_consume_token(LR);
+      rangeNeigh = jj_consume_token(INT);
+      jj_consume_token(RR);
+    }
     jj_consume_token(RBRAC);
     jj_consume_token(LR);
     name = jj_consume_token(IDENTIFIER);
@@ -377,13 +414,38 @@ Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
     update = jj_consume_token(IDENTIFIER);
     jj_consume_token(LR);
     updatelocInf = UpdateLoc();
+    label_9:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case LR:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[16] = jj_gen;
+        break label_9;
+      }
+      jj_consume_token(LR);
+      range = jj_consume_token(INT);
+      jj_consume_token(RR);
+    }
+if (range != null){
+    int rangeValue = Integer.parseInt(range.image);
+    if (rangeNeigh!= null){
+    int rangeNeighValue = Integer.parseInt(rangeNeigh.image);
+    Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
+    InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
+    agent.addAction(ac);}}else{
+    int rangeValue = 1;
+    int rangeNeighValue = 1;
+    Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
+    InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
+    agent.addAction(ac);
+    }
     jj_consume_token(RR);
-Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
-     InfAction ac = new InfAction(name.image, rateValue, infset.image, symbolInf.image, update.image + "(" + updatelocInf.image + ")");
-     agent.addAction(ac);
   }
 
-  final public void PassAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, probName = null, update, updatelocPass=null, symbolPass=null;
+  final public void PassAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token name = null, probName = null, update, updatelocPass=null, symbolPass=null, range=null;
     jj_consume_token(LANG);
     jj_consume_token(DASH);
     jj_consume_token(LR);
@@ -395,10 +457,31 @@ Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
     update = jj_consume_token(IDENTIFIER);
     jj_consume_token(LR);
     updatelocPass = UpdateLoc();
+    label_10:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case LR:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[17] = jj_gen;
+        break label_10;
+      }
+      jj_consume_token(LR);
+      range = jj_consume_token(INT);
+      jj_consume_token(RR);
+    }
+if (range != null){
+    int rangeValue = Integer.parseInt(range.image);
+    Double prob = GlobalManager.getParamManager().getParamValue(probName.image);
+    PassAction ac = new PassAction(name.image, prob, symbolPass.image, update.image + "(" + updatelocPass.image + ")", rangeValue);
+    agent.addAction(ac);}else{
+    int rangeValue = 1;
+    Double prob = GlobalManager.getParamManager().getParamValue(probName.image);
+    PassAction ac = new PassAction(name.image, prob, symbolPass.image, update.image + "(" + updatelocPass.image + ")", rangeValue);
+    agent.addAction(ac);}
     jj_consume_token(RR);
-Double prob = GlobalManager.getParamManager().getParamValue(probName.image);
-     PassAction ac = new PassAction(name.image, prob, symbolPass.image, update.image + "(" + updatelocPass.image + ")");
-     agent.addAction(ac);
   }
 
   final public void EnvAction(Agent agent) throws ParseException, NumberFormatException, RuntimeException, ParseException {Token infsetE=null, name=null, rateName=null, update;
@@ -421,7 +504,7 @@ Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
 
   final public void Init() throws ParseException, NumberFormatException, RuntimeException, ParseException {
     InitAgent();
-    label_7:
+    label_11:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case PARALLEL:{
@@ -429,8 +512,8 @@ Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
         break;
         }
       default:
-        jj_la1[14] = jj_gen;
-        break label_7;
+        jj_la1[18] = jj_gen;
+        break label_11;
       }
       jj_consume_token(PARALLEL);
       InitAgent();
@@ -454,20 +537,20 @@ Double rate = GlobalManager.getParamManager().getParamValue(rateName.image);
           break;
           }
         default:
-          jj_la1[15] = jj_gen;
+          jj_la1[19] = jj_gen;
           ;
         }
         break;
         }
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[20] = jj_gen;
         ;
       }
       jj_consume_token(RR);
       break;
       }
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[21] = jj_gen;
       ;
     }
     jj_consume_token(LSQ);
@@ -515,16 +598,17 @@ if (x == null)
        }int i = GlobalManager.getAgentManager().MatrixAgent.get(t.image);
        int xValue = Integer.parseInt(x.image);
        {if (y==null)
-         {if (true) throw new ParseException("The input location does not exist");}
+         {{if (true) throw new ParseException("The input location does not exist");}}
        }
        int yValue = Integer.parseInt(y.image);
        int InitNum = Integer.parseInt(n.image);
-       ArrayList<Integer> LocName = GlobalManager.createListTwoD(xValue, yValue);       
+       ArrayList<Integer> LocName = GlobalManager.createListTwoD(xValue, yValue);
        {if (z ==null && GlobalManager.getLocationManager().AllLoc.contains(LocName))
        { int j = GlobalManager.getLocationManager().MatrixLoc.get(LocName);
        GlobalManager.getAgentManager().GlobalMatrix[i][j]= InitNum;
        }else
-       {if (true) throw new ParseException("The input location does not exist");}
+       {
+     {if (true) throw new ParseException("The input location does not exist");}}
        }
        }
              else if (GlobalManager.getLocationManager().SpatialSt.matches("(?i).*ThreeD*"))
@@ -561,7 +645,7 @@ if (x == null)
 int vertexName = Integer.parseInt(v.image);
     GlobalManager.getLocationManager().AllLoc.add(GlobalManager.createListName(vertexName));
     GlobalManager.getLocationManager().prepareMap(GlobalManager.createListName(vertexName));
-    label_8:
+    label_12:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case COMMA:{
@@ -569,8 +653,8 @@ int vertexName = Integer.parseInt(v.image);
         break;
         }
       default:
-        jj_la1[18] = jj_gen;
-        break label_8;
+        jj_la1[22] = jj_gen;
+        break label_12;
       }
       jj_consume_token(COMMA);
       v1 = jj_consume_token(INT);
@@ -589,7 +673,7 @@ BracketsCounter++;
     e = jj_consume_token(INT);
 int edgeName = Integer.parseInt(e.image);
      GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName), BracketsCounter);
-    label_9:
+    label_13:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case COMMA:{
@@ -597,8 +681,8 @@ int edgeName = Integer.parseInt(e.image);
         break;
         }
       default:
-        jj_la1[19] = jj_gen;
-        break label_9;
+        jj_la1[23] = jj_gen;
+        break label_13;
       }
       jj_consume_token(COMMA);
       e1 = jj_consume_token(INT);
@@ -606,7 +690,7 @@ int edgeName1 = Integer.parseInt(e1.image);
      GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName1), BracketsCounter);
     }
     jj_consume_token(RBRAC);
-    label_10:
+    label_14:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case COMMA:{
@@ -614,8 +698,8 @@ int edgeName1 = Integer.parseInt(e1.image);
         break;
         }
       default:
-        jj_la1[20] = jj_gen;
-        break label_10;
+        jj_la1[24] = jj_gen;
+        break label_14;
       }
       jj_consume_token(COMMA);
       jj_consume_token(LBRAC);
@@ -623,7 +707,7 @@ BracketsCounter++;
       e = jj_consume_token(INT);
 int edgeName2 = Integer.parseInt(e.image);
      GlobalManager.getLocationManager().addNeighNode(GlobalManager.createListName(edgeName2), BracketsCounter);
-      label_11:
+      label_15:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case COMMA:{
@@ -631,8 +715,8 @@ int edgeName2 = Integer.parseInt(e.image);
           break;
           }
         default:
-          jj_la1[21] = jj_gen;
-          break label_11;
+          jj_la1[25] = jj_gen;
+          break label_15;
         }
         jj_consume_token(COMMA);
         e1 = jj_consume_token(INT);
@@ -742,15 +826,21 @@ int xValue = Integer.parseInt(x.image);
     finally { jj_save(6, xla); }
   }
 
+  private boolean jj_3_1()
+ {
+    if (jj_scan_token(KEYWORD_GRAPH)) return true;
+    return false;
+  }
+
   private boolean jj_3_7()
  {
-    if (jj_3R_14()) return true;
+    if (jj_3R_18()) return true;
     return false;
   }
 
   private boolean jj_3_6()
  {
-    if (jj_3R_13()) return true;
+    if (jj_3R_17()) return true;
     return false;
   }
 
@@ -762,7 +852,14 @@ int xValue = Integer.parseInt(x.image);
 
   private boolean jj_3_5()
  {
-    if (jj_3R_12()) return true;
+    if (jj_3R_16()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_17()
+ {
+    if (jj_scan_token(DASH)) return true;
+    if (jj_scan_token(RANG)) return true;
     return false;
   }
 
@@ -772,7 +869,7 @@ int xValue = Integer.parseInt(x.image);
     return false;
   }
 
-  private boolean jj_3R_14()
+  private boolean jj_3R_18()
  {
     if (jj_scan_token(LANG)) return true;
     if (jj_scan_token(DASH)) return true;
@@ -785,23 +882,10 @@ int xValue = Integer.parseInt(x.image);
     return false;
   }
 
-  private boolean jj_3R_12()
+  private boolean jj_3R_16()
  {
     if (jj_scan_token(LR)) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_13()
- {
-    if (jj_scan_token(DASH)) return true;
-    if (jj_scan_token(RANG)) return true;
-    return false;
-  }
-
-  private boolean jj_3_1()
- {
-    if (jj_scan_token(KEYWORD_GRAPH)) return true;
     return false;
   }
 
@@ -816,7 +900,7 @@ int xValue = Integer.parseInt(x.image);
   private Token jj_scanpos, jj_lastpos;
   private int jj_la;
   private int jj_gen;
-  final private int[] jj_la1 = new int[22];
+  final private int[] jj_la1 = new int[26];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -824,10 +908,10 @@ int xValue = Integer.parseInt(x.image);
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x20000,0x0,0x20000000,0x20000000,0x1e00000,0xe000000,0xe000000,0x40000000,0x40000000,0x2000000,0x2000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0x20000,0x0,0x20000000,0x20000000,0x1e00000,0xe000000,0xe000000,0x40000000,0x40000000,0x2000000,0x2000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x100000,0x100000,0x0,0x10,0x0,0x0,0x0,0x0,0x0,0x30000,0x30000,0x100000,0x100000,0x9010,0x4000,0x800,0x800,0x10,0x800,0x800,0x800,0x800,};
+      jj_la1_1 = new int[] {0x100000,0x100000,0x0,0x10,0x0,0x0,0x0,0x0,0x0,0x30000,0x30000,0x100000,0x100000,0x9010,0x10,0x10,0x10,0x10,0x4000,0x800,0x800,0x10,0x800,0x800,0x800,0x800,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[7];
   private boolean jj_rescan = false;
@@ -844,7 +928,7 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -859,7 +943,7 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -870,7 +954,7 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -881,7 +965,7 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -891,7 +975,7 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -901,7 +985,7 @@ int xValue = Integer.parseInt(x.image);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1019,7 +1103,7 @@ int xValue = Integer.parseInt(x.image);
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 22; i++) {
+    for (int i = 0; i < 26; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

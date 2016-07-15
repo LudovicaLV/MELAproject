@@ -1,0 +1,32 @@
+#Space: TwoD(n,n)
+
+#Parameters
+c1 = 1.0;
+c2 = 0.5;
+c3 = 0.25;
+
+p1 = 1.0;
+p2 = 1.0;
+p3 = 1.0;
+
+s = 1.0;
+
+r = 1.0;
+
+#Agents
+S(l):= <-(contact1,p1).I1(l) + <-(contact2,p2).I1(l) + <-(contact3,p3).I1(l);
+
+I1(l):= ->{N(1)}(contact1,c1).I1(l) + ->{N(2)}(contact2,c2).I1(l) + ->{N(3)}(contact3,c3).I1(l) + (step,s).I2(l);
+
+I2(l):= ->{N(1)}(contact1,c1).I2(l) + ->{N(2)}(contact2,c2).I2(l) + ->{N(3)}(contact3,c3).I2(l) + (step,s).I3(l);
+
+I3(l):= ->{N(1)}(contact1,c1).I3(l) + ->{N(2)}(contact2,c2).I3(l) + ->{N(3)}(contact3,c3).I3(l) + (step,s).I4(l);
+
+I4(l):= ->{N(1)}(contact1,c1).I4(l) + ->{N(2)}(contact2,c2).I4(l) + ->{N(3)}(contact3,c3).I4(l) + (step,s).I5(l);
+
+I5(l):= ->{N(1)}(contact1,c1).I5(l) + ->{N(2)}(contact2,c2).I5(l) + ->{N(3)}(contact3,c3).I5(l) + (recover,r).R(l);
+
+R(l):= ;
+
+#Initial conditions
+S(x1,y1)[1]||S(x2,y2)[1]||…||S(xn,yn)[1]||I(x,y)[1]

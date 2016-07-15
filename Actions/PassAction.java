@@ -6,12 +6,14 @@ public class PassAction implements Action {
 	private double infProb;
 	private String symbol;
 	private String update;
+	private int range;
 	
-	public PassAction(String name, double infProb, String symbol, String update){
+	public PassAction(String name, double infProb, String symbol, String update, int range){
 		this.name = name;
 		this.infProb = infProb;
 		this.symbol = symbol;
 		this.update = update;
+		this.range = range;
 	}
 
 @Override
@@ -34,6 +36,10 @@ public String getSymbol() {
 @Override
 public String getUpdate() {
 	return update;
+}
+
+public int getRangePass() {
+	return range;
 }
 
 @Override

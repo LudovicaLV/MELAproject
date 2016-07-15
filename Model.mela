@@ -1,0 +1,22 @@
+#Space: Graph
+
+V = {1,2,3,4,5,6,7};
+
+E = {{2,3},{4,5},{6},{7},{7},{7},{6}};
+
+#Parameters
+b = 0.01;
+dS = 0.3;
+dI1 = 0.6;
+m = 0.7;
+c = 1.0;
+p = 1.0;
+
+#Agents
+S(l):=(birth,b)>>S(l) + (deathS,dS)<<S(l) + (move,m).S(newl(2)) + <-(contact,p).I1(l);
+
+I1(l):= (deathI1,dI1)<<I1(l) + ->{N(2)}(contact,c).I1(l);
+
+
+#Initial conditions
+S(1)[100]||I1(1)[1]

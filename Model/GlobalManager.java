@@ -1,14 +1,50 @@
 package Model;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import Actions.Action;
+import ParserProg5.Parser5;
 
 public class GlobalManager {
 	static AgentManager agentManager;
 	static LocationManager locationManager;
 	static ParamManager paramManager;
-		
+	
+	static String outputFileLog = "/Users/ludovicaluisavissat/anaconda/pyTSA/Output/Log/Output" + "Info";
+	
+	//new part for rules
+	
+	public static String actionChosenType;
+	public static String actionToTrack;
+	
+	public static String boundary;
+	
+	//time
+	public static double timeTotal;
+	
+	//runs
+	public static int Runs;
+	public static double Step;
+
+	//population
+	public static String nameAgentToTrack;
+	
+	//location
+	public static ArrayList<Integer> LocToTrack;
+	
+	//actionCount
+	public static String nameActionToCount;
+	public static int valueToCount;	
+	public static int valueForLoop;
+	
+	//for specific traces
+	public static String SpecificType;
+	
+	//end new part
+	
 	public static void init(){
 			agentManager = new AgentManager();
 			locationManager = new LocationManager();
@@ -87,7 +123,40 @@ public class GlobalManager {
 				}
 				System.out.println(") is " + GlobalManager.getAgentManager().GlobalMatrix[i][j]);}
 			}
-		}
+		}}
+		
+		
+		
+	public static void ForPlotting(){		
+		for (int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+			for (int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
+				if (GlobalManager.getAgentManager().GlobalMatrix[i][j] != 0){
+				System.out.print(GlobalManager.getLocationManager().AllLoc.get(j).get(0) + ", ");
+			}
+		}}
+		System.out.println(" ");
+		
+		for (int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+			for (int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
+				if (GlobalManager.getAgentManager().GlobalMatrix[i][j] != 0){
+				//System.out.print(GlobalManager.getLocationManager().AllLoc.get(j).get(0) + " ");
+				for (int k=1; k < GlobalManager.getLocationManager().AllLoc.get(j).size(); k++){
+					System.out.print(GlobalManager.getLocationManager().AllLoc.get(j).get(k) + ", ");
+				}}}}
+		System.out.println(" ");
+		
+		for (int i=0; i < 10; i++){
+			for (int j=0; j < 10; j++){
+			System.out.print(i +", ");
+		}}
+		System.out.println(" ");
+		
+		for (int i=0; i < 10; i++){
+			for (int j=0; j < 10; j++){
+			System.out.print(j +", ");				
+			}}
+		System.out.println(" ");
+	
 	}
 		
 	public static boolean isInteger(String s) {
@@ -168,6 +237,7 @@ public class GlobalManager {
 		 return GlobalManager.getLocationManager().AllLoc;
 		}	
 	   
+<<<<<<< Updated upstream
 		
 		public static int SumPopulation (String name){
 			int sum = 0;
@@ -177,5 +247,51 @@ public class GlobalManager {
 			return sum;
 		    }
 	 
+=======
+>>>>>>> Stashed changes
 		
+		public static int SumPopulation (String name){
+			int sum = 0;
+			for (int j = 0; j < GlobalManager.getAgentManager().GlobalMatrix[0].length; j++){
+		         sum = sum + GlobalManager.getAgentManager().GlobalMatrix[GlobalManager.getAgentManager().MatrixAgent.get(name)][j];
+		        }
+			return sum;
+		    }
+		
+		public static int EntryPopLoc (String name, ArrayList<Integer> loc){
+			int Value = GlobalManager.getAgentManager().GlobalMatrix[GlobalManager.getAgentManager().MatrixAgent.get(name)][GlobalManager.getLocationManager().MatrixLoc.get(loc)];
+			return Value;
+		    }
+		
+		
+	 //new code - for rules
+		public static String GetAction(){
+			return actionToTrack;
 		}
+		
+		public static double GetTime(){
+			return timeTotal;
+		}
+		
+		public static boolean WhileMethod(){
+			if(boundary == "#time"){
+				 if (Simulator2.getTime() < timeTotal){return true;}
+		         else{return false;}}
+			else{
+			if(boundary == "#population"){
+				if ((SumPopulation(nameAgentToTrack) > 0) && Simulator2.getTime() < 1000 ){return true;}
+		    	else{return false;}}
+			else{
+				if(boundary == "#pop_loc"){
+					if ((EntryPopLoc(nameAgentToTrack, LocToTrack) > 0) && Simulator2.getTime() < 1000 ){return true;}
+			    	else{return false;}}
+			else{
+				if ((valueForLoop < valueToCount) || Simulator2.getTime() < 1000){return true;}
+		    	else{return false;}    
+				}}}}
+		
+}
+					
+
+	    
+	    
