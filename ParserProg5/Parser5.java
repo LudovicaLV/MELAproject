@@ -1,48 +1,38 @@
 package ParserProg5;
 
-<<<<<<< Updated upstream
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
-import Model.SimulatorR;
-=======
 import ParserRules.MELArules;
+import ParserStatMC.StatMCrules;
 import TraceAnalyser.Analyser;
->>>>>>> Stashed changes
+import TraceAnalyser.SignalAnalysis;
 
 public class Parser5 {
 
 	public static int _SIMULATION_ID = 1;
 	
-	public static int numberOfRuns = 1;
+	public static int numberOfRuns = 10;
 	
 	public static void main(String[] args) throws Exception {
-<<<<<<< Updated upstream
-		System.setOut(new PrintStream(new FileOutputStream("/Users/ludovicaluisavissat/GitHub/MELAprojectR*/output.txt")));       
-		MELAprog5 Parser= new MELAprog5();
-		Parser.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELAprojectR*/R*.mela");
-        System.out.println("Model parsed correctly. The result of the simulation is:");   
-        SimulatorR.main(args);
-	}
-}
-=======
 	
 		
 		for(int i = 1; i <= numberOfRuns; i++)
 		{   MELAprog5 Parser= new MELAprog5();
-			Parser.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/NewModel.mela");
+			Parser.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/NewModel2.mela");
 	        System.out.println("Model parsed correctly.");      
 			MELArules Parser2= new MELArules();
 			Parser2.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/Rules.txt");
 			_SIMULATION_ID++;
 		}	
-			
-		//	Analyser Analysis = new Analyser();
-			Analyser.numberRuns = numberOfRuns;
-			Analyser.main(null);
+				
+		    StatMCrules Parser3= new StatMCrules();
+		    Parser3.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/RulesStatMC.txt");
+        
+//			Analyser.numberRuns = numberOfRuns;
+//			Analyser.main(null);
+		    
+		    SignalAnalysis.numberRuns = numberOfRuns;
+		    SignalAnalysis.main(null);
 
 	}	
 }
 
 
->>>>>>> Stashed changes

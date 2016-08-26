@@ -23,3 +23,11 @@
         Spatial
         Demographic
         No change
+        
+        
+        
+--- StatMC ---
+
+#Property: A(l) > 0;
+
+#AgentsToCheck = {};

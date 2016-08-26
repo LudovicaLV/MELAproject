@@ -123,7 +123,18 @@ public class GlobalManager {
 				}
 				System.out.println(") is " + GlobalManager.getAgentManager().GlobalMatrix[i][j]);}
 			}
-		}}
+		}
+		
+//		for (int i=0; i < GlobalManager.getAgentManager().AgentNames.size(); i++){
+//			for (int j=0; j < GlobalManager.getLocationManager().AllLoc.size(); j++){
+//				if (GlobalManager.getAgentManager().GlobalMatrix[i][j] != 0){
+//				System.out.print("\"I(" + GlobalManager.getLocationManager().AllLoc.get(j).get(0));
+//				for (int k=1; k < GlobalManager.getLocationManager().AllLoc.get(j).size(); k++){
+//					System.out.print("," + GlobalManager.getLocationManager().AllLoc.get(j).get(k) + ")\", ");
+//				}}
+//			}
+//		}	
+	}
 		
 		
 		
@@ -237,18 +248,6 @@ public class GlobalManager {
 		 return GlobalManager.getLocationManager().AllLoc;
 		}	
 	   
-<<<<<<< Updated upstream
-		
-		public static int SumPopulation (String name){
-			int sum = 0;
-			for (int j = 0; j < GlobalManager.getAgentManager().GlobalMatrix[0].length; j++){
-		         sum = sum + GlobalManager.getAgentManager().GlobalMatrix[GlobalManager.getAgentManager().MatrixAgent.get(name)][j];
-		        }
-			return sum;
-		    }
-	 
-=======
->>>>>>> Stashed changes
 		
 		public static int SumPopulation (String name){
 			int sum = 0;

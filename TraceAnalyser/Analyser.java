@@ -4,15 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import Model.GlobalManager;
+import java.util.stream.IntStream;
 
 public class Analyser {
 
 	public static int numberRuns;
+	public static int intProperty;
+	public static String whichProperty;
+	public static String symbolProperty;
+	public static ArrayList<String> namesToCheckList = new ArrayList<>();
+		    	
 	public static void main(String[] args) throws IOException {
-
 		// names
 		BufferedReader br = new BufferedReader(
 				new FileReader("/Users/ludovicaluisavissat/anaconda/pyTSA/Output/Log/Output1_log.txt"));
@@ -21,11 +23,17 @@ public class Analyser {
 		ArrayList<String> names = new ArrayList<>();
 		for (int i = 0; i < singleline.length; i++) {
 			names.add(singleline[i]);
-		}
+		}	
+
+		String[] namesToCheck = new String[namesToCheckList.size()];
 		
-		//names to check
-		String[] namesToCheck = {"I(0,0)", "I(0,1)", "I(0,2)", "I(0,3)", "I(0,4)", "I(0,5)", "I(0,6)", "I(0,7)", "I(0,8)", "I(0,9)", "I(1,0)", "I(1,1)", "I(1,2)", "I(1,3)", "I(1,4)", "I(1,5)", "I(1,6)", "I(1,7)", "I(1,8)", "I(1,9)", "I(2,0)", "I(2,1)", "I(2,2)", "I(2,3)", "I(2,4)", "I(2,5)", "I(2,6)", "I(2,7)", "I(2,8)", "I(2,9)", "I(3,0)", "I(3,1)", "I(3,2)", "I(3,3)", "I(3,4)", "I(3,5)", "I(3,6)", "I(3,7)", "I(3,8)", "I(3,9)", "I(4,0)", "I(4,1)", "I(4,2)", "I(4,3)", "I(4,4)", "I(4,5)", "I(4,6)", "I(4,7)", "I(4,8)", "I(4,9)", "I(5,0)", "I(5,1)", "I(5,2)", "I(5,3)", "I(5,4)", "I(5,5)", "I(5,6)", "I(5,7)", "I(5,8)", "I(5,9)", "I(6,0)", "I(6,1)", "I(6,2)", "I(6,3)", "I(6,4)", "I(6,5)", "I(6,6)", "I(6,7)", "I(6,8)", "I(6,9)", "I(7,0)", "I(7,1)", "I(7,2)", "I(7,3)", "I(7,4)", "I(7,5)", "I(7,6)", "I(7,7)", "I(7,8)", "I(7,9)", "I(8,0)", "I(8,1)", "I(8,2)", "I(8,3)", "I(8,4)", "I(8,5)", "I(8,6)", "I(8,7)", "I(8,8)", "I(8,9)", "I(9,0)", "I(9,1)", "I(9,2)", "I(9,3)", "I(9,4)", "I(9,5)", "I(9,6)", "I(9,7)", "I(9,8)", "I(9,9)"};
+		for (int i=0; i < namesToCheckList.size(); i++){
+			namesToCheck[i] = namesToCheckList.get(i);
+		}
+				
 		int[] statMCValues = new int [namesToCheck.length];	
+
+		int[] countArray = new int[numberRuns];
 		
         for (int k=1; k<=numberRuns; k++){
 		BufferedReader buf = new BufferedReader(
@@ -55,9 +63,7 @@ public class Analyser {
 			double timeval = Double.parseDouble(newline[0]);
 			timeValues.add(timeval);
 		}
-		
-		
-		
+				
 		// popValues
 		ArrayList<ArrayList<Integer>> separateIntValues = new ArrayList<>();
 		for (int i = 0; i < values.size(); i++) {
@@ -70,29 +76,84 @@ public class Analyser {
 			separateIntValues.add(newone);
 		}
 		
-		// analysis of each column, to see if I(l)>0
  		int[] statMC = new int[namesToCheck.length];
-		for (int r=0; r < namesToCheck.length; r++){
+ 		
+		int count = 0;
+		
+		if (whichProperty == "A(l)"){
+		for (int r=0; r < namesToCheck.length; r++){			
 			int index = names.indexOf(namesToCheck[r]);	
-			for (int t=0; t< timeValues.size(); t++){				
-				if (separateIntValues.get(t).get(index) > 0){
-					statMC[r] = 1;
-					//System.out.println(namesToCheck[r] + " got infected in simulation " + k);
-					break;
-				}else{
-					statMC[r] = 0;
-				}
-	    }
-		statMCValues[r] = statMCValues[r] + statMC[r];
+			for (int t=0; t< timeValues.size(); t++){		
+				if (symbolProperty == ">="){
+					if (separateIntValues.get(t).get(index) >= intProperty){
+						statMC[r] = 1;
+						break;
+					}else{
+						statMC[r] = 0;
+					}
+				}else{if (symbolProperty == ">"){
+					if (separateIntValues.get(t).get(index) > intProperty){
+						statMC[r] = 1;
+						break;
+					}else{
+						statMC[r] = 0;
+					}
+				}else{if (symbolProperty == "="){
+					if (separateIntValues.get(t).get(index) == intProperty){
+						statMC[r] = 1;
+						break;
+					}else{
+						statMC[r] = 0;
+					}
+				}else{if (symbolProperty == "<="){
+					if (separateIntValues.get(t).get(index) <= intProperty){
+						statMC[r] = 1;
+						break;
+					}else{
+						statMC[r] = 0;
+					}
+				}else{if (symbolProperty == "<"){
+					if (separateIntValues.get(t).get(index) < intProperty){
+						statMC[r] = 1;
+						break;
+					}else{
+						statMC[r] = 0;
+				}}}}}}}
+		statMCValues[r] = statMCValues[r] + statMC[r];		
 		}
-        }
+        }else{if (whichProperty == "#A(l)"){       	
+    		for (int r=0; r < namesToCheck.length; r++){			
+    			int index = names.indexOf(namesToCheck[r]);	
+    			for (int t=0; t< timeValues.size(); t++){		
+    				if (symbolProperty == ">="){
+    					if (separateIntValues.get(t).get(index) >= intProperty){
+    						count ++;
+    						break;
+    					}
+    				}else{if (symbolProperty == ">"){
+    					if (separateIntValues.get(t).get(index) > intProperty){
+    						count ++;
+    						break;
+    					}
+    				}else{if (symbolProperty == "="){
+    					if (separateIntValues.get(t).get(index) == intProperty){
+    						count ++;
+    						break;
+    					}
+    				}else{if (symbolProperty == "<="){
+    					if (separateIntValues.get(t).get(index) <= intProperty){
+    						count ++;
+    						break;
+    					}
+    				}else{if (symbolProperty == "<"){
+    					if (separateIntValues.get(t).get(index) < intProperty){
+    						count ++;
+    						break;
+    					}}}}}}}}
+    		countArray[k-1] = count; }}}
    
-//        for (int f=0; f< statMCValues.length; f++){
-//        	System.out.println(statMCValues[f]);
-//        }
-        
+        if (whichProperty == "A(l)"){ 
         ArrayList<Double> StatMCPlot = new ArrayList<>();
-        
         System.out.println("Stat MC:");
         for (int f=0; f< statMCValues.length; f++){
         	Integer valueToUse = statMCValues[f];
@@ -102,12 +163,29 @@ public class Analyser {
         	double conflevel = 1.96;
         	double root = Math.sqrt((1.0/numberRuns) * valueMC * (1 - valueMC));
         	double confinterval = conflevel * root;
-        	System.out.println(valueMC + " \u00B1 " + confinterval);
-        }
-        
-        GlobalManager.ForPlotting();
-        for (int y=0; y < StatMCPlot.size(); y++){
+        	System.out.println(namesToCheck[f] + " -> " + valueMC + " \u00B1 " + confinterval);
+        }      
+       // GlobalManager.ForPlotting();
+        System.out.print("statMC = [");
+        for (int y=0; y < (StatMCPlot.size()-1); y++){
         	System.out.print(StatMCPlot.get(y) + ", ");
         }
-       
+        System.out.print(StatMCPlot.get(StatMCPlot.size()-1) + "]");}else{
+        
+        if (whichProperty == "#A(l)"){         
+        for (int k=0; k<numberRuns; k++){
+         System.out.println("Simulation" + (k+1) + " -> " + countArray[k]);	
+        }       
+        
+        Integer sum = IntStream.of(countArray).sum();       
+        double sumDouble = sum.doubleValue();       
+        double meanSim = sumDouble/countArray.length;        
+        double[] countArrayDouble = new double[countArray.length];        
+        for (int i=0; i<countArray.length; i++){
+        	Integer intValue = countArray[i];
+        	countArrayDouble[i] = intValue.doubleValue(); 
+        }       
+        Stat MyData = new Stat(countArrayDouble);                
+        System.out.println("The mean is " + MyData.getMean() + " and the standard deviation is " + MyData.getStdDev());}}
+              
 	}}

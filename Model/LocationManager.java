@@ -215,12 +215,12 @@ public class LocationManager {
 		for (int i=1; i <= d; i++){
 		int neigh1 = ((LocName.get(0) + i));			
 		ArrayList<Integer> neigh1_list = GlobalManager.createListName(neigh1);
-		if (!Neigh1.contains(neigh1_list)){
+		if ((!Neigh1.contains(neigh1_list)) && ((LocName.get(0) + i) < OneD)){
 		Neigh1.add(neigh1_list);}}				
 		for (int i=1; i <= d; i++){
 			int neigh2 = (LocName.get(0) - i);			
 			ArrayList<Integer> neigh2_list = GlobalManager.createListName(neigh2);
-			if (!Neigh1.contains(neigh2_list)){
+			if ((!Neigh1.contains(neigh2_list)) && ((LocName.get(0) - i) >= 0)){
 			Neigh1.add(neigh2_list);}}	
         return Neigh1;	
 	   }		
@@ -232,7 +232,7 @@ public class LocationManager {
 			ArrayList<Integer> Neigh2_1 = new ArrayList<Integer>();	
 			Neigh2_1.add(LocName.get(0) + i);
 			Neigh2_1.add(LocName.get(1) + j);
-			if (!Neigh2.contains(Neigh2_1)){
+			if ((!Neigh2.contains(Neigh2_1)) && (LocName.get(0) + i) >= 0 && ((LocName.get(0) + i) < TwoDx) && ((LocName.get(1) + j) >= 0) && ((LocName.get(1) + j) < TwoDy)){
 			Neigh2.add(Neigh2_1); 				
 		}}}		
 		for (int i=0; i <= d; i++){
@@ -240,7 +240,7 @@ public class LocationManager {
 			ArrayList<Integer> Neigh2_1 = new ArrayList<Integer>();	
 			Neigh2_1.add(LocName.get(0) - i);
 			Neigh2_1.add(LocName.get(1) + j);
-			if (!Neigh2.contains(Neigh2_1)){
+			if (!Neigh2.contains(Neigh2_1) && (LocName.get(0) - i) >= 0 && ((LocName.get(0) - i) < TwoDx) && ((LocName.get(1) + j) >= 0) && ((LocName.get(1) + j) < TwoDy)){
 			Neigh2.add(Neigh2_1); 				
 		}}}		
 		for (int i=0; i <= d; i++){
@@ -248,7 +248,7 @@ public class LocationManager {
 			ArrayList<Integer> Neigh2_1 = new ArrayList<Integer>();	
 			Neigh2_1.add(LocName.get(0) - i);
 			Neigh2_1.add(LocName.get(1) - j);
-			if (!Neigh2.contains(Neigh2_1)){
+			if (!Neigh2.contains(Neigh2_1)&& (LocName.get(0) - i) >= 0 && ((LocName.get(0) - i) < TwoDx) && ((LocName.get(1) - j) >= 0) && ((LocName.get(1) - j) < TwoDy)){			
 			Neigh2.add(Neigh2_1); 				
 		}}}		
 		for (int i=0; i <= d; i++){
@@ -256,13 +256,15 @@ public class LocationManager {
 			ArrayList<Integer> Neigh2_1 = new ArrayList<Integer>();	
 			Neigh2_1.add(LocName.get(0) + i);
 			Neigh2_1.add(LocName.get(1) - j);
-			if (!Neigh2.contains(Neigh2_1)){
+			if (!Neigh2.contains(Neigh2_1)&& (LocName.get(0) + i) >= 0 && ((LocName.get(0) + i) < TwoDx) && ((LocName.get(1) - j) >= 0) && ((LocName.get(1) - j) < TwoDy)){				
 			Neigh2.add(Neigh2_1); 				
 		}}}		
 		Neigh2.remove(LocName);	 
         return Neigh2;	
 	   }
 			
+	
+	//SOLVE THE NEGATIVE PROBLEM, as done for TwoD
 	public ArrayList<ArrayList<Integer>> getNeighThreeDBouncing(ArrayList<Integer> LocName, int d){
 		ArrayList<ArrayList<Integer>> Neigh3 = new ArrayList<ArrayList<Integer>>(); 	
 		  for (int i=0; i <= d; i++){

@@ -3,13 +3,20 @@
 package ParserProg5;
 
 import java.util.ArrayList;
+import Actions.Action;
 import Actions.EnvAction;
 import Actions.InfAction;
 import Actions.NoInfAction;
 import Actions.PassAction;
 
 import Model.Agent;
+import Model.AgentManager;
+import Model.ExpEvaluator;
 import Model.GlobalManager;
+import Model.Location;
+import Model.LocationManager;
+import Model.ParamManager;
+
 
 public class MELAprog5 implements MELAprog5Constants {
 
@@ -93,13 +100,15 @@ if (!agents && !init)
         {if (true) throw new ParseException("Some model sections are missing");}
 
     /*All the following lines are used to print the stored information in the console*/
-    System.out.println("The chosen spatial structure is: " + GlobalManager.getLocationManager().SpatialSt);
-    GlobalManager.PrintHashMap(GlobalManager.getParamManager().paramMap);
-    GlobalManager.PrintNames(GlobalManager.getAgentManager().AgentNames);
-    GlobalManager.PrintActions(GlobalManager.getAgentManager().Agents);
-    GlobalManager.PrintLocations(GlobalManager.getLocationManager().AllLoc);
-    GlobalManager.PrintInitCondition();
-    GlobalManager.PrintNoZeroInitCondition();
+//    System.out.println("The chosen spatial structure is: " + GlobalManager.getLocationManager().SpatialSt);
+//    GlobalManager.PrintHashMap(GlobalManager.getParamManager().paramMap);
+//    GlobalManager.PrintNames(GlobalManager.getAgentManager().AgentNames);
+//    GlobalManager.PrintActions(GlobalManager.getAgentManager().Agents);
+//    GlobalManager.PrintLocations(GlobalManager.getLocationManager().AllLoc);
+//    GlobalManager.PrintInitCondition();
+//    GlobalManager.PrintNoZeroInitCondition();
+
+    System.out.println("Simulation -> " + Parser5._SIMULATION_ID);
     jj_consume_token(0);
   }
 
@@ -429,19 +438,30 @@ if (range != null){
       range = jj_consume_token(INT);
       jj_consume_token(RR);
     }
-if (range != null){
+if (range != null && rangeNeigh!= null){
     int rangeValue = Integer.parseInt(range.image);
-    if (rangeNeigh!= null){
     int rangeNeighValue = Integer.parseInt(rangeNeigh.image);
     Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
     InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
-    agent.addAction(ac);}}else{
+    agent.addAction(ac);}else{
+    if (range == null && rangeNeigh!= null){
+    int rangeValue = 1;
+    int rangeNeighValue = Integer.parseInt(rangeNeigh.image);
+    Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
+    InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
+    agent.addAction(ac);}else{
+    if (range != null && rangeNeigh == null){
+    int rangeValue = Integer.parseInt(range.image);
+    int rangeNeighValue = 1;
+    Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
+    InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
+    agent.addAction(ac);}else{
+    if (range == null && rangeNeigh == null){
     int rangeValue = 1;
     int rangeNeighValue = 1;
     Double rateValue = GlobalManager.getParamManager().getParamValue(rate.image);
     InfAction ac = new InfAction(name.image, rateValue, infset.image, rangeNeighValue, symbolInf.image, update.image + "(" + updatelocInf.image + ")", rangeValue);
-    agent.addAction(ac);
-    }
+    agent.addAction(ac);}}}}
     jj_consume_token(RR);
   }
 
@@ -838,6 +858,13 @@ int xValue = Integer.parseInt(x.image);
     return false;
   }
 
+  private boolean jj_3R_18()
+ {
+    if (jj_scan_token(LANG)) return true;
+    if (jj_scan_token(DASH)) return true;
+    return false;
+  }
+
   private boolean jj_3_6()
  {
     if (jj_3R_17()) return true;
@@ -866,13 +893,6 @@ int xValue = Integer.parseInt(x.image);
   private boolean jj_3_3()
  {
     if (jj_scan_token(KEYWORD_TWOD)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_18()
- {
-    if (jj_scan_token(LANG)) return true;
-    if (jj_scan_token(DASH)) return true;
     return false;
   }
 
