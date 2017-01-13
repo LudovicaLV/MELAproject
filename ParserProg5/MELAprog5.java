@@ -108,7 +108,6 @@ if (!agents && !init)
 //    GlobalManager.PrintInitCondition();
 //    GlobalManager.PrintNoZeroInitCondition();
 
-    System.out.println("Simulation -> " + Parser5._SIMULATION_ID);
     jj_consume_token(0);
   }
 

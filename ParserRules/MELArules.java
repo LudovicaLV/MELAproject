@@ -29,7 +29,7 @@ GRAMMAR RULES
   final public 
 void Input() throws ParseException, NumberFormatException, RuntimeException, ParseException {Token action, time_boundary, boundary = null, focus, runs = null, step;
     time_boundary = BoundChoice();
-GlobalManager.WhileMethod();
+    GlobalManager.WhileMethod();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case KEYWORD_BOUNDARY:{
       jj_consume_token(KEYWORD_BOUNDARY);
@@ -150,7 +150,7 @@ GlobalManager.actionToTrack = nameAction.image;
         jj_consume_token(WORD_TIME);
         jj_consume_token(ASSIGN);
         timeTotal = jj_consume_token(INT);
-GlobalManager.boundary = bound.image;
+        GlobalManager.boundary = bound.image;
         int total = Integer.parseInt(timeTotal.image);
         GlobalManager.timeTotal = total;
         GlobalManager.WhileMethod();

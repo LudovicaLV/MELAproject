@@ -7,7 +7,7 @@ public class RandomF {
 
 	public static void main(String[] args) {
 		
-		int numberOfFarms = 50;
+		int numberOfFarms = 100;
 		int gridX = 10;
 	    int gridY = 10;
 	    
@@ -18,23 +18,23 @@ public class RandomF {
 	    initFarm.add(initFarmY);
 	    
 		ArrayList<ArrayList<Integer>> initialLocs = new ArrayList<>();		
-		while (initialLocs.size() < numberOfFarms){	    
-		int valueX = randInt(0,gridX-1);
-		int valueY = randInt(0,gridY-1);
-		ArrayList<Integer> loc = new ArrayList<>();
-		loc.add(valueX);
-		loc.add(valueY);
-		if (!(initialLocs.contains(loc)) && !(loc.equals(initFarm))){
-			initialLocs.add(loc);
-		  }
-	    }
+//		while (initialLocs.size() < numberOfFarms){	    
+//		int valueX = randInt(0,gridX-1);
+//		int valueY = randInt(0,gridY-1);
+//		ArrayList<Integer> loc = new ArrayList<>();
+//		loc.add(valueX);
+//		loc.add(valueY);
+//		if (!(initialLocs.contains(loc)) && !(loc.equals(initFarm))){
+//			initialLocs.add(loc);
+//		  }
+//	    }
 		
-//		for (int i=0; i< gridX; i++){
-//			for (int j=0; j < gridY; j++){
-//			ArrayList<Integer> loc = new ArrayList<>();
-//			loc.add(i);
-//			loc.add(j);
-//			initialLocs.add(loc);}}
+		for (int i=0; i< gridX; i++){
+			for (int j=0; j < gridY; j++){
+			ArrayList<Integer> loc = new ArrayList<>();
+			loc.add(i);
+			loc.add(j);
+			initialLocs.add(loc);}}
 		
 		
 		

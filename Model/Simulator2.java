@@ -76,7 +76,6 @@ public class Simulator2 {
 		writer_meta.println(" ");
 		writer_data.println(" ");
 		
-		
 
 		while (GlobalManager.WhileMethod()) {
             ArrayList<Double> PropFunc = new ArrayList<>();

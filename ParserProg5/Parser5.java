@@ -9,14 +9,14 @@ public class Parser5 {
 
 	public static int _SIMULATION_ID = 1;
 	
-	public static int numberOfRuns = 10;
+	public static int numberOfRuns = 1;
 	
 	public static void main(String[] args) throws Exception {
 	
 		
 		for(int i = 1; i <= numberOfRuns; i++)
 		{   MELAprog5 Parser= new MELAprog5();
-			Parser.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/NewModel2.mela");
+			Parser.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/Project2.mela");
 	        System.out.println("Model parsed correctly.");      
 			MELArules Parser2= new MELArules();
 			Parser2.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/Rules.txt");
@@ -24,13 +24,13 @@ public class Parser5 {
 		}	
 				
 		    StatMCrules Parser3= new StatMCrules();
-		    Parser3.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/RulesStatMC.txt");
+		    Parser3.parseFromFile("/Users/ludovicaluisavissat/GitHub/MELATotalDistance/RulesStatMCProject2.txt");
         
-//			Analyser.numberRuns = numberOfRuns;
-//			Analyser.main(null);
+			Analyser.numberRuns = numberOfRuns;
+			Analyser.main(null);
 		    
-		    SignalAnalysis.numberRuns = numberOfRuns;
-		    SignalAnalysis.main(null);
+//		    SignalAnalysis.numberRuns = numberOfRuns;
+//		    SignalAnalysis.main(null);
 
 	}	
 }

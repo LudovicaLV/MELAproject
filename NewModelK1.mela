@@ -36,7 +36,7 @@ S(l):= <-(contact1,p1).I1(l) + <-(contact2,p2).I1(l) + <-(contact3,p3).I1(l) +
        <-(contact13,p13).I1(l) + <-(contact23,p23).I1(l) + <-(contact33,p33).I1(l) +
        <-(contact14,p14).I1(l) + <-(contact24,p24).I1(l) + <-(contact34,p34).I1(l);
 
-I1(l):= ->{N(1)}(contact1,c1).I1(l) + ->{N(2)}(contact2,c2).I1(l) + ->{N(3)}(contact3,c3).I1(l) + (step1,s1).I2(l);
+I1(l):= ->{N(1)}(contact11,c11).I1(l) + ->{N(2)}(contact21,c21).I1(l) + ->{N(3)}(contact3,c3).I1(l) + (step1,s1).I2(l);
 
 I2(l):= ->{N(1)}(contact12,c12).I2(l) + ->{N(2)}(contact22,c22).I2(l) + ->{N(3)}(contact32,c3).I2(l) + (step2,s2).I3(l);
 

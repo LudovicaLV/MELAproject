@@ -1,8 +1,8 @@
-#Space: OneD(3)
+#Space: TwoD(10,10)
 
 #Parameters
 rc = 0.5;
-rc1 = 5.0;
+rc1 = 0.8;
 p = 1.0;
 p1 = 1.0;
 rr = 0.8;
@@ -13,7 +13,7 @@ dI = 0.6;
 dI1 = 0.6;
 dR = 0.4;
 mS = 0.7;
-mI1 = 5.0;
+mI1 = 1.0;
 mI = 0.5;
 mR = 0.6;
 
@@ -30,4 +30,4 @@ R(l):=(deathR,dR)<<R(l) + (moveR,mR).R(newl);
 
 
 #Initial conditions
-S(0)[100]||I1(0)[1]
+S(5,5)[100]||I1(5,5)[1]

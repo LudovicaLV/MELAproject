@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.IntStream;
+
+import Creation.InitCond;
 
 public class Analyser {
 
@@ -13,6 +16,7 @@ public class Analyser {
 	public static String whichProperty;
 	public static String symbolProperty;
 	public static ArrayList<String> namesToCheckList = new ArrayList<>();
+    public static ArrayList<ArrayList<Integer>> namesToCheckListArray = new ArrayList<>();
 		    	
 	public static void main(String[] args) throws IOException {
 		// names
@@ -163,8 +167,15 @@ public class Analyser {
         	double conflevel = 1.96;
         	double root = Math.sqrt((1.0/numberRuns) * valueMC * (1 - valueMC));
         	double confinterval = conflevel * root;
+        	ArrayList<Double> resultSMC = new ArrayList<>();
+        	resultSMC.add(valueMC);
+        	resultSMC.add(confinterval);    	
+            HashMap <ArrayList<Integer>, ArrayList<Double>> toAdd = new HashMap<>();
+        	toAdd.put(namesToCheckListArray.get(f),resultSMC);       	
         	System.out.println(namesToCheck[f] + " -> " + valueMC + " \u00B1 " + confinterval);
         }      
+        
+        
        // GlobalManager.ForPlotting();
         System.out.print("statMC = [");
         for (int y=0; y < (StatMCPlot.size()-1); y++){

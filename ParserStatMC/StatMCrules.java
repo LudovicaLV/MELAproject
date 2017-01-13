@@ -151,9 +151,29 @@ if (y == null && z == null){
     TraceAnalyser.Analyser.namesToCheckList.add(name.image + "(" + x.image + ")");}else{
     if (z == null) {
     TraceAnalyser.Analyser.namesToCheckList.add(name.image + "(" + x.image + "," + y.image + ")");}else{
-    TraceAnalyser.Analyser.namesToCheckList.add(name.image + "(" + x.image + "," + y.image + "," + z.image + ")");}
+    TraceAnalyser.Analyser.namesToCheckList.add(name.image + "(" + x.image + "," + y.image + "," + z.image + ")");}}
 
-    }
+
+    if (y == null && z == null){
+    int xValue = Integer.parseInt(x.image);
+    ArrayList<Integer> xValueList = new ArrayList<Integer>();
+    xValueList.add(xValue);
+    TraceAnalyser.Analyser.namesToCheckListArray.add(xValueList);}else{
+    if (z == null) {
+    int xValue = Integer.parseInt(x.image);
+    int yValue = Integer.parseInt(y.image);
+    ArrayList<Integer> xyValues = new ArrayList<Integer>();
+    xyValues.add(xValue);
+    xyValues.add(yValue);
+    TraceAnalyser.Analyser.namesToCheckListArray.add(xyValues);}else{
+    int xValue = Integer.parseInt(x.image);
+    int yValue = Integer.parseInt(y.image);
+    int zValue = Integer.parseInt(z.image);
+    ArrayList<Integer> xyzValues = new ArrayList<Integer>();
+    xyzValues.add(xValue);
+    xyzValues.add(yValue);
+    xyzValues.add(zValue);
+    TraceAnalyser.Analyser.namesToCheckListArray.add(xyzValues);}}
   }
 
   private boolean jj_2_1(int xla)

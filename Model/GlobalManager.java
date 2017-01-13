@@ -273,15 +273,15 @@ public class GlobalManager {
 		}
 		
 		public static boolean WhileMethod(){
-			if(boundary == "#time"){
+			if(boundary == "#Time"){
 				 if (Simulator2.getTime() < timeTotal){return true;}
 		         else{return false;}}
 			else{
-			if(boundary == "#population"){
+			if(boundary == "#Population"){
 				if ((SumPopulation(nameAgentToTrack) > 0) && Simulator2.getTime() < 1000 ){return true;}
 		    	else{return false;}}
 			else{
-				if(boundary == "#pop_loc"){
+				if(boundary == "#Pop_loc"){
 					if ((EntryPopLoc(nameAgentToTrack, LocToTrack) > 0) && Simulator2.getTime() < 1000 ){return true;}
 			    	else{return false;}}
 			else{

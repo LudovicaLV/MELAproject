@@ -1,4 +1,4 @@
 
-#Time : time = 100
+#Time : time = 1
 
 #Boundary: Bouncing
